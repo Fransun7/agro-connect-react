@@ -3,6 +3,7 @@ import image1 from "../assets/hero-section-image-1.jpg";
 import image2 from "../assets/hero-section-image-2.jpg";
 import image3 from "../assets/hero-section-image-3.jpg";
 import image4 from "../assets/hero-section-image-4.jpg";
+import farmVideo from "../assets/farm-video.mp4";
 import { useState, useEffect } from "react";
 
 // const images = [image1, image2, image3, image4];
@@ -161,12 +162,15 @@ function Home() {
             </div>
           </div>
 
-          {/* Right Side — Farm image in styled card */}
+          {/* Right Side — Farm video in styled card */}
           <div className="flex justify-center">
             <div className="bg-[#f5f0e8] rounded-3xl p-4 shadow-2xl w-full max-w-sm">
-              <img
-                src={image1}
-                alt="Fresh farm produce"
+              <video
+                src={farmVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-72 object-cover rounded-2xl"
               />
               <div className="mt-4 px-2 pb-2 flex flex-col gap-1">
