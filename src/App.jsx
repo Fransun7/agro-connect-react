@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <nav
           id="navigation"
-          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_40%_30%_15%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 pr-5 gap-2 w-full items-center z-50 shadow-md md:shadow-2xl md: md:h-35"
+          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_35%_37%_13%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md md:shadow-2xl md:h-35 pr-5 md:pr-0"
         >
           {/* logo container + get-started-button */}
           <div id="logo-div" class="flex">
@@ -67,18 +67,20 @@ function App() {
             </button>
           </div>
 
-          {/* search input hidden on mobile  */}
-          <div className="hidden md:flex w-full h-[40%] bg-white rounded-lg font-mono justify-end items-center">
-            <input
-              className="text-sm text-green-900 custom-input w-full h-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-green-800 hover:shadow-lg hover:border-green-800 bg-gray-100"
-              placeholder="Enter text here"
-              type="text"
-              id="unique-input"
-            />
+          {/* search input container hidden on mobile  */}
+          <div className="hidden h-[90%] md:flex items-center">
+            <div className="hidden h-[50%] w-full md:flex rounded-lg font-mono items-center">
+              <input
+                className="text-sm text-green-900 custom-input w-full h-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-green-800 hover:shadow-lg hover:border-green-800"
+                placeholder="Enter text here"
+                type="text"
+                id="unique-input"
+              />
+            </div>
           </div>
 
-          {/* hidden on mobile */}
-          <div class="basis-[30%] hidden md:flex md:items-center gap-8">
+          {/* menu links hidden on mobile */}
+          <div class="hidden md:flex md:items-center justify-center gap-10">
             <NavLink
               to="/"
               className="text-[#2F6B3F] font-bold text-lg hover:text-green-600"
@@ -107,7 +109,7 @@ function App() {
           </div>
 
           {/* right menu on mobile */}
-          <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-10">
+          <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
             <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
               <button className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]">
                 <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
