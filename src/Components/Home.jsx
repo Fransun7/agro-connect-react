@@ -3,7 +3,6 @@ import image1 from "../assets/hero-section-image-1.jpg";
 import image2 from "../assets/hero-section-image-2.jpg";
 import image3 from "../assets/hero-section-image-3.jpg";
 import image4 from "../assets/hero-section-image-4.jpg";
-import farmVideo from "../assets/farm-video.mp4";
 import { useState, useEffect } from "react";
 
 // const images = [image1, image2, image3, image4];
@@ -166,7 +165,7 @@ function Home() {
           <div className="flex justify-center">
             <div className="bg-[#f5f0e8] rounded-3xl p-4 shadow-2xl w-full max-w-sm">
               <video
-                src={farmVideo}
+                src="https://res.cloudinary.com/dzerw6edh/video/upload/v1777237205/farm-video_ft3gmx.mp4"
                 autoPlay
                 loop
                 muted
