@@ -101,7 +101,8 @@ function Home() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-6 z-10">
+      {/* Array dot */}
+      <div className="absolute bottom-25 md:bottom-10 left-0 right-0 flex justify-center gap-6 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
