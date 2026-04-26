@@ -7,6 +7,7 @@ import Products from "./Components/Products";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <>
@@ -83,29 +84,45 @@ function App() {
           <div class="hidden md:flex md:items-center justify-center gap-10">
             <NavLink
               to="/"
-              className="text-[#2F6B3F] font-bold text-lg hover:text-green-600"
+              className={({ isActive }) =>
+                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                }`
+              }
             >
               Home
             </NavLink>
             <NavLink
               to="/products"
-              className="text-[#2F6B3F] font-bold text-lg hover:text-green-600 hover:rounded-md"
+              className={({ isActive }) =>
+                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                }`
+              }
             >
               Products
             </NavLink>
 
-            <a
-              href="#"
-              className="text-[#2F6B3F] font-bold text-lg   hover:rounded-md hover:text-green-600 "
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                }`
+              }
             >
               Dashboard
-            </a>
-            <a
-              href="#"
-              className="text-[#2F6B3F] font-bold text-lg  hover:rounded-md hover:text-green-600"
+            </NavLink>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                }`
+              }
             >
               Login
-            </a>
+            </NavLink>
           </div>
 
           {/* right menu on mobile */}
