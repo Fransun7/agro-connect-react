@@ -1,21 +1,3 @@
-import tomatoes from "../assets/tomatoes.jpg";
-import yam from "../assets/yam.jpg";
-import plantain from "../assets/plantain.jpg";
-import garri from "../assets/garri.jpg";
-import rice from "../assets/rice.jpg";
-import maize from "../assets/maize.jpg";
-import sorgum from "../assets/sorghum.jpg";
-import millet from "../assets/millet.jpg";
-import mango from "../assets/mango.jpg";
-import pineapple from "../assets/pineapple.jpg";
-import citrus from "../assets/citrus.jpg";
-import onion from "../assets/onion.jpg";
-import cassava from "../assets/cassava.jpg";
-import sweetPotato from "../assets/sweet-potato.jpg";
-import cocoyam from "../assets/cocoyam.jpg";
-import okro from "../assets/okro.jpg";
-import pepper from "../assets/pepper.jpg";
-
 const productsData = [
   {
     id: 1,
@@ -26,7 +8,7 @@ const productsData = [
     quantity: 100,
     farmerName: "Taiwo Adeleke",
     location: "Oyo State",
-    image: garri,
+    image: "/images/garri.jpg",
   },
   {
     id: 2,
@@ -37,7 +19,7 @@ const productsData = [
     quantity: 100,
     farmerName: "Taiwo Adeleke",
     location: "Oyo State",
-    image: rice,
+    image: "/images/rice.jpg",
   },
   {
     id: 3,
@@ -48,7 +30,7 @@ const productsData = [
     quantity: 100,
     farmerName: "Taiwo Adeleke",
     location: "Oyo State",
-    image: maize,
+    image: "/images/maize.jpg",
   },
   {
     id: 4,
@@ -59,7 +41,7 @@ const productsData = [
     quantity: 100,
     farmerName: "Taiwo Adeleke",
     location: "Oyo State",
-    image: sorgum,
+    image: "/images/sorghum.jpg",
   },
   {
     id: 5,
@@ -70,7 +52,7 @@ const productsData = [
     quantity: 100,
     farmerName: "Taiwo Adeleke",
     location: "Oyo State",
-    image: millet,
+    image: "/images/millet.jpg",
   },
   {
     id: 6,
@@ -81,7 +63,7 @@ const productsData = [
     quantity: 30,
     farmerName: "Chidi Nwosu",
     location: "Anambra State",
-    image: plantain,
+    image: "/images/plantain.jpg",
   },
   {
     id: 7,
@@ -92,7 +74,7 @@ const productsData = [
     quantity: 30,
     farmerName: "Chidi Nwosu",
     location: "Anambra State",
-    image: mango,
+    image: "/images/mango.jpg",
   },
   {
     id: 8,
@@ -103,7 +85,7 @@ const productsData = [
     quantity: 30,
     farmerName: "Chidi Nwosu",
     location: "Anambra State",
-    image: pineapple,
+    image: "/images/pineapple.jpg",
   },
   {
     id: 9,
@@ -114,7 +96,7 @@ const productsData = [
     quantity: 30,
     farmerName: "Chidi Nwosu",
     location: "Anambra State",
-    image: citrus,
+    image: "/images/citrus.jpg",
   },
   {
     id: 10,
@@ -125,7 +107,7 @@ const productsData = [
     quantity: 20,
     farmerName: "Musa Abdullahi",
     location: "Kano State",
-    image: tomatoes,
+    image: "/images/tomatoes.jpg",
   },
   {
     id: 11,
@@ -136,7 +118,7 @@ const productsData = [
     quantity: 20,
     farmerName: "Musa Abdullahi",
     location: "Kano State",
-    image: onion,
+    image: "/images/onion.jpg",
   },
   {
     id: 12,
@@ -147,7 +129,7 @@ const productsData = [
     quantity: 20,
     farmerName: "Musa Abdullahi",
     location: "Kano State",
-    image: okro,
+    image: "/images/okro.jpg",
   },
   {
     id: 13,
@@ -158,7 +140,7 @@ const productsData = [
     quantity: 20,
     farmerName: "Musa Abdullahi",
     location: "Kano State",
-    image: pepper,
+    image: "/images/pepper.jpg",
   },
   {
     id: 14,
@@ -169,7 +151,7 @@ const productsData = [
     quantity: 50,
     farmerName: "Emeka Okafor",
     location: "Benue State",
-    image: yam,
+    image: "/images/yam.jpg",
   },
   {
     id: 15,
@@ -180,7 +162,7 @@ const productsData = [
     quantity: 50,
     farmerName: "Emeka Okafor",
     location: "Benue State",
-    image: cassava,
+    image: "/images/cassava.jpg",
   },
   {
     id: 16,
@@ -191,7 +173,7 @@ const productsData = [
     quantity: 50,
     farmerName: "Emeka Okafor",
     location: "Benue State",
-    image: sweetPotato,
+    image: "/images/sweet-potato.jpg",
   },
   {
     id: 17,
@@ -202,7 +184,7 @@ const productsData = [
     quantity: 50,
     farmerName: "Emeka Okafor",
     location: "Benue State",
-    image: cocoyam,
+    image: "/images/cocoyam.jpg",
   },
 ];
 
