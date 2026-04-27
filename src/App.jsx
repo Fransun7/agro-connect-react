@@ -190,7 +190,11 @@ function App() {
           <div className="flex items-center bg-white/10 border border-white/20 rounded-full overflow-hidden mx-6 mb-4">
             <input
               type="text"
+              value={searchTerm}
               placeholder="Search products..."
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
               className="flex-1 bg-transparent border-none py-3 px-4 text-white text-sm placeholder-white/40 outline-none"
             />
             <button className="bg-green-500 rounded-full p-2 m-1 flex items-center justify-center">
