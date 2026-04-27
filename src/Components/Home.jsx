@@ -21,7 +21,7 @@ const slides = [
     headline: "From Nigerian Soil,",
     headlineSpan: "To Your Doorstep",
     subtext:
-      "We partner with local farmers to bring you the freshest tubers, grains and vegetables — harvested and delivered with care.",
+      "We partner with local farmers to bring you the freshest tubers, grains and vegetables harvested and delivered with care.",
     primaryBtn: { label: "Shop Now", link: "/products" },
     secondaryBtn: { label: "List Your Farm", link: "/signup" },
   },
@@ -52,7 +52,7 @@ function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, 4000);
+    }, 5500);
 
     return () => clearInterval(timer);
   }, []);

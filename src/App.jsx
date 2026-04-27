@@ -9,6 +9,7 @@ import image1 from "./assets/hero-section-image-1.jpg";
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
@@ -69,16 +70,27 @@ function App() {
             </button>
           </div>
 
-          {/* search input container hidden on mobile  */}
-          <div className="hidden h-[90%] md:flex items-center">
-            <div className="hidden h-[50%] w-full md:flex rounded-lg font-mono items-center">
-              <input
-                className="text-sm text-green-900 custom-input w-full h-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 focus:outline-green-800 hover:shadow-lg hover:border-green-800"
-                placeholder="Enter text here"
-                type="text"
-                id="unique-input"
-              />
-            </div>
+          {/* Search — hidden on mobile */}
+          <div className="hidden md:flex items-center bg-gray-100 border border-gray-200 focus-within:border-green-700 rounded-full overflow-hidden transition-all duration-200">
+            <button className="bg-[#2F6B3F] hover:bg-green-700 rounded-full p-2 m-1 flex items-center justify-center transition-colors duration-200">
+              <svg
+                className="w-4 h-4 stroke-white fill-none"
+                strokeWidth="2.5"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path strokeLinecap="round" d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              className="flex-1 bg-transparent border-none py-2 px-4 text-green-900 text-sm placeholder-gray-400 outline-none"
+            />
           </div>
 
           {/* menu links hidden on mobile */}
@@ -141,9 +153,8 @@ function App() {
         </nav>
 
         {/* side menu */}
-        {/* Side Menu */}
         <div
-          className={`fixed top-0 right-0 h-full w-64 bg-[#1A5C2A] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
+          className={`fixed top-0 right-0 h-full w-80 bg-[#1A5C2A] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -174,6 +185,24 @@ function App() {
 
           {/* Divider */}
           <div className="border-t border-white/20 mx-6 mb-6" />
+
+          {/* search input for mobile */}
+          <div className="flex items-center bg-white/10 border border-white/20 rounded-full overflow-hidden mx-6 mb-4">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="flex-1 bg-transparent border-none py-3 px-4 text-white text-sm placeholder-white/40 outline-none"
+            />
+            <button className="bg-green-500 rounded-full p-2 m-1 flex items-center justify-center">
+              <svg
+                className="w-4 h-4 stroke-white fill-none stroke-2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path strokeLinecap="round" d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
+          </div>
 
           {/* Nav Links */}
           <nav className="flex flex-col px-6 gap-2">
@@ -257,7 +286,10 @@ function App() {
         <div className="">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
+            <Route
+              path="/products"
+              element={<Products searchTerm={searchTerm} />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

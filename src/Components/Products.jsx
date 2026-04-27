@@ -15,12 +15,15 @@ const categories = [
   /* Filtering logic */
 }
 
-function Products() {
+function Products({ searchTerm }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const filteredProduct =
-    selectedCategory === "All"
-      ? productsData
-      : productsData.filter((product) => product.category === selectedCategory);
+  const filteredProduct = productsData
+    .filter((product) =>
+      selectedCategory === "All" ? true : product.category === selectedCategory,
+    )
+    .filter((product) =>
+      product.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()),
+    );
 
   return (
     <div className="bg-green-800 h-screen mt-20 md:mt-40">
