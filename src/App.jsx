@@ -19,14 +19,14 @@ function App() {
           {/* logo container + get-started-button */}
           <div id="logo-div" class="flex">
             {/* logo container */}
-            <div className="w-[40%] md:w-[80%]">
+            <div className="w-[30%] md:w-[80%]">
               {/* logo image */}
               <img className="" src={logo} alt="" />
             </div>
 
             {/* get started button for mobile hidden on desktop */}
-            <div className="flex w-[60%] md:hidden items-center">
-              <a href="" className="flex w-[70%] h-[90%] items-center">
+            <div className="flex w-[70%] md:hidden items-center">
+              <a href="" className="flex w-[60%] h-full items-center">
                 <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
                   <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
                     <button className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]">
