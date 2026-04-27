@@ -4,6 +4,7 @@ import "./App.css";
 import logo from "../src/assets/logo.png";
 import Home from "./Components/Home";
 import Products from "./Components/Products";
+import image1 from "./assets/hero-section-image-1.jpg";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -140,77 +141,119 @@ function App() {
         </nav>
 
         {/* side menu */}
+        {/* Side Menu */}
         <div
-          id="sideMenu"
-          className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg transform duration-300 ease-in-out ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed top-0 right-0 h-full w-64 bg-[#1A5C2A] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
-          {/* close button */}
+          {/* Close button */}
           <div className="flex justify-end p-4">
-            <button
-              id="close-button"
-              className="text-gray-700"
-              onClick={() => setMenuOpen(false)}
-            >
+            <button className="text-white" onClick={() => setMenuOpen(false)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-12 w-12"
+                className="h-8 w-8"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>
           </div>
 
-          <div className="flex justify-center">
-            <img className="w-50" src={logo} alt="" />
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img className="w-28" src={logo} alt="AgroConnect logo" />
           </div>
 
-          <nav className="flex flex-col px-6 gap-11 mt-4">
+          {/* Divider */}
+          <div className="border-t border-white/20 mx-6 mb-6" />
+
+          {/* Nav Links */}
+          <nav className="flex flex-col px-6 gap-2">
             <NavLink
-              to="./"
-              className="flex items-center gap-3 text-[#2F6B3F] text-xl font-medium hover:text-[#7FB77E]"
+              to="/"
               onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-white text-[#1A5C2A]"
+                    : "text-white hover:bg-white/10"
+                }`
+              }
             >
-              <i className="fa-solid fa-house"></i> Home
+              <i className="fa-solid fa-house w-5"></i> Home
             </NavLink>
 
             <NavLink
               to="/products"
-              className="flex items-center gap-3 text-[#2F6B3F] text-xl font-medium hover:text-[#7FB77E]"
               onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-white text-[#1A5C2A]"
+                    : "text-white hover:bg-white/10"
+                }`
+              }
             >
-              <i className="fa-solid fa-house"></i> Products
+              <i className="fa-solid fa-basket-shopping w-5"></i> Products
             </NavLink>
 
             <NavLink
               to="/dashboard"
-              className="flex items-center gap-3 text-[#2F6B3F] text-xl font-medium hover:text-[#7FB77E]"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-white text-[#1A5C2A]"
+                    : "text-white hover:bg-white/10"
+                }`
+              }
             >
-              <i className="fa-solid fa-house"></i> Dashboard
+              <i className="fa-solid fa-gauge w-5"></i> Dashboard
             </NavLink>
 
             <NavLink
-              to="./"
-              className="flex items-center gap-3 text-[#2F6B3F] text-xl font-medium hover:text-[#7FB77E]"
+              to="/login"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-white text-[#1A5C2A]"
+                    : "text-white hover:bg-white/10"
+                }`
+              }
             >
-              <i className="fa-solid fa-house"></i> Login
+              <i className="fa-solid fa-right-to-bracket w-5"></i> Login
             </NavLink>
 
             <NavLink
-              to="./"
-              className="flex items-center gap-3 text-[#2F6B3F] text-xl font-medium hover:text-[#7FB77E]"
+              to="/signup"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-white text-[#1A5C2A]"
+                    : "text-white hover:bg-white/10"
+                }`
+              }
             >
-              <i className="fa-solid fa-house"></i> Signup
+              <i className="fa-solid fa-user-plus w-5"></i> Sign Up
             </NavLink>
           </nav>
+
+          {/* Bottom tag */}
+          <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+            <p className="text-white/40 text-xs">© 2026 AgroConnect</p>
+          </div>
         </div>
+
         <div className="">
           <Routes>
             <Route path="/" element={<Home />} />
