@@ -5,6 +5,7 @@ import logo from "../src/assets/logo.png";
 import Home from "./Components/Home";
 import Products from "./Components/Products";
 import image1 from "./assets/hero-section-image-1.jpg";
+import Order from "./Components/Order";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -294,6 +295,7 @@ function App() {
               path="/products"
               element={<Products searchTerm={searchTerm} />}
             />
+            <Route path="/order/:id" element={<Order />} />
           </Routes>
         </div>
       </BrowserRouter>

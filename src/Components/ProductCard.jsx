@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import Order from "./Order";
+
 function ProductCard({ productData }) {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img
@@ -31,7 +36,10 @@ function ProductCard({ productData }) {
         </div>
 
         {/* Order button */}
-        <button className="mt-2 bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300">
+        <button
+          onClick={() => navigate(`/order/${productData.id}`)}
+          className="mt-2 bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300"
+        >
           Order Now
         </button>
       </div>
