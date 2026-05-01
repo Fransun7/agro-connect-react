@@ -283,7 +283,7 @@ function App() {
             </NavLink>
 
             <NavLink
-              to="/signup"
+              to="/register"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
