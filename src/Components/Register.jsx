@@ -43,8 +43,10 @@ function Register() {
             Nigerian farms.
           </h1>
           <p className="text-green-200 text-base leading-relaxed max-w-xs">
-            Join thousands of farmers and buyers building a better food system
-            together.
+            Whether you grow it or eat it, AgroConnect was built for you. Join a
+            growing community of Nigerian farmers and buyers who are cutting out
+            the middleman, getting fairer prices, and putting fresher food on
+            the table starting today.
           </p>
 
           {/* Stats */}
@@ -73,7 +75,7 @@ function Register() {
             leaving my farm."
           </p>
           <p className="text-white text-xs font-semibold mt-2">
-            — Emeka Okafor, Benue State
+            Emeka Okafor, Benue State
           </p>
         </div>
       </div>

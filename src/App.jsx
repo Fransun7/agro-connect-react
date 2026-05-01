@@ -8,6 +8,7 @@ import Products from "./Components/Products";
 import image1 from "./assets/hero-section-image-1.jpg";
 import Order from "./Components/Order";
 import Register from "./Components/Register";
+import Login from "./Components/Login";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -311,6 +312,7 @@ function App() {
             />
             <Route path="/order/:id" element={<Order />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
       </BrowserRouter>
