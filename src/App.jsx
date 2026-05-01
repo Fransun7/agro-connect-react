@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import logo from "../src/assets/logo.png";
 import Home from "./Components/Home";
 import Products from "./Components/Products";
 import image1 from "./assets/hero-section-image-1.jpg";
 import Order from "./Components/Order";
+import Register from "./Components/Register";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,10 +19,10 @@ function App() {
       <BrowserRouter>
         <nav
           id="navigation"
-          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_35%_37%_13%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md md:shadow-2xl md:h-35 pr-5 md:pr-0"
+          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_30%_42%_13%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md shadow-gray-400 md:h-35 pr-5 md:pr-0 rounded-b-xl md:rounded-b-2xl"
         >
           {/* logo container + get-started-button */}
-          <div id="logo-div" class="flex">
+          <div id="logo-div" className="flex">
             {/* logo container */}
             <div className="w-[30%] md:w-[80%]">
               {/* logo image */}
@@ -28,22 +30,27 @@ function App() {
             </div>
 
             {/* get started button for mobile hidden on desktop */}
-            <div className="flex w-[70%] md:hidden items-center">
-              <a href="" className="flex w-[60%] h-full items-center">
-                <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
-                  <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                    <button className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]">
-                      <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                        <div className="flex gap-2 items-center justify-center w-full h-full">
-                          <span className="font-semibold text-lg">
-                            Get Started
-                          </span>
+            <div className="flex md:hidden items-center">
+              <NavLink to="/register">
+                <a href="" className="flex h-full items-center">
+                  <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
+                    <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                      <button
+                        onClick={() => navigate("/register")}
+                        className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                      >
+                        <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                          <div className="flex gap-2 items-center justify-center w-full h-full">
+                            <span className="font-semibold text-lg">
+                              Get Started
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </NavLink>
             </div>
           </div>
 
@@ -95,7 +102,7 @@ function App() {
           </div>
 
           {/* menu links hidden on mobile */}
-          <div class="hidden md:flex md:items-center justify-center gap-10">
+          <div class="hidden md:flex md:items-center justify-center gap-8">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -104,7 +111,7 @@ function App() {
                 }`
               }
             >
-              Home
+              <i className="fa-solid fa-house w-5"></i> Home
             </NavLink>
             <NavLink
               to="/products"
@@ -114,7 +121,7 @@ function App() {
                 }`
               }
             >
-              Products
+              <i className="fa-solid fa-basket-shopping w-5"></i>Products
             </NavLink>
 
             <NavLink
@@ -125,7 +132,7 @@ function App() {
                 }`
               }
             >
-              Dashboard
+              <i className="fa-solid fa-gauge w-5"></i> Dashboard
             </NavLink>
             <NavLink
               to="/login"
@@ -135,20 +142,27 @@ function App() {
                 }`
               }
             >
-              Login
+              <i className="fa-solid fa-right-to-bracket w-5"></i> Login
             </NavLink>
           </div>
 
-          {/* right menu on mobile */}
+          {/* right menu on desktop */}
           <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
             <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-              <button className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]">
-                <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                  <div className="flex gap-2 items-center">
-                    <span className="font-semibold text-base">Get Started</span>
+              <NavLink to="/register">
+                <button
+                  onClick={() => navigate("/register")}
+                  className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                >
+                  <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                    <div className="flex gap-2 items-center">
+                      <span className="font-semibold text-base">
+                        Get Started
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </button>
+                </button>
+              </NavLink>
             </div>
           </div>
         </nav>
@@ -296,6 +310,7 @@ function App() {
               element={<Products searchTerm={searchTerm} />}
             />
             <Route path="/order/:id" element={<Order />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
       </BrowserRouter>
