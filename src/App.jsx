@@ -9,6 +9,11 @@ import image1 from "./assets/hero-section-image-1.jpg";
 import Order from "./Components/Order";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
+import Dashboard from "./Components/Dashboard";
+import Overview from "./Components/Overview";
+import Orders from "./Components/Orders";
+import Listings from "./Components/Listings";
+import Settings from "./Components/Settings";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,24 +38,22 @@ function App() {
             {/* get started button for mobile hidden on desktop */}
             <div className="flex md:hidden items-center">
               <NavLink to="/register">
-                <a href="" className="flex h-full items-center">
-                  <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
-                    <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                      <button
-                        onClick={() => navigate("/register")}
-                        className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
-                      >
-                        <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                          <div className="flex gap-2 items-center justify-center w-full h-full">
-                            <span className="font-semibold text-lg">
-                              Get Started
-                            </span>
-                          </div>
+                <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
+                  <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                    <button
+                      onClick={() => navigate("/register")}
+                      className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                    >
+                      <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                        <div className="flex gap-2 items-center justify-center w-full h-full">
+                          <span className="font-semibold text-lg">
+                            Get Started
+                          </span>
                         </div>
-                      </button>
-                    </div>
+                      </div>
+                    </button>
                   </div>
-                </a>
+                </div>
               </NavLink>
             </div>
           </div>
@@ -70,9 +73,9 @@ function App() {
                 stroke="green"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
@@ -103,7 +106,7 @@ function App() {
           </div>
 
           {/* menu links hidden on mobile */}
-          <div class="hidden md:flex md:items-center justify-center gap-8">
+          <div className="hidden md:flex md:items-center justify-center gap-8">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -136,7 +139,7 @@ function App() {
               <i className="fa-solid fa-gauge w-5"></i> Dashboard
             </NavLink>
             <NavLink
-              to="/login"
+              to="/dashboard"
               className={({ isActive }) =>
                 `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
                   isActive ? "border-b-2 border-[#2F6B3F]" : ""
@@ -313,6 +316,13 @@ function App() {
             <Route path="/order/:id" element={<Order />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<Overview />} />
+              <Route path="listings" element={<Listings />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>
