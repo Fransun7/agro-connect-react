@@ -23,7 +23,7 @@ const slides = [
     subtext:
       "We partner with local farmers to bring you the freshest tubers, grains and vegetables öharvested and delivered with care.",
     primaryBtn: { label: "Shop Now", link: "/products" },
-    secondaryBtn: { label: "List Your Farm", link: "/signup" },
+    secondaryBtn: { label: "List Your Farm", link: "/dashboard/" },
   },
 
   {

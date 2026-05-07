@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const dashboardLinks = [
   { label: "Overview", path: "/dashboard", icon: "fa-solid fa-chart-line" },
   {
-    label: "My Listings",
+    label: "Listings",
     path: "/dashboard/listings",
     icon: "fa-solid fa-list",
   },
@@ -66,7 +66,7 @@ function Dashboard() {
           </div>
         </div>
         {/* right panel */}
-        <div className="min-h-screen md:w-[70%] md:mt-40 ">
+        <div className="min-h-screen w-full md:w-[70%] md:mt-40 ">
           <Outlet />
         </div>
       </div>
