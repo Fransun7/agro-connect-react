@@ -9,10 +9,12 @@ import {
   farmerOrders,
   buyerOrders,
 } from "../data/dashboardData";
+import { useState } from "react";
 
 const Order = isFarmer ? farmerOrders : buyerOrders;
 
 function Overview() {
+  const [listings, setListings] = useState(initialListings);
   return (
     <div className="flex flex-col gap-4 p-6">
       <h2 className="text-xl font-bold text-[#1A5C2A]">Overview</h2>
@@ -37,7 +39,7 @@ function Overview() {
               <StatsCard
                 label="Total Listing"
                 bg="bg-[#1A5C2A]"
-                value={initialListings.length}
+                value={listings.length}
                 icon="🌾"
               />
 

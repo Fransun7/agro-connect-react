@@ -66,7 +66,7 @@ function Dashboard() {
           </div>
         </div>
         {/* right panel */}
-        <div className="min-h-screen w-full md:w-[70%] md:mt-40 ">
+        <div className="min-h-screen w-full  md:w-[70%] md:mt-40 ">
           <Outlet />
         </div>
       </div>
