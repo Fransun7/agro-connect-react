@@ -19,9 +19,11 @@ function Overview() {
     <div className="flex flex-col gap-4 p-6">
       <h2 className="text-xl font-bold text-[#1A5C2A]">Overview</h2>
       <div className="border-4 border-black/5 p-2">
-        <h3 className="text-[#1A5C2A] font-semibold">Farmer Dashboard</h3>
+        <h3 className="text-white font-semibold p-2 ml-2 bg-[#1A5C2A] flex w-40 justify-center rounded-full mt-4">
+          Farmer Dashboard
+        </h3>
         {/* image + text section */}
-        <div className="flex flex-col object-cover overflow-hidden items-center   p-2 relative">
+        <div className="flex flex-col object-cover overflow-hidden items-center   p-2 relative mt-8">
           <img className="rounded-lg" src={image3} alt="" />
           <div className="absolute top-10 md:top-20  text-white ">
             <h1 className="text-center text-xl  md:text-4xl font-bold mb-5">

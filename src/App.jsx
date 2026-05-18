@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 import logo from "../src/assets/logo.png";
+import farmer from "../src/assets/farmer.svg";
 import Home from "./Components/Home";
-import Products from "./Components/Products";
+import Products from "./Components/Farmers";
 import image1 from "./assets/hero-section-image-1.jpg";
 import Order from "./Components/Order";
 import Register from "./Components/Register";
@@ -14,6 +15,9 @@ import Overview from "./Components/Overview";
 import Orders from "./Components/Orders";
 import Listings from "./Components/Listings";
 import Settings from "./Components/Settings";
+import Farmers from "./Components/Farmers";
+import Produce from "./Components/Produce";
+import FarmerIcon from "./Components/FarmerIcon";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -118,14 +122,16 @@ function App() {
               <i className="fa-solid fa-house w-5"></i> Home
             </NavLink>
             <NavLink
-              to="/products"
+              to="/farmers"
               className={({ isActive }) =>
                 `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
                   isActive ? "border-b-2 border-[#2F6B3F]" : ""
                 }`
               }
             >
-              <i className="fa-solid fa-basket-shopping w-5"></i>Products
+              <span className="flex items-center gap-1">
+                <FarmerIcon className="w-6 h-5" /> Farmers
+              </span>
             </NavLink>
 
             <NavLink
@@ -244,7 +250,7 @@ function App() {
             </NavLink>
 
             <NavLink
-              to="/products"
+              to="/farmers"
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
@@ -254,7 +260,7 @@ function App() {
                 }`
               }
             >
-              <i className="fa-solid fa-basket-shopping w-5"></i> Products
+              <i className="fa-solid fa-tractor w-5"></i>Farmers
             </NavLink>
 
             <NavLink
@@ -310,8 +316,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
-              path="/products"
-              element={<Products searchTerm={searchTerm} />}
+              path="/farmers"
+              element={<Farmers searchTerm={searchTerm} />}
             />
             <Route path="/order/:id" element={<Order />} />
             <Route path="/register" element={<Register />} />
@@ -323,6 +329,7 @@ function App() {
               <Route path="orders" element={<Orders />} />
               <Route path="settings" element={<Settings />} />
             </Route>
+            <Route path="/produce/:id" element={<Produce />}></Route>
           </Routes>
         </div>
       </BrowserRouter>

@@ -5,7 +5,7 @@ function ProductCard({ productData }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="w-72.5 sm:w-[320px] shrink-0 snap-start bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img
         src={productData.image}
         alt={productData.name}

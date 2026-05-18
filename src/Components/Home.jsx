@@ -4,6 +4,8 @@ import image2 from "../assets/hero-section-image-2.jpg";
 import image3 from "../assets/hero-section-image-3.jpg";
 import image4 from "../assets/hero-section-image-4.jpg";
 import { useState, useEffect } from "react";
+import productsData from "../data/products";
+import ProductCard from "./ProductCard";
 
 // const images = [image1, image2, image3, image4];
 const slides = [
@@ -116,6 +118,19 @@ function Home() {
         </div>
       </section>
 
+      <section className="bg-white p-3">
+        <div className="flex justify-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-green-800 leading-tight mb-4 drop-shadow-lg">
+            Products
+          </h1>
+        </div>
+        <div className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth">
+          {productsData.map((product) => (
+            <ProductCard key={product.id} productData={product} />
+          ))}
+        </div>
+      </section>
+
       {/* Mission Section */}
       <section className="bg-[#1A5C2A] px-6 md:px-20 py-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -129,7 +144,7 @@ function Home() {
             <p className="text-gray-300 text-base md:text-lg leading-relaxed">
               AgroConnect is committed to closing the gap between Nigerian
               farmers and buyers. We make fresh produce accessible, affordable,
-              and traceable — starting from Ibadan, spreading across Nigeria.
+              and traceable, starting from Ibadan, spreading across Nigeria.
             </p>
 
             {/* Icons with labels */}
