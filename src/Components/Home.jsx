@@ -3,7 +3,7 @@ import image1 from "../assets/hero-section-image-1.jpg";
 import image2 from "../assets/hero-section-image-2.jpg";
 import image3 from "../assets/hero-section-image-3.jpg";
 import image4 from "../assets/hero-section-image-4.jpg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import productsData from "../data/products";
 import ProductCard from "./ProductCard";
 
@@ -59,6 +59,42 @@ function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  // using useRef to point to my scrollable div or container
+  const containerRef = useRef(null);
+
+  const [showScrollLeft, setShowScrollLeft] = useState(false);
+  const [showScrollRight, setShowScrollRight] = useState(true);
+  const checkArrrow = () => {
+    // a variable to hold the ref that points to the card cntainer
+    const container = containerRef.current;
+
+    setShowScrollLeft(container.scrollLeft > 10);
+    setShowScrollRight(
+      container.scrollLeft + container.clientWidth < container.scrollWidth - 1,
+    );
+    console.log("scrollLeft:", container.scrollLeft);
+    console.log("clientWidth:", container.clientWidth);
+    console.log("scrollWidth:", container.scrollWidth);
+    console.log(
+      "showRight should be:",
+      container.scrollLeft + container.clientWidth < container.scrollWidth - 1,
+    );
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    // requestAnimationFrame(() => checkArrrow());
+    // setTimeout(() => checkArrrow(), 300);
+    // container.addEventListener("scrollend", checkArrrow);
+    // const resizeObserver = new ResizeObserver(() => checkArrrow());
+    // resizeObserver.observe(container);
+
+    // return () => {
+    //   container.removeEventListener("scrollend", checkArrrow);
+    //   resizeObserver.disconnect();
+    // };
+  }, []);
+
   return (
     <>
       <section className="relative w-full h-screen overflow-hidden">
@@ -105,7 +141,7 @@ function Home() {
         </div>
 
         {/* Array dot */}
-        <div className="absolute bottom-25 md:bottom-10 left-0 right-0 flex justify-center gap-6 z-10">
+        <div className="absolute bottom-25 md:bottom-10 left-0  right-0 flex justify-center gap-6 z-10">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -118,16 +154,34 @@ function Home() {
         </div>
       </section>
 
+      {/* produce section */}
       <section className="bg-white p-3">
         <div className="flex justify-center">
           <h1 className="text-4xl md:text-6xl font-bold text-green-800 leading-tight mb-4 drop-shadow-lg">
             Products
           </h1>
         </div>
-        <div className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth">
-          {productsData.map((product) => (
-            <ProductCard key={product.id} productData={product} />
-          ))}
+        <div className="relative">
+          {showScrollLeft && (
+            <i
+              className="fa-solid fa-circle-arrow-left text-5xl absolute left-0 top-1/2 
+            "
+            ></i>
+          )}
+
+          <div
+            ref={containerRef}
+            onScroll={checkArrrow}
+            className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
+          >
+            {productsData.map((product) => (
+              <ProductCard key={product.id} productData={product} />
+            ))}
+          </div>
+
+          {showScrollRight && (
+            <i className="fa-solid fa-circle-arrow-right text-5xl absolute right-0 top-1/2"></i>
+          )}
         </div>
       </section>
 
