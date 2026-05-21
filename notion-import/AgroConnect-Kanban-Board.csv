@@ -1,0 +1,20 @@
+Backlog,In Progress,Done
+"Complete dashboard Orders page - Build the first useful orders screen using farmerOrders and buyerOrders from dashboardData.js. Show product, customer/farmer name, quantity, total, and status.",,"Created project audit - Reviewed current components, routes, dummy data, existing features, gaps, and likely next steps."
+"Add order status badges - Add visual badges for Pending, Confirmed, Delivered, and Cancelled orders.",,"Created progress tracker - Added PROGRESS_TRACKER.md to document shipped features, current status, next features, and X post angles."
+"Add farmer order actions - Allow farmers to confirm, deliver, or cancel orders in local state first.",,"Created Notion import package - Prepared Markdown and CSV files for importing the project tracker into Notion manually."
+"Fix desktop Login nav route - The desktop Login link currently points to /dashboard; update it to /login.",,
+"Create or redirect Products route - Several buttons point to /products, but there is no /products route yet. Either create the route or update the links.",,
+"Make farmer produce page URL-driven - Update /produce/:id so it filters data using the URL ID instead of depending only on router state.",,
+"Fix Produce page order navigation - Produce.jsx uses navigate for Order Now, but navigate is not imported or initialized.",,
+"Fix Produce back link - The page says Back to Farmers but links to /; update it to /farmers.",,
+"Calculate farmer total earnings - Replace placeholder earnings with the sum of delivered farmer orders.",,
+"Calculate buyer total spent - Replace placeholder buyer spending with the total from buyer orders.",,
+"Add search filtering - The app stores searchTerm and passes it to Farmers, but filtering is not active yet.",,
+"Improve farmer dummy data - Give farmers unique names, locations, farm names, and farmerId values.",,
+"Normalize farmer/listing relationships - Make sure farmers, products, and listings connect consistently through IDs.",,
+"Remove duplicate listing IDs - farmerListings has duplicate IDs. Clean them up to prevent routing and rendering issues.",,
+"Complete Settings page - Add profile, farm details, contact info, delivery/location preferences, and account settings.",,
+"Add auth form behavior - Login and register screens are UI-only. Add form state, validation, and basic simulated submission.",,
+"Persist listings locally - Use localStorage so added/deleted listings survive page reloads before backend integration.",,
+"Connect order form to dashboard orders - When a buyer places an order, add it to the dashboard orders list.",,
+"Clean encoding artifacts - Fix corrupted emoji/currency characters in UI text and source files.",,

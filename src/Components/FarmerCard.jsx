@@ -9,7 +9,8 @@ function FarmerCard({ farmersData, onViewProduce }) {
       {/* Card Body */}
       <div className="p-4 flex flex-col gap-8">
         <div className="flex justify-center">
-          <i className="fa-solid fa-circle-user text-[180px]"></i>
+          {/* <i className="fa-solid fa-circle-user text-[180px]"></i> */}
+          <img className="rounded-lgö" src={farmersData.image} alt="image" />
         </div>
 
         <div>
@@ -22,6 +23,7 @@ function FarmerCard({ farmersData, onViewProduce }) {
 
           <button
             onClick={() => onViewProduce(farmersData.id)}
+            onClick={() => navigate(`/order/${farmersData.id}`)}
             className="mt-2 w-full bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300"
           >
             View Farmer Produce

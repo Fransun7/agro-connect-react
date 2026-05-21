@@ -1,0 +1,10 @@
+Post Idea,Status,Feature Area,Content Type,Hook,Draft Notes
+Landing page milestone,Ready,Landing page,Build log,"Built the first AgroConnect landing experience.","Talk about rotating hero slides, Nigerian farmer/buyer positioning, product preview, mission section, and footer."
+Product cards milestone,Ready,Product catalog,Build log,"Today I added the first produce cards for AgroConnect.","Mention categories, prices, farmer names, location, quantity, and order button."
+Farmer directory milestone,Ready,Farmer directory,Build log,"AgroConnect now has a farmer browsing page.","Mention verified farmer direction, farmer cards, and view produce flow."
+Order flow milestone,Ready,Order flow,Build log,"The first order flow is now working as a frontend prototype.","Mention quantity, phone, address, note, estimate, validation, and success screen."
+Dashboard foundation milestone,Ready,Dashboard,Build log,"Started building the farmer dashboard for AgroConnect.","Mention overview, sidebar/mobile submenu, stats cards, and listings section."
+Listings management milestone,Ready,Listings,Build log,"Farmers can now add and delete listings in the dashboard prototype.","Mention local state, add product form, listing cards, and future persistence."
+Next up orders dashboard,Draft,Dashboard orders,Next step,"Next feature: an Orders page for farmers and buyers.","Mention why orders matter: tracking demand, status, and fulfillment."
+Dummy data lesson,Draft,Dummy data,Learning,"Dummy data is helping me discover the app structure before backend work.","Talk about products, farmers, listings, orders, and data relationships."
+Route cleanup lesson,Draft,Navigation,Learning,"Building routes early exposed where my product flow needs cleanup.","Mention /products, /signup, /register, /farmers, and direct page refresh."

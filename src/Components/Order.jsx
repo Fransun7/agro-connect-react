@@ -1,11 +1,13 @@
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import productsData from "../data/products";
+import { farmersData } from "../data/farmers";
 
 function Order() {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = productsData.find((p) => p.id === Number(id));
+  const farmer = farmersData.find((f) => f.id === product?.id);
   const [form, setForm] = useState({
     quantity: 1,
     address: "",
@@ -92,7 +94,7 @@ function Order() {
               ₦{product.price.toLocaleString()} / {product.unit}
             </p>
             <p className="text-gray-400 text-xs">
-              🧑‍🌾 {product.farmerName} — 📍 {product.location}
+              🧑‍🌾 {farmer.name} — 📍 {farmer.location}
             </p>
           </div>
         </div>

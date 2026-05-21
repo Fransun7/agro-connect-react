@@ -1,0 +1,8 @@
+Milestone,Status,Date,Area,Summary
+Created project audit,Done,2026-05-21,Planning,"Audited current AgroConnect components, routes, dummy data, feature status, and next steps."
+Created progress tracker,Done,2026-05-21,Planning,"Added PROGRESS_TRACKER.md to the repo for ongoing feature tracking."
+Created Notion import package,Done,2026-05-21,Planning,"Prepared Markdown and CSV files for importing AgroConnect workflow into Notion."
+Complete dashboard Orders page,Next,,Dashboard,"Build the first functional dashboard orders view from dummy data."
+Clean route issues,Next,,Navigation,"Fix incorrect or missing routes such as /products, /signup, and desktop login."
+Improve data relationships,Backlog,,Data,"Normalize farmer and listing data before backend integration."
+Add real auth behavior,Backlog,,Authentication,"Move login/register from UI-only screens to validated behavior."

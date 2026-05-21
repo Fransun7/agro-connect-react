@@ -67,7 +67,7 @@ function Produce() {
                   onClick={() => navigate(`/order/${item.id}`)}
                   className="mt-2 bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300"
                 >
-                  Order Now
+                  Order NowB
                 </button>
               </div>
             </div>
