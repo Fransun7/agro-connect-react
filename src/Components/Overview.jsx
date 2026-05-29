@@ -18,7 +18,7 @@ function Overview() {
   return (
     <div className="flex flex-col gap-4 p-6">
       <h2 className="text-xl font-bold text-[#1A5C2A]">Overview</h2>
-      <div className="border-4 border-black/5 p-2">
+      <div className="border-4 border-black/5 p-2 rounded-lg">
         <h3 className="text-white font-semibold p-2 ml-2 bg-[#1A5C2A] flex w-40 justify-center rounded-full mt-4">
           Farmer Dashboard
         </h3>
@@ -29,6 +29,7 @@ function Overview() {
             <h1 className="text-center text-xl  md:text-4xl font-bold mb-5">
               Welcome to your Dashboard
             </h1>
+            5
             <p className="text-center">
               Manage your listings and track incoming orders
             </p>
@@ -54,7 +55,7 @@ function Overview() {
 
               <StatsCard
                 label="Pending Orders"
-                bg="bg-blue-500"
+                bg="bg-cyan-600"
                 value={Order.filter((o) => o.status === "Pending").length}
                 icon="🌾"
               />

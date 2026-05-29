@@ -18,6 +18,7 @@ import Settings from "./Components/Settings";
 import Farmers from "./Components/Farmers";
 import Produce from "./Components/Produce";
 import FarmerIcon from "./Components/FarmerIcon";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -323,12 +324,20 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/dashboard" element={<Dashboard />}>
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Overview />} />
               <Route path="listings" element={<Listings />} />
               <Route path="orders" element={<Orders />} />
               <Route path="settings" element={<Settings />} />
             </Route>
+
             <Route path="/produce/:id" element={<Produce />}></Route>
           </Routes>
         </div>

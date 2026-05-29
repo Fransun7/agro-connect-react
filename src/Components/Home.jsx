@@ -6,6 +6,7 @@ import image4 from "../assets/hero-section-image-4.jpg";
 import { useState, useEffect, useRef } from "react";
 import productsData from "../data/products";
 import ProductCard from "./ProductCard";
+import { farmerListings } from "../data/listings";
 
 // const images = [image1, image2, image3, image4];
 const slides = [
@@ -174,8 +175,8 @@ function Home() {
             onScroll={checkArrrow}
             className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
           >
-            {productsData.map((product) => (
-              <ProductCard key={product.id} productData={product} />
+            {farmerListings.map((item) => (
+              <ProductCard key={item.id} produce={item} />
             ))}
           </div>
 
@@ -234,7 +235,7 @@ function Home() {
           <div className="flex justify-center">
             <div className="bg-[#f5f0e8] rounded-3xl p-4 shadow-2xl w-full max-w-sm">
               <video
-                src="https://res.cloudinary.com/dzerw6edh/video/upload/v1777237205/farm-video_ft3gmx.mp4"
+                src="https://res.cloudinary.com/dzerw6edh/video/upload/v1779789746/home-page-video_esbith.mp4"
                 autoPlay
                 loop
                 muted

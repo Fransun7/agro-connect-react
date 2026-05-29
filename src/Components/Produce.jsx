@@ -7,6 +7,7 @@ import { farmersData } from "../data/farmers";
 
 function Produce() {
   const location = useLocation();
+  const [user, login] = useAuth;
 
   // This is where we "unpack" the produce we sent from the previous page
   const produceItems = location.state?.produce || [];
