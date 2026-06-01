@@ -39,9 +39,9 @@ function Dashboard() {
       {/* Two column layout */}
       <div className="flex  md:grid-cols-2 bg-white min-h-screen gap-2">
         {/* left panel */}
-        <div className="bg-green-50 hidden md:flex min-h-screen w-[30%] sticky top-20 mt-35 p-3">
+        <div className=" fixed bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20 hidden md:flex min-h-screen w-[30%]  top-0 mt-35 p-3">
           <div className="border-r border-gray-100  w-full ">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest px-4 mb-3">
+            <p className="text-xs font-bold text-emerald-300 uppercase tracking-widest px-4 mb-3">
               Dashboard
             </p>
             <div className="flex flex-col gap-1">
@@ -66,7 +66,7 @@ function Dashboard() {
           </div>
         </div>
         {/* right panel */}
-        <div className="min-h-screen w-full  md:w-[70%] md:mt-40 ">
+        <div className="min-h-screen w-full md:w-[70%] md:ml-[30%] md:mt-40">
           <Outlet />
         </div>
       </div>

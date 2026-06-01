@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
 import logo from "../src/assets/logo.png";
 import farmer from "../src/assets/farmer.svg";
@@ -16,9 +16,10 @@ import Orders from "./Components/Orders";
 import Listings from "./Components/Listings";
 import Settings from "./Components/Settings";
 import Farmers from "./Components/Farmers";
-import Produce from "./Components/Produce";
+// import Produce from "./Components/Produce";
 import FarmerIcon from "./Components/FarmerIcon";
 import ProtectedRoute from "./Components/ProtectedRoute";
+// This invisible helper remembers our route and jumps back to it on reload
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,7 +47,7 @@ function App() {
                 <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
                   <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
                     <button
-                      onClick={() => navigate("/register")}
+                      // onClick={() => navigate("/register")}
                       className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
                     >
                       <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
@@ -146,7 +147,7 @@ function App() {
               <i className="fa-solid fa-gauge w-5"></i> Dashboard
             </NavLink>
             <NavLink
-              to="/dashboard"
+              to="/login"
               className={({ isActive }) =>
                 `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
                   isActive ? "border-b-2 border-[#2F6B3F]" : ""
@@ -162,7 +163,7 @@ function App() {
             <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
               <NavLink to="/register">
                 <button
-                  onClick={() => navigate("/register")}
+                  // onClick={() => navigate("/register")}
                   className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
                 >
                   <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
@@ -338,7 +339,7 @@ function App() {
               <Route path="settings" element={<Settings />} />
             </Route>
 
-            <Route path="/produce/:id" element={<Produce />}></Route>
+            {/* <Route path="/produce/:id" element={<Produce />}></Route> */}
           </Routes>
         </div>
       </BrowserRouter>

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function Login() {
   const [role, setRole] = useState("buyer");
@@ -91,7 +93,7 @@ function Login() {
         </div>
 
         {/* where the role toggles */}
-        <div className="flex bg-white border border-gray-200 rounded-xl p-1 mb-6">
+        {/* <div className="flex bg-white border border-gray-200 rounded-xl p-1 mb-6">
           <button
             onClick={() => setRole("buyer")}
             className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
@@ -113,7 +115,7 @@ function Login() {
           >
             🌾 I'm a Farmer
           </button>
-        </div>
+        </div> */}
 
         {/* form field */}
         <div className="flex flex-col gap-4">

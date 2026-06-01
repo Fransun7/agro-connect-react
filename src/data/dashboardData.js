@@ -55,8 +55,18 @@ export const farmerOrders = [
     total: 16000,
     status: "Delivered",
   },
+
   {
     id: 4,
+    product: "Garri",
+    name: "Seun Adeyemi",
+    quantity: 20,
+    unit: "kg",
+    total: 16000,
+    status: "Delivered",
+  },
+  {
+    id: 5,
     product: "Plantain",
     name: "Tunde Obi",
     quantity: 3,

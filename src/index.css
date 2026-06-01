@@ -6,3 +6,19 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+/* Main Hero & Dashboard Greetings */
+h1 {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+/* Section Titles, Card Headers, Subheadings */
+h2, h3 {
+  font-family: 'Sora', sans-serif !important;
+}
+
+/* Body Text, Labels, Metric Numbers, and Buttons */
+p, span, div, a, button, input, textarea, select {
+  font-family: 'Inter', sans-serif !important;
+}
