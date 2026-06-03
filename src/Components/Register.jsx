@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 function Register() {
+  const navigate = useNavigate();
   const [role, setRole] = useState("buyer");
   const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] =useState("");
+  const handleRegister = (e) => {
+    e.preventDefault()
+
+     const userData = {fullName, email, password, role};
+  localStorage.setItem("theRegisteredUser", JSON.stringify(userData))
+  alert("Registration Successful! Please Login.");
+    navigate("/login");
+  }
+ 
   // const [form, setForm] = useState({
   //   fullName: "",
   //   email: "",
@@ -128,7 +142,8 @@ function Register() {
         </div>
 
         {/* form field */}
-        <div className="flex flex-col gap-4">
+        <form onSubmit={handleRegister}>
+          <div className="flex flex-col gap-4">
           {/* Full name */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-semibold text-gray-700">
@@ -137,6 +152,8 @@ function Register() {
             <input
               type="text"
               placeholder="e.g. Chidi Okafor"
+              value = {fullName}
+              onChange={(e)=> setFullName(e.target.value)}
               className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none focus:border-[#2F6B3F] focus:ring-1 focus:ring-[#2F6B3F]/20 transition-all placeholder-gray-300"
             />
           </div>
@@ -148,6 +165,8 @@ function Register() {
             <input
               type="email"
               placeholder="you@example.com"
+              value={email}
+              onChange={(e)=> setEmail(e.target.value)}
               className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none focus:border-[#2F6B3F] focus:ring-1 focus:ring-[#2F6B3F]/20 transition-all placeholder-gray-300"
             />
           </div>
@@ -219,6 +238,8 @@ function Register() {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                value= {password} 
+                onChange={(e)=> setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
                 className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none focus:border-[#2F6B3F] focus:ring-1 focus:ring-[#2F6B3F]/20 transition-all placeholder-gray-300"
               />
@@ -254,7 +275,7 @@ function Register() {
           </div>
 
           {/* Submit */}
-          <button className="mt-2 bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold text-base py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg">
+          <button type="submit" className="mt-2 bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold text-base py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg">
             Create Account
           </button>
 
@@ -288,6 +309,8 @@ function Register() {
             Continue with Google
           </button>
         </div>
+        </form>
+        
       </div>
     </div>
   );

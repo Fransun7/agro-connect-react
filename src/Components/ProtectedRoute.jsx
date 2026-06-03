@@ -1,15 +1,18 @@
-import { Children } from "react";
+// import { Children } from "react";
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children }) {
-  // This effect listens to 'showPopup'. When it becomes true, it triggers a 3-second countdown.
+// getting the authorization from local storage
+  const isAuth = localStorage.getItem("isAuth");
 
-  const isLoggedIn = false;
+  if (isAuth !== "true") {
+    alert("You are not authorized to access the Dashboard, please Login")
+    return <Navigate to="/login" replace />
+  }
 
-  // if (!isLoggedIn) {
-  //   alert("You can't access dashboard right now, please login!");
-  //   return <Navigate to="/login" />;
-  // }
+  return children
+
+  
 
   return children;
 }

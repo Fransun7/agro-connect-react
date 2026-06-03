@@ -31,7 +31,7 @@ export const farmerOrders = [
   {
     id: 1,
     product: "Tomatoes",
-    name: "Chidi Nwosu",
+    buyer: "Chidi Nwosu",
     quantity: 5,
     unit: "basket",
     total: 7500,
@@ -40,7 +40,7 @@ export const farmerOrders = [
   {
     id: 2,
     product: "Yam",
-    name: "Amina Bello",
+    buyer: "Amina Bello",
     quantity: 10,
     unit: "tuber",
     total: 30000,
@@ -49,7 +49,7 @@ export const farmerOrders = [
   {
     id: 3,
     product: "Garri",
-    name: "Seun Adeyemi",
+    buyer: "Seun Adeyemi",
     quantity: 20,
     unit: "kg",
     total: 16000,
@@ -59,7 +59,7 @@ export const farmerOrders = [
   {
     id: 4,
     product: "Garri",
-    name: "Seun Adeyemi",
+    buyer: "Seun Adeyemi",
     quantity: 20,
     unit: "kg",
     total: 16000,
@@ -68,7 +68,7 @@ export const farmerOrders = [
   {
     id: 5,
     product: "Plantain",
-    name: "Tunde Obi",
+    buyer: "Tunde Obi",
     quantity: 3,
     unit: "bunch",
     total: 6000,
@@ -80,7 +80,7 @@ export const buyerOrders = [
   {
     id: 1,
     product: "Tomatoes",
-    name: "Musa Abdullahi",
+    buyer: "Musa Abdullahi",
     quantity: 2,
     unit: "basket",
     total: 3000,
@@ -89,7 +89,7 @@ export const buyerOrders = [
   {
     id: 2,
     product: "Garri",
-    name: "Taiwo Adeleke",
+    buyer: "Taiwo Adeleke",
     quantity: 5,
     unit: "kg",
     total: 4000,
@@ -98,7 +98,7 @@ export const buyerOrders = [
   {
     id: 3,
     product: "Yam",
-    name: "Emeka Okafor",
+    buyer: "Emeka Okafor",
     quantity: 4,
     unit: "tuber",
     total: 12000,

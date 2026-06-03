@@ -26,42 +26,94 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // const isAuth = localStorage.getItem("isAuth") === "true";
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === "true");
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setIsAuth(localStorage.getItem("isAuth") === "true");
+    }
+
+    window.addEventListener("authUpdate", handleAuthChange);
+
+    return () => window.removeEventListener("authUpdate", handleAuthChange);
+    
+  }, []);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("currentUserRole");
+    window.dispatchEvent(new Event("authUpdate"));
+    window.location.href = "/";
+  };
+
+  // 1. Get the user object
+  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
+
+  // 2. Logic to get initials (e.g., "Francis Omotayo" -> "FO")
+  const getInitials = (name) => {
+    if (!name) return "U"; // Fallback to "U" for User
+
+    const names = name.split(" "); // Splits "Francis Omotayo" into ["Francis", "Omotayo"]
+
+    if (names.length >= 2) {
+      // Takes "F" and "O"
+      return (names[0][0] + names[1][0]).toUpperCase();
+    }
+
+    // If they only entered one name, just take the first two letters or just the first
+    return names[0][0].toUpperCase();
+  };
+
+  const initials = getInitials(savedUser?.fullName);
+
   return (
     <>
       <BrowserRouter>
         <nav
           id="navigation"
-          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_30%_42%_13%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md shadow-gray-400 md:h-35 pr-5 md:pr-0 rounded-b-xl md:rounded-b-2xl"
+          className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_30%_50%_5%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md shadow-gray-400 md:h-35 pr-5 md:pr-0 rounded-b-xl md:rounded-b-2xl"
         >
           {/* logo container + get-started-button */}
-          <div id="logo-div" className="flex">
+          <div id="logo-div" className="flex items-center">
             {/* logo container */}
             <div className="w-[30%] md:w-[80%]">
               {/* logo image */}
               <img className="" src={logo} alt="" />
             </div>
 
-            {/* get started button for mobile hidden on desktop */}
-            <div className="flex md:hidden items-center">
-              <NavLink to="/register">
-                <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
-                  <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                    <button
-                      // onClick={() => navigate("/register")}
-                      className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
-                    >
-                      <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                        <div className="flex gap-2 items-center justify-center w-full h-full">
-                          <span className="font-semibold text-lg">
-                            Get Started
-                          </span>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
+            {isAuth ? (
+              <NavLink to="/dashboard" className="relative group md:hidden">
+                {/* The Initials Circle */}
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
+                  {initials}
                 </div>
+
+                {/* Optional: Small Green Dot to show they are "Active" */}
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
               </NavLink>
-            </div>
+            ) : (
+              <div className="flex md:hidden items-center">
+                <NavLink to="/register">
+                  <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
+                    <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                      <button
+                        // onClick={() => navigate("/register")}
+                        className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                      >
+                        <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                          <div className="flex gap-2 items-center justify-center w-full h-full">
+                            <span className="font-semibold text-lg">
+                              Get Started
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </NavLink>
+              </div>
+            )}
           </div>
 
           <div className="flex md:hidden justify-end">
@@ -112,31 +164,31 @@ function App() {
           </div>
 
           {/* menu links hidden on mobile */}
-          <div className="hidden md:flex md:items-center justify-center gap-8">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
-                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
-                }`
-              }
-            >
-              <i className="fa-solid fa-house w-5"></i> Home
-            </NavLink>
-            <NavLink
-              to="/farmers"
-              className={({ isActive }) =>
-                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
-                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
-                }`
-              }
-            >
-              <span className="flex items-center gap-1">
-                <FarmerIcon className="w-6 h-5" /> Farmers
-              </span>
-            </NavLink>
-
-            <NavLink
+          <div className="hidden md:flex md:items-center gap-1  col-span-2 justify-between w-full pr-5">
+            <div className="flex  items-center justify-center gap-8">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                    isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                  }`
+                }
+              >
+                <i className="fa-solid fa-house w-5"></i> Home
+              </NavLink>
+              <NavLink
+                to="/farmers"
+                className={({ isActive }) =>
+                  `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                    isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                  }`
+                }
+              >
+                <span className="flex items-center gap-1">
+                  <FarmerIcon className="w-6 h-5" /> Farmers
+                </span>
+              </NavLink>
+{isAuth && (<NavLink
               to="/dashboard"
               className={({ isActive }) =>
                 `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
@@ -145,8 +197,45 @@ function App() {
               }
             >
               <i className="fa-solid fa-gauge w-5"></i> Dashboard
-            </NavLink>
-            <NavLink
+            </NavLink>)}
+              
+              
+            </div>
+
+            <div className="flex grow"></div>
+
+            {/* right side of the menu */}
+            <div className="flex items-center gap-4">
+              {isAuth ? (
+                <>
+                <NavLink to="/dashboard" className="relative group">
+                {/* The Initials Circle */}
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
+                  {initials}
+                </div>
+
+                {/* Optional: Small Green Dot to show they are "Active" */}
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
+              </NavLink>
+
+              <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
+                <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                  <button
+                    onClick={handleLogOut}
+                    className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                  >
+                    <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                      <div className="flex gap-2 items-center">
+                        <span className="font-semibold text-base">Logout</span>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+                </>
+              ) : (
+                <>
+                 <NavLink
               to="/login"
               className={({ isActive }) =>
                 `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
@@ -156,26 +245,40 @@ function App() {
             >
               <i className="fa-solid fa-right-to-bracket w-5"></i> Login
             </NavLink>
-          </div>
 
-          {/* right menu on desktop */}
-          <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
-            <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-              <NavLink to="/register">
-                <button
-                  // onClick={() => navigate("/register")}
-                  className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
-                >
-                  <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                    <div className="flex gap-2 items-center">
-                      <span className="font-semibold text-base">
-                        Get Started
-                      </span>
+            
+            <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
+              <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                <NavLink to="/register">
+                  <button
+                    // onClick={() => navigate("/register")}
+                    className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                  >
+                    <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                      <div className="flex gap-2 items-center">
+                        <span className="font-semibold text-base">
+                          Get Started
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </button>
-              </NavLink>
+                  </button>
+                </NavLink>
+              </div>
             </div>
+                </>
+              )}
+              
+            
+              
+
+              
+ 
+            
+
+            
+            </div>
+
+            
           </div>
         </nav>
 
@@ -264,48 +367,60 @@ function App() {
             >
               <i className="fa-solid fa-tractor w-5"></i>Farmers
             </NavLink>
+            {isAuth ? (
+              <>
+                <NavLink
+                  to="/dashboard"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-white text-[#1A5C2A]"
+                        : "text-white hover:bg-white/10"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-gauge w-5"></i> Dashboard
+                </NavLink>
 
-            <NavLink
-              to="/dashboard"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? "bg-white text-[#1A5C2A]"
-                    : "text-white hover:bg-white/10"
-                }`
-              }
-            >
-              <i className="fa-solid fa-gauge w-5"></i> Dashboard
-            </NavLink>
+                <button
+                  onClick={handleLogOut}
+                  className="text-white hover:bg-white/10 p-3 rounded-lg text-left"
+                >
+                  <i className="fa-solid fa-right-from-bracket w-5"></i> Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-white text-[#1A5C2A]"
+                        : "text-white hover:bg-white/10"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-right-to-bracket w-5"></i> Login
+                </NavLink>
 
-            <NavLink
-              to="/login"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? "bg-white text-[#1A5C2A]"
-                    : "text-white hover:bg-white/10"
-                }`
-              }
-            >
-              <i className="fa-solid fa-right-to-bracket w-5"></i> Login
-            </NavLink>
-
-            <NavLink
-              to="/register"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? "bg-white text-[#1A5C2A]"
-                    : "text-white hover:bg-white/10"
-                }`
-              }
-            >
-              <i className="fa-solid fa-user-plus w-5"></i> Sign Up
-            </NavLink>
+                <NavLink
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-white text-[#1A5C2A]"
+                        : "text-white hover:bg-white/10"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-user-plus w-5"></i> Sign Up
+                </NavLink>
+              </>
+            )}
           </nav>
 
           {/* Bottom tag */}

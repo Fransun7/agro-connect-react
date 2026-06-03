@@ -1,12 +1,29 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function Login() {
   const [role, setRole] = useState("buyer");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const handleLogin = (e) => {
+    e.preventDefault();
 
+    const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
+  if (savedUser && savedUser.email === email && savedUser.password === password) {
+    localStorage.setItem("isAuth", true);
+    localStorage.setItem("currentUserRole", savedUser.role  );
+    window.dispatchEvent(new Event("authUpdate"));
+    navigate("/dashboard");
+  } else {
+    alert("inavalid credentials")
+  }
+
+  }
+  
   return (
     <div className="min-h-screen flex">
       {/* Left Panel */}
@@ -118,7 +135,8 @@ function Login() {
         </div> */}
 
         {/* form field */}
-        <div className="flex flex-col gap-4">
+        <form onSubmit={handleLogin}>
+          <div className="flex flex-col gap-4">
           {/* Full name */}
 
           <div className="flex flex-col gap-1">
@@ -127,6 +145,8 @@ function Login() {
             </label>
             <input
               type="email"
+              value={email}
+              onChange={(e)=> setEmail(e.target.value)}
               placeholder="you@example.com"
               className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none focus:border-[#2F6B3F] focus:ring-1 focus:ring-[#2F6B3F]/20 transition-all placeholder-gray-300"
             />
@@ -139,6 +159,8 @@ function Login() {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
                 className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 outline-none focus:border-[#2F6B3F] focus:ring-1 focus:ring-[#2F6B3F]/20 transition-all placeholder-gray-300"
               />
@@ -187,6 +209,8 @@ function Login() {
             Continue with Google
           </button>
         </div>
+        </form>
+        
       </div>
     </div>
   );

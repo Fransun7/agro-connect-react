@@ -4,16 +4,20 @@ import Listings from "./Listings";
 import Settings from "./Settings";
 import {
   currentRole,
-  isFarmer,
   initialListings,
   farmerOrders,
   buyerOrders,
 } from "../data/dashboardData";
 import { useState } from "react";
 
-const Order = isFarmer ? farmerOrders : buyerOrders;
+
 
 function Overview() {
+ 
+ const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"))
+  const isFarmer = savedUser?.role === "Farmer"
+const Order = isFarmer ? farmerOrders : buyerOrders;
+  const userName = savedUser ? savedUser.fullName : "USER"
   const [listings, setListings] = useState(initialListings);
   const totalEarnings = Order.filter((o) => o.status === "Delivered").reduce((sum, o) => sum + o.total, 0)
 
@@ -56,7 +60,7 @@ function Overview() {
       
       {/* Title (Uses Outfit Font automatically!) */}
       <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2 text-white">
-        Welcome back, Tunde!
+        Welcome back, {userName}
       </h1>
       
       {/* Sub-details row with location and farm */}
@@ -259,7 +263,89 @@ function Overview() {
 
 </div>
 
-       
+       {/* ROW 4 */}
+       {/* <div className="bg-white border border-slate-100/80 rounded-3xl p-6 shadow-sm grid grid-row md:grid-cols gap-4">
+      
+       </div> */}
+       {/* --- RECENT ORDERS SECTION --- */}
+<div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+  {/* Header Area */}
+  <div className="px-6 py-5 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
+    <h3 className="font-bold text-slate-800">Recent Orders</h3>
+    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+      {Order.length} Total Transactions
+    </span>
+  </div>
+
+  {/* Table Header (Visible only on Desktop) */}
+  <div className="hidden md:grid grid-cols-6 bg-slate-50/50 border-b border-slate-100 px-6 py-3">
+    <span className="text-[10px] font-bold text-slate-400 uppercase">Customer</span>
+    <span className="text-[10px] font-bold text-slate-400 uppercase">Product</span>
+    <span className="text-[10px] font-bold text-slate-400 uppercase">Qty</span>
+    <span className="text-[10px] font-bold text-slate-400 uppercase">Total</span>
+    <span className="text-[10px] font-bold text-slate-400 uppercase">Status</span>
+    <span className="text-[10px] font-bold text-slate-400 uppercase text-right">Date</span>
+  </div>
+
+  {/* Order Rows */}
+  <div className="divide-y divide-slate-50">
+    {Order.map((item, index) => (
+      <div 
+        key={index} 
+        className="grid grid-cols-1 md:grid-cols-6 px-6 py-4 items-center hover:bg-slate-50/30 transition-colors gap-y-2 md:gap-y-0"
+      >
+        {/* Customer Column */}
+        <div className="flex justify-between md:block">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Customer</span>
+          <span className="text-sm font-semibold text-slate-700">
+            {isFarmer ? item.buyer : "My Order"}
+          </span>
+        </div>
+
+        {/* Product Column */}
+        <div className="flex justify-between md:block">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Product</span>
+          <span className="text-sm text-slate-600">{item.product}</span>
+        </div>
+
+        {/* Quantity Column */}
+        <div className="flex justify-between md:block">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Quantity</span>
+          <span className="text-sm text-slate-600 font-medium">{item.quantity} units</span>
+        </div>
+
+        {/* Total Column */}
+        <div className="flex justify-between md:block">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Total</span>
+          <span className="text-sm font-bold text-emerald-700">
+            ₦{item.total.toLocaleString()}
+          </span>
+        </div>
+
+        {/* Status Column */}
+        <div className="flex justify-between md:block">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Status</span>
+          <span className={`px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter ${
+            item.status === 'Delivered' ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100' : 
+            item.status === 'Pending' ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-100' : 
+            item.status === 'Confirmed' ? 'bg-blue-50 text-blue-600 ring-1 ring-rose-100' : 'bg-rose-50 text-rose-600 ring-1 ring-rose-100'
+          }`}>
+            {item.status}
+          </span>
+        </div>
+
+        {/* Date Column */}
+        <div className="flex justify-between md:block md:text-right">
+          <span className="md:hidden text-[10px] font-bold text-slate-400 uppercase">Date</span>
+          <span className="text-[11px] font-medium text-slate-400 uppercase">
+            {item.date || "Today"}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+ 
       </div>
     </div>
   );
