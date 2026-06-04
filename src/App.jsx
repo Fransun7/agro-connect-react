@@ -24,6 +24,8 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [logoutConfirm, setLogConfirm] = useState(false);
+  // const [logoutStatus, setLogoutStatus] = useState(false);
 
   // const isAuth = localStorage.getItem("isAuth") === "true";
   const [isAuth, setIsAuth] = useState(
@@ -40,11 +42,20 @@ function App() {
     return () => window.removeEventListener("authUpdate", handleAuthChange);
   }, []);
 
-  const handleLogOut = () => {
+  const triggerLogoutPopup = () => {
+    setLogConfirm(true);
+  };
+
+  const confirmLogOut = () => {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("currentUserRole");
     window.dispatchEvent(new Event("authUpdate"));
+    setLogConfirm(false);
     window.location.href = "/";
+  };
+
+  const cancelLogout = () => {
+    setLogConfirm(false);
   };
 
   // 1. Get the user object
@@ -70,6 +81,42 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        {logoutConfirm && (
+          <div className="mt-10 fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center animate-in fade-in zoom-in duration-300 border border-gray-100">
+              {/* Warning Icon */}
+              <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i className="fa-solid fa-right-from-bracket text-3xl text-red-600"></i>
+              </div>
+
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                Logging Out?
+              </h2>
+              <p className="text-gray-500 mb-8 leading-relaxed">
+                Are you sure you want to log out? You will need to sign in again
+                to access your dashboard.
+              </p>
+
+              {/* Button Container - Flex for side-by-side */}
+              <div className="flex gap-3">
+                <button
+                  onClick={cancelLogout}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3.5 rounded-2xl transition-all active:scale-95"
+                >
+                  No, Stay
+                </button>
+
+                <button
+                  onClick={confirmLogOut}
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-2xl transition-all shadow-md shadow-red-200 active:scale-95"
+                >
+                  Yes, Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <nav
           id="navigation"
           className="bg-green-50 grid grid-cols-[80%_20%] md:grid-cols-[15%_30%_50%_5%] text-white fixed top-0 left-0  md:pt-5 md:pl-5 gap-2 w-full items-center z-50 shadow-md shadow-gray-400 md:h-35 pr-5 md:pr-0 rounded-b-xl md:rounded-b-2xl"
@@ -221,7 +268,7 @@ function App() {
                   <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
                     <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
                       <button
-                        onClick={handleLogOut}
+                        onClick={triggerLogoutPopup}
                         className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
                       >
                         <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
@@ -374,7 +421,10 @@ function App() {
                 </NavLink>
 
                 <button
-                  onClick={handleLogOut}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    triggerLogoutPopup();
+                  }}
                   className="text-white hover:bg-white/10 p-3 rounded-lg text-left"
                 >
                   <i className="fa-solid fa-right-from-bracket w-5"></i> Logout
