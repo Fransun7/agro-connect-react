@@ -18,7 +18,6 @@ import Settings from "./Components/Settings";
 import Farmers from "./Components/Farmers";
 // import Produce from "./Components/Produce";
 import FarmerIcon from "./Components/FarmerIcon";
-import ProtectedRoute from "./Components/ProtectedRoute";
 // This invisible helper remembers our route and jumps back to it on reload
 
 function App() {
@@ -27,17 +26,18 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // const isAuth = localStorage.getItem("isAuth") === "true";
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth") === "true");
+  const [isAuth, setIsAuth] = useState(
+    localStorage.getItem("isAuth") === "true",
+  );
 
   useEffect(() => {
     const handleAuthChange = () => {
       setIsAuth(localStorage.getItem("isAuth") === "true");
-    }
+    };
 
     window.addEventListener("authUpdate", handleAuthChange);
 
     return () => window.removeEventListener("authUpdate", handleAuthChange);
-    
   }, []);
 
   const handleLogOut = () => {
@@ -188,18 +188,18 @@ function App() {
                   <FarmerIcon className="w-6 h-5" /> Farmers
                 </span>
               </NavLink>
-{isAuth && (<NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
-                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
-                }`
-              }
-            >
-              <i className="fa-solid fa-gauge w-5"></i> Dashboard
-            </NavLink>)}
-              
-              
+              {isAuth && (
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                      isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-gauge w-5"></i> Dashboard
+                </NavLink>
+              )}
             </div>
 
             <div className="flex grow"></div>
@@ -208,77 +208,67 @@ function App() {
             <div className="flex items-center gap-4">
               {isAuth ? (
                 <>
-                <NavLink to="/dashboard" className="relative group">
-                {/* The Initials Circle */}
-                <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
-                  {initials}
-                </div>
-
-                {/* Optional: Small Green Dot to show they are "Active" */}
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
-              </NavLink>
-
-              <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
-                <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                  <button
-                    onClick={handleLogOut}
-                    className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
-                  >
-                    <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                      <div className="flex gap-2 items-center">
-                        <span className="font-semibold text-base">Logout</span>
-                      </div>
+                  <NavLink to="/dashboard" className="relative group">
+                    {/* The Initials Circle */}
+                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
+                      {initials}
                     </div>
-                  </button>
-                </div>
-              </div>
+
+                    {/* Optional: Small Green Dot to show they are "Active" */}
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
+                  </NavLink>
+
+                  <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
+                    <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                      <button
+                        onClick={handleLogOut}
+                        className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                      >
+                        <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                          <div className="flex gap-2 items-center">
+                            <span className="font-semibold text-base">
+                              Logout
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
                 </>
               ) : (
                 <>
-                 <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
-                  isActive ? "border-b-2 border-[#2F6B3F]" : ""
-                }`
-              }
-            >
-              <i className="fa-solid fa-right-to-bracket w-5"></i> Login
-            </NavLink>
-
-            
-            <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
-              <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                <NavLink to="/register">
-                  <button
-                    // onClick={() => navigate("/register")}
-                    className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      `text-[#2F6B3F] font-bold text-lg hover:text-green-600 ${
+                        isActive ? "border-b-2 border-[#2F6B3F]" : ""
+                      }`
+                    }
                   >
-                    <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                      <div className="flex gap-2 items-center">
-                        <span className="font-semibold text-base">
-                          Get Started
-                        </span>
-                      </div>
+                    <i className="fa-solid fa-right-to-bracket w-5"></i> Login
+                  </NavLink>
+
+                  <div className="hidden md:flex items-center gap-12 h-full text-[#2F6B3F] pl-5">
+                    <div className="bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+                      <NavLink to="/register">
+                        <button
+                          // onClick={() => navigate("/register")}
+                          className="group p-px rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+                        >
+                          <div className="bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+                            <div className="flex gap-2 items-center">
+                              <span className="font-semibold text-base">
+                                Get Started
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </NavLink>
                     </div>
-                  </button>
-                </NavLink>
-              </div>
-            </div>
+                  </div>
                 </>
               )}
-              
-            
-              
-
-              
- 
-            
-
-            
             </div>
-
-            
           </div>
         </nav>
 
@@ -440,14 +430,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
 
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            >
+            <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<Overview />} />
               <Route path="listings" element={<Listings />} />
               <Route path="orders" element={<Orders />} />
