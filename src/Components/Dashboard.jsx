@@ -13,11 +13,23 @@ const dashboardLinks = [
 ];
 
 function Dashboard() {
+  // getting the registerUser from local storage and setting the role
+  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
+  const isFarmer = savedUser?.role === "Farmer";
+
+  // filtering the link to get Listing and make it appear only with the role of farmer
+  const filteredLink = dashboardLinks.filter((link) => {
+    if (link.label === "Listings") {
+      return isFarmer;
+    }
+    return true;
+  });
+
   return (
     <div>
-      {/* Mobile submenu */}
+      {/* Mobile sidemenu */}
       <div className="flex mt-20 md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 bg-white border-b border-gray-100">
-        {dashboardLinks.map((link) => (
+        {filteredLink.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
@@ -39,13 +51,13 @@ function Dashboard() {
       {/* Two column layout */}
       <div className="flex  md:grid-cols-2 bg-white min-h-screen gap-2">
         {/* left panel */}
-        <div className=" fixed bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20 hidden md:flex min-h-screen w-[30%]  top-0 mt-35 p-3">
+        <div className=" fixed bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20 hidden md:flex min-h-screen w-[30%]  top-0 mt-35 ">
           <div className="border-r border-gray-100  w-full ">
             <p className="text-xs font-bold text-emerald-300 uppercase tracking-widest px-4 mb-3">
               Dashboard
             </p>
             <div className="flex flex-col gap-1">
-              {dashboardLinks.map((link) => (
+              {filteredLink.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}

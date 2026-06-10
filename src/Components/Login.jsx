@@ -14,14 +14,15 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-    if (
-      savedUser &&
-      savedUser.email === email &&
-      savedUser.password === password
-    ) {
+    const currentUsersTable = JSON.parse(localStorage.getItem("allUsers"));
+
+    const matchedUser = currentUsersTable.find(
+      (user) => user.email === email && user.password === password,
+    );
+    if (matchedUser) {
       localStorage.setItem("isAuth", true);
-      localStorage.setItem("currentUserRole", savedUser.role);
+      localStorage.setItem("currentUserRole", matchedUser.role);
+      localStorage.setItem("theRegisteredUser", JSON.stringify(matchedUser));
       window.dispatchEvent(new Event("authUpdate"));
       setShowSuccessCard(true);
       setTimeout(() => {

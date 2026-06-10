@@ -20,7 +20,7 @@ function Register() {
     password: "",
     farmLocation: "",
     farmName: "",
-    role: "Farmer",
+    role: "",
   });
 
   const handleChange = (e) => {
@@ -30,19 +30,45 @@ function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    // creating for newUser and give it a unique ID
+    const newUser = {
+      ...formData,
+      role: role === "farmer" ? "Farmer" : "Buyer",
+      id: Date.now(),
+    };
+
+    // getting all current users and putting them in a table
+    const currentUsersTable =
+      JSON.parse(localStorage.getItem("allUsers")) || [];
+
+    // checking if a user email exist before
+    const emailExist = currentUsersTable.some(
+      (user) => user.email === formData.email,
+    );
+    if (emailExist) {
+      alert(
+        "An account fot this email already exist, please choose another email!",
+      );
+      return;
+    }
+
+    // appending the newUser into the currentUsersTable
+    const updatedUsersTable = [...currentUsersTable, newUser];
+
+    // putting the users back to allUsers
+    localStorage.setItem("allUsers", JSON.stringify(updatedUsersTable));
+
+    // assinging newUsers  to the registered user
+    localStorage.setItem("theRegisteredUser", JSON.stringify(newUser));
 
     const userData = formData;
-    // {  name,
-    //   email,
-    //   password,
-    //   farmLocation,
-    //   farmName,
-    //   role,
-    // };
     localStorage.setItem("theRegisteredUser", JSON.stringify(userData));
-    // alert("Registration Successful! Please Login.");
+
     setShowSuccessCard(true);
-    // navigate("/login");
+    setTimeout(() => {
+      setShowSuccessCard(false);
+      navigate("/login");
+    }, 2000);
   };
 
   return (

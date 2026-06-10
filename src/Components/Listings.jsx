@@ -9,8 +9,20 @@ import {
 } from "../data/dashboardData";
 
 function Listings() {
+  // getting the user details
+  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
+  const isFarmer = savedUser?.role === "Farmer";
+  const userEmail = savedUser?.email;
+
   const [showForm, setShowForm] = useState(false);
-  const [listings, setListings] = useState(initialListings);
+
+  // reading listings from local storage
+  const [listings, setListings] = useState(() => {
+    const globalProducts =
+      JSON.parse(localStorage.getItem("allProducts")) || initialListings;
+    return globalProducts.filter((item) => item.farmerEmail === userEmail);
+  });
+
   const [newProduct, setNewProduct] = useState({
     name: "",
     category: "",
@@ -28,10 +40,22 @@ function Listings() {
     }
     const newItem = {
       ...newProduct,
-      id: listings.length + 1,
+      // id: listings.length + 1,
+      // price: Number(newProduct.price),
+      // quantity: Number(newProduct.quantity),
+      id: Date.now(), // Unique identifier timestamp
       price: Number(newProduct.price),
       quantity: Number(newProduct.quantity),
+      farmerEmail: userEmail, // Link to this specific account
+      farmerName: savedUser?.fullName || "Anonymous Farmer",
+      location: savedUser?.farmLocation || "Unknown Location",
     };
+
+    const globalProducts =
+      JSON.parse(localStorage.getItem("allProducts")) || initialListings;
+    const updatedGlobal = [...globalProducts, newItem];
+    localStorage.setItem("allProducts", JSON.stringify(updatedGlobal));
+
     setListings([...listings, newItem]);
     setNewProduct({
       name: "",
@@ -45,6 +69,11 @@ function Listings() {
 
   function handleDelete(id) {
     setListings(listings.filter((item) => item.id !== id));
+
+    const globalProducts =
+      JSON.parse(localStorage.getItem("allProducts")) || [];
+    const updatedGlobal = globalProducts.filter((item) => item.id !== id);
+    localStorage.setItem("allProducts", JSON.stringify(updatedGlobal));
   }
   return (
     <div className="p-6">

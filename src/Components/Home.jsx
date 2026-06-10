@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import productsData from "../data/products";
 import ProductCard from "./ProductCard";
 import { farmerListings } from "../data/listings";
+import { initialListings } from "../data/dashboardData";
 
 // const images = [image1, image2, image3, image4];
 const slides = [
@@ -51,6 +52,8 @@ const slides = [
 ];
 
 function Home() {
+  const globalProducts =
+    JSON.parse(localStorage.getItem("allProducts")) || farmerListings;
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const timer = setInterval(() => {
@@ -175,7 +178,7 @@ function Home() {
             onScroll={checkArrrow}
             className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
           >
-            {farmerListings.map((item) => (
+            {globalProducts.map((item) => (
               <ProductCard key={item.id} produce={item} />
             ))}
           </div>

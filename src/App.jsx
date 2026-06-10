@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
@@ -16,6 +22,11 @@ import Orders from "./Components/Orders";
 import Listings from "./Components/Listings";
 import Settings from "./Components/Settings";
 import Farmers from "./Components/Farmers";
+import {
+  buyerOrders,
+  farmerOrders,
+  initialListings,
+} from "./data/dashboardData";
 // import Produce from "./Components/Produce";
 import FarmerIcon from "./Components/FarmerIcon";
 // This invisible helper remembers our route and jumps back to it on reload
@@ -40,6 +51,21 @@ function App() {
     window.addEventListener("authUpdate", handleAuthChange);
 
     return () => window.removeEventListener("authUpdate", handleAuthChange);
+  }, []);
+
+  useEffect(() => {
+    // checks if there are items for allFarmerProducts in localstarage and put initial listing in the local staorage if not
+    if (!localStorage.getItem("allFarmerProducts")) {
+      localStorage.setItem(
+        "allFarmerProducts",
+        JSON.stringify(initialListings),
+      );
+
+      // check for items for allOrders in local Storage, if empty set farmerOrders to the localStorage
+      if (!localStorage.getItem("allOrders")) {
+        localStorage.setItem("allOrders", JSON.stringify(farmerOrders));
+      }
+    }
   }, []);
 
   const triggerLogoutPopup = () => {
@@ -482,7 +508,18 @@ function App() {
 
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<Overview />} />
-              <Route path="listings" element={<Listings />} />
+              <Route
+                path="listings"
+                element={
+                  JSON.parse(localStorage.getItem("theRegisteredUser"))
+                    ?.role === "Farmer" ? (
+                    <Listings />
+                  ) : (
+                    <Navigate to="/dashboard" replace />
+                  )
+                }
+              />
+
               <Route path="orders" element={<Orders />} />
               <Route path="settings" element={<Settings />} />
             </Route>

@@ -11,26 +11,47 @@ import {
 import { useState } from "react";
 
 function Overview() {
+  // getting the current user profile details
   const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
   const isFarmer = savedUser?.role === "Farmer";
-  const Order = isFarmer ? farmerOrders : buyerOrders;
+  const userEmail = savedUser?.email;
   const userName = savedUser ? savedUser.fullName : "USER";
   const farmLocation = savedUser ? savedUser.farmLocation : "UNDEFINED";
   const farmName = savedUser ? savedUser.farmName : "UNDEFINED";
-  const [listings, setListings] = useState(initialListings);
-  const totalEarnings = Order.filter((o) => o.status === "Delivered").reduce(
-    (sum, o) => sum + o.total,
-    0,
+
+  // getting allOrders in local storage and filtering them, along with respective roles
+  const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];
+  const globalProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
+
+  // filterring the orders
+  const myOrders = isFarmer
+    ? globalOrders.filter((order) => order.farmerEmail === userEmail)
+    : globalOrders.filter((order) => order.buyerEmail === userEmail);
+
+  // filtering globalProduct
+  const myProducts = globalProducts.filter(
+    (item) => item.farmerEmail === userEmail,
   );
 
+  // const Order = isFarmer ? farmerOrders : buyerOrder
+
+  // const [listings, setListings] = useState(initialListings);
+
+  const totalEarnings = myOrders
+    .filter((o) => o.status === "Delivered")
+    .reduce((sum, o) => sum + o.total, 0);
+
   // creating an object that takes the produce sales of the farmer and saving it into a variable
-  const produceSales = Order.reduce((acc, o) => {
+  const produceSales = myOrders.reduce((acc, o) => {
     if (o.status !== "Cancelled") {
       acc[o.product] = (acc[o.product] || 0) + o.total;
     }
     return acc;
   }, {});
   console.log("produceSales result:", produceSales);
+
+  // getting last 4 orders
+  const recentOrders = myOrders.slice(-4).reverse();
 
   // summing up the value of the produceSales object to get the total revenue
   const totalSalesRevenue = Object.values(produceSales).reduce(
@@ -74,7 +95,9 @@ function Overview() {
               {/* Dynamic Status message */}
               <p className="text-sm md:text-base text-emerald-100/90 max-w-xl leading-relaxed">
                 Your digital shop is online and active. You have{" "}
-                <strong className="text-emerald-300 font-bold">3 crops</strong>{" "}
+                <strong className="text-emerald-300 font-bold">
+                  {myProducts.length}
+                </strong>{" "}
                 listed for sale and{" "}
                 <strong className="text-yellow-400 font-bold">
                   1 pending order
@@ -114,21 +137,21 @@ function Overview() {
             <>
               <StatsCard
                 label="Active Listings"
-                value={listings.length}
+                value={myProducts.length}
                 icon="🌾"
                 iconColor="bg-emerald-50 text-emerald-600 border border-emerald-100/50"
               />
               {/* Card 2: Total Orders (Blue Colorway) */}
               <StatsCard
                 label="Total Orders"
-                value={Order.length}
+                value={myOrders.length}
                 icon="📦"
                 iconColor="bg-blue-50 text-blue-600 border border-blue-100/50"
               />
               {/* Card 3: Pending Orders (Amber Colorway) */}
               <StatsCard
                 label="Pending Approvals"
-                value={Order.filter((o) => o.status === "Pending").length}
+                value={myOrders.filter((o) => o.status === "Pending").length}
                 icon="⏳"
                 iconColor="bg-amber-50 text-amber-600 border border-amber-100/50"
               />
@@ -144,27 +167,25 @@ function Overview() {
             <>
               <StatsCard
                 label="Orders Placed"
-                value={buyerOrders.length}
+                value={myOrders.length}
                 icon="🛒"
                 bg="bg-[#1A5C2A]"
               />
               <StatsCard
                 label="Pending"
-                value={buyerOrders.filter((o) => o.status === "Pending").length}
+                value={myOrders.filter((o) => o.status === "Pending").length}
                 icon="⏳"
                 bg="bg-[#FFA02E]"
               />
               <StatsCard
                 label="Delivered"
-                value={
-                  buyerOrders.filter((o) => o.status === "Delivered").length
-                }
+                value={myOrders.filter((o) => o.status === "Delivered").length}
                 icon="✅"
                 bg="bg-green-500"
               />
               <StatsCard
                 label="Total Spent"
-                value={1}
+                value={`₦${totalEarnings.toLocaleString()}`}
                 icon="💳"
                 bg="bg-blue-500"
               />
@@ -240,7 +261,7 @@ function Overview() {
 
             {/* Stock list */}
             <div className="flex flex-col gap-4">
-              {listings.map((item) => {
+              {myOrders.map((item) => {
                 const isLow = item.quantity <= LOW_STOCK_LIMIT;
                 return (
                   <div
@@ -284,7 +305,7 @@ function Overview() {
           <div className="px-6 py-5 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
             <h3 className="font-bold text-slate-800">Recent Orders</h3>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              {Order.length} Total Transactions
+              {myOrders.length} Total Transactions
             </span>
           </div>
 
@@ -312,7 +333,7 @@ function Overview() {
 
           {/* Order Rows */}
           <div className="divide-y divide-slate-50">
-            {Order.map((item, index) => (
+            {myOrders.map((item, index) => (
               <div
                 key={index}
                 className="grid grid-cols-1 md:grid-cols-6 px-6 py-4 items-center hover:bg-slate-50/30 transition-colors gap-y-2 md:gap-y-0"
