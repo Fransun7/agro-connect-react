@@ -1,3 +1,6 @@
+import { supabase } from "../supabaseClient";
+import { useOutletContext } from "react-router-dom";
+
 import image3 from "../assets/hero-section-image-3.jpg";
 import StatsCard from "./StatsCard";
 import Listings from "./Listings";
@@ -8,16 +11,18 @@ import {
   farmerOrders,
   buyerOrders,
 } from "../data/dashboardData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Overview() {
+  const { currentUser } = useOutletContext();
+
   // getting the current user profile details
   const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
   const isFarmer = savedUser?.role === "Farmer";
   const userEmail = savedUser?.email;
-  const userName = savedUser ? savedUser.fullName : "USER";
+  const userName = currentUser?.fullName || "Agro User";
   const farmLocation = savedUser ? savedUser.farmLocation : "UNDEFINED";
-  const farmName = savedUser ? savedUser.farmName : "UNDEFINED";
+  const farmName = currentUser?.farmName || "UNDEFINED";
 
   // getting allOrders in local storage and filtering them, along with respective roles
   const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];

@@ -1,3 +1,5 @@
+import { supabase } from "../supabaseClient";
+
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -28,47 +30,85 @@ function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = (e) => {
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+  //   // creating for newUser and give it a unique ID
+  //   const newUser = {
+  //     ...formData,
+  //     role: role === "farmer" ? "Farmer" : "Buyer",
+  //     id: Date.now(),
+  //   };
+
+  //   // getting all current users and putting them in a table
+  //   const currentUsersTable =
+  //     JSON.parse(localStorage.getItem("allUsers")) || [];
+
+  //   // checking if a user email exist before
+  //   const emailExist = currentUsersTable.some(
+  //     (user) => user.email === formData.email,
+  //   );
+  //   if (emailExist) {
+  //     alert(
+  //       "An account fot this email already exist, please choose another email!",
+  //     );
+  //     return;
+  //   }
+
+  //   // appending the newUser into the currentUsersTable
+  //   const updatedUsersTable = [...currentUsersTable, newUser];
+
+  //   // putting the users back to allUsers
+  //   localStorage.setItem("allUsers", JSON.stringify(updatedUsersTable));
+
+  //   // assinging newUsers  to the registered user
+  //   localStorage.setItem("theRegisteredUser", JSON.stringify(newUser));
+
+  //   const userData = formData;
+  //   localStorage.setItem("theRegisteredUser", JSON.stringify(userData));
+
+  //   setShowSuccessCard(true);
+  //   setTimeout(() => {
+  //     setShowSuccessCard(false);
+  //     navigate("/login");
+  //   }, 2000);
+  // };
+
+  // ... inside your Register component ...
+  const handleRegister = async (e) => {
     e.preventDefault();
-    // creating for newUser and give it a unique ID
-    const newUser = {
-      ...formData,
-      role: role === "farmer" ? "Farmer" : "Buyer",
-      id: Date.now(),
-    };
 
-    // getting all current users and putting them in a table
-    const currentUsersTable =
-      JSON.parse(localStorage.getItem("allUsers")) || [];
+    const userRole = role === "farmer" ? "Farmer" : "Buyer";
 
-    // checking if a user email exist before
-    const emailExist = currentUsersTable.some(
-      (user) => user.email === formData.email,
-    );
-    if (emailExist) {
-      alert(
-        "An account fot this email already exist, please choose another email!",
-      );
-      return;
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            fullName: formData.fullName,
+            role: userRole,
+            farmName: userRole === "Farmer" ? formData.farmName : null,
+            farmLocation: userRole === "Farmer" ? formData.Location : null,
+          },
+        },
+      });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      if (data?.user) {
+        setShowSuccessCard(true);
+        setTimeout(() => {
+          setShowSuccessCard(false);
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (err) {
+      console.error("Cloud registration failed:", err);
+      alert("Something went wrong connecting to the database server.");
     }
-
-    // appending the newUser into the currentUsersTable
-    const updatedUsersTable = [...currentUsersTable, newUser];
-
-    // putting the users back to allUsers
-    localStorage.setItem("allUsers", JSON.stringify(updatedUsersTable));
-
-    // assinging newUsers  to the registered user
-    localStorage.setItem("theRegisteredUser", JSON.stringify(newUser));
-
-    const userData = formData;
-    localStorage.setItem("theRegisteredUser", JSON.stringify(userData));
-
-    setShowSuccessCard(true);
-    setTimeout(() => {
-      setShowSuccessCard(false);
-      navigate("/login");
-    }, 2000);
   };
 
   return (

@@ -29,6 +29,7 @@ function Listings() {
     price: "",
     unit: "",
     quantity: "",
+    image: "",
   });
   function handleChange(e) {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -63,6 +64,7 @@ function Listings() {
       price: "",
       unit: "",
       quantity: "",
+      image: "",
     });
     setShowForm(false);
   }
@@ -121,6 +123,21 @@ function Listings() {
                   />
                 </div>
               ))}
+
+              <div className="flex flex-col gap-1 mt-2">
+                <label className="text-xs font-semibold text-gray-600 text-left">
+                  Product Image URL (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="image"
+                  placeholder="Paste an image link address (e.g. https://...)"
+                  value={newProduct.image}
+                  onChange={handleChange}
+                  className="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#2F6B3F]"
+                />
+              </div>
+
               <div className="sm:col-span-2">
                 <button
                   onClick={handleAddProduct}

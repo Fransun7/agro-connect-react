@@ -1,3 +1,4 @@
+import { supabase } from "../supabaseClient";
 import { useState } from "react";
 import { Navigate, NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,26 +12,73 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccessCard, setShowSuccessCard] = useState(false);
 
-  const handleLogin = (e) => {
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+
+  //   const currentUsersTable = JSON.parse(localStorage.getItem("allUsers"));
+
+  //   const matchedUser = currentUsersTable.find(
+  //     (user) => user.email === email && user.password === password,
+  //   );
+  //   if (matchedUser) {
+  //     localStorage.setItem("isAuth", true);
+  //     localStorage.setItem("currentUserRole", matchedUser.role);
+  //     localStorage.setItem("theRegisteredUser", JSON.stringify(matchedUser));
+  //     window.dispatchEvent(new Event("authUpdate"));
+  //     setShowSuccessCard(true);
+  //     setTimeout(() => {
+  //       setShowSuccessCard(false); // Hide card (optional since we are navigating)
+  //       navigate("/dashboard");
+  //     }, 2000);
+  //   } else {
+  //     alert("inavalid credentials");
+  //   }
+  // };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const currentUsersTable = JSON.parse(localStorage.getItem("allUsers"));
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword(
+        {
+          email: email,
+          password: password,
+        },
+      );
 
-    const matchedUser = currentUsersTable.find(
-      (user) => user.email === email && user.password === password,
-    );
-    if (matchedUser) {
-      localStorage.setItem("isAuth", true);
-      localStorage.setItem("currentUserRole", matchedUser.role);
-      localStorage.setItem("theRegisteredUser", JSON.stringify(matchedUser));
-      window.dispatchEvent(new Event("authUpdate"));
-      setShowSuccessCard(true);
-      setTimeout(() => {
-        setShowSuccessCard(false); // Hide card (optional since we are navigating)
-        navigate("/dashboard");
-      }, 2000);
-    } else {
-      alert("inavalid credentials");
+      if (authError) {
+        alert(authError.message);
+        return;
+      }
+
+      const user = data?.user;
+
+      if (user) {
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profileError) {
+          console.error("Profile matching query failed:", profileError);
+          alert("Failed to synchronize profile metadata attributes.");
+          return;
+        }
+
+        if (profile?.role === "Farmer") {
+          navigate("/dashboard");
+        } else if (profile?.role === "Buyer") {
+          navigate("/dashboard");
+        } else {
+          alert("Account layout configuration conflict detected.");
+        }
+      }
+    } catch (err) {
+      console.error("Cloud connection handshake crash:", err);
+      alert(
+        "Server routing disruption encountered. Please test connection state.",
+      );
     }
   };
 

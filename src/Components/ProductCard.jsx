@@ -8,11 +8,30 @@ function ProductCard({ produce }) {
 
   return (
     <div className="w-72.5 sm:w-[320px] shrink-0 snap-start bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <img
+      {/* <img
         src={produce.image}
         alt={produce.name}
         className="w-full h-48 object-cover"
-      />
+      /> */}
+
+      {produce.image && produce.image.trim() !== "" ? (
+        <img
+          src={produce.image}
+          alt={produce.name}
+          className="w-full h-48 object-cover"
+        />
+      ) : (
+        /* Sleek CSS Image Placeholder box that draws if the farmer didn't upload a file */
+        <div className="w-full h-48 bg-slate-50 border-b border-gray-100 flex flex-col items-center justify-center gap-2 text-slate-300 select-none">
+          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+            <i className="fa-solid fa-basket-shopping text-xl"></i>
+          </div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            No Image Provided
+          </span>
+        </div>
+      )}
+
       {/* Card Body */}
       <div className="p-4 flex flex-col gap-2">
         {/* Category tag */}

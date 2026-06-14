@@ -1,3 +1,6 @@
+import { supabase } from "../supabaseClient";
+import { useState, useEffect } from "react";
+
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
@@ -12,10 +15,34 @@ const dashboardLinks = [
   { label: "Settings", path: "/dashboard/settings", icon: "fa-solid fa-gear" },
 ];
 
-function Dashboard() {
+function Dashboard({ currentUser }) {
   // getting the registerUser from local storage and setting the role
-  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-  const isFarmer = savedUser?.role === "Farmer";
+  // const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
+  // const isFarmer = savedUser?.role === "Farmer";
+
+  const [isFarmer, setIsFarmer] = useState(false);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+        console.log(profile?.role);
+
+        if (profile?.role === "Farmer") {
+          setIsFarmer(true);
+        }
+      }
+    };
+    fetchUserProfile();
+  }, []);
 
   // filtering the link to get Listing and make it appear only with the role of farmer
   const filteredLink = dashboardLinks.filter((link) => {
@@ -79,7 +106,7 @@ function Dashboard() {
         </div>
         {/* right panel */}
         <div className="min-h-screen w-full md:w-[70%] md:ml-[30%] md:mt-40">
-          <Outlet />
+          <Outlet context={{ currentUser }} />
         </div>
       </div>
     </div>

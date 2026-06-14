@@ -1,10 +1,6 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  NavLink,
-  Navigate,
-} from "react-router-dom";
+import { supabase } from "./supabaseClient";
+
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
@@ -22,36 +18,80 @@ import Orders from "./Components/Orders";
 import Listings from "./Components/Listings";
 import Settings from "./Components/Settings";
 import Farmers from "./Components/Farmers";
+import { Navigate } from "react-router-dom";
 import {
   buyerOrders,
   farmerOrders,
   initialListings,
 } from "./data/dashboardData";
-// import Produce from "./Components/Produce";
 import FarmerIcon from "./Components/FarmerIcon";
-// This invisible helper remembers our route and jumps back to it on reload
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [logoutConfirm, setLogConfirm] = useState(false);
-  // const [logoutStatus, setLogoutStatus] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // const isAuth = localStorage.getItem("isAuth") === "true";
-  const [isAuth, setIsAuth] = useState(
-    localStorage.getItem("isAuth") === "true",
-  );
-
+  // what happens if sessionUser does not exist and getting sessionUser full name
   useEffect(() => {
-    const handleAuthChange = () => {
-      setIsAuth(localStorage.getItem("isAuth") === "true");
+    const profileName = async (sessionUser) => {
+      if (!sessionUser) {
+        setCurrentUser(null);
+        return;
+      }
+      // getting session user full name
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name", "farm_name", "farm_location")
+        .eq("id", sessionUser.id)
+        .single();
+
+      setCurrentUser({
+        ...sessionUser,
+        fullName: profile?.full_name || "Agro User",
+        farmName: profile?.farm_name,
+        farmLocation: profile?.farm_location,
+      });
     };
 
-    window.addEventListener("authUpdate", handleAuthChange);
+    // getting session from supabase to know loggedIn state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      // if session exist change and fill in state
+      if (session) {
+        setIsAuth(true);
+        profileName(session.user);
+      }
+    });
 
-    return () => window.removeEventListener("authUpdate", handleAuthChange);
+    // I need something to listen to login state and define what happens when logged in or not
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session) {
+        setIsAuth(true);
+        profileName(session.user);
+      } else {
+        setIsAuth(false);
+        setCurrentUser(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
+  // useEffect(() => {
+  //   const handleAuthChange = () => {
+  //     setIsAuth(localStorage.getItem("isAuth") === "true");
+  //   };
+
+  //   window.addEventListener("authUpdate", handleAuthChange);
+
+  //   return () => window.removeEventListener("authUpdate", handleAuthChange);
+  // }, []);
 
   useEffect(() => {
     // checks if there are items for allFarmerProducts in localstarage and put initial listing in the local staorage if not
@@ -72,12 +112,9 @@ function App() {
     setLogConfirm(true);
   };
 
-  const confirmLogOut = () => {
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("currentUserRole");
-    window.dispatchEvent(new Event("authUpdate"));
+  const confirmLogOut = async () => {
+    await supabase.auth.signOut();
     setLogConfirm(false);
-    window.location.href = "/";
   };
 
   const cancelLogout = () => {
@@ -88,21 +125,17 @@ function App() {
   const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
 
   // 2. Logic to get initials (e.g., "Francis Omotayo" -> "FO")
-  const getInitials = (name) => {
-    if (!name) return "U"; // Fallback to "U" for User
+  const getInitials = () => {
+    const name = currentUser?.fullName || "Agro User";
 
-    const names = name.split(" "); // Splits "Francis Omotayo" into ["Francis", "Omotayo"]
-
-    if (names.length >= 2) {
-      // Takes "F" and "O"
-      return (names[0][0] + names[1][0]).toUpperCase();
-    }
-
-    // If they only entered one name, just take the first two letters or just the first
-    return names[0][0].toUpperCase();
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join(" ")
+      .toUpperCase();
   };
 
-  const initials = getInitials(savedUser?.fullName);
+  console.log("current user is:", currentUser);
 
   return (
     <>
@@ -159,7 +192,7 @@ function App() {
               <NavLink to="/dashboard" className="relative group md:hidden">
                 {/* The Initials Circle */}
                 <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
-                  {initials}
+                  {getInitials()}
                 </div>
 
                 {/* Optional: Small Green Dot to show they are "Active" */}
@@ -284,7 +317,7 @@ function App() {
                   <NavLink to="/dashboard" className="relative group">
                     {/* The Initials Circle */}
                     <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
-                      {initials}
+                      {getInitials()}
                     </div>
 
                     {/* Optional: Small Green Dot to show they are "Active" */}
@@ -506,19 +539,12 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/dashboard" element={<Dashboard />}>
+            <Route
+              path="/dashboard"
+              element={<Dashboard currentUser={currentUser} isAuth={isAuth} />}
+            >
               <Route index element={<Overview />} />
-              <Route
-                path="listings"
-                element={
-                  JSON.parse(localStorage.getItem("theRegisteredUser"))
-                    ?.role === "Farmer" ? (
-                    <Listings />
-                  ) : (
-                    <Navigate to="/dashboard" replace />
-                  )
-                }
-              />
+              <Route path="listings" element={<Listings />} />
 
               <Route path="orders" element={<Orders />} />
               <Route path="settings" element={<Settings />} />
