@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 
 import {
   currentRole,
@@ -9,20 +11,48 @@ import {
 } from "../data/dashboardData";
 
 function Listings() {
-  // getting the user details
-  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-  const isFarmer = savedUser?.role === "Farmer";
-  const userEmail = savedUser?.email;
-
+  const { currentUser } = useOutletContext();
+  const isFarmer = currentUser?.role === "Farmer";
+  const userEmail = currentUser?.email;
   const [showForm, setShowForm] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // reading listings from local storage
-  const [listings, setListings] = useState(() => {
-    const globalProducts =
-      JSON.parse(localStorage.getItem("allProducts")) || initialListings;
-    return globalProducts.filter((item) => item.farmerEmail === userEmail);
-  });
+  // FETCHING FARMER LISTED PRODUCT AND UPDATING IT TO LOCAL STATE
+  useEffect(() => {
+    const fetchFarmerListings = async () => {
+      if (!userEmail) return;
+      setLoading(true);
 
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("farmer_email", userEmail);
+
+      if (error) {
+        alert("Error fetching listings:", error.message);
+      } else if (data) {
+        const mappedListings = data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          category: item.category,
+          price: Number(item.price),
+          unit: item.unit,
+          quantity: Number(item.quantity),
+          image: item.image,
+          farmerEmail: item.farmer_email,
+          farmerName: item.farmer_name,
+          location: item.location,
+        }));
+        setListings(mappedListings);
+      }
+      setLoading(false);
+    };
+
+    fetchFarmerListings();
+  }, [userEmail]);
+
+  // WHAT NEW PRODUCT CONTAINS
   const [newProduct, setNewProduct] = useState({
     name: "",
     category: "",
@@ -31,33 +61,59 @@ function Listings() {
     quantity: "",
     image: "",
   });
+
   function handleChange(e) {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   }
-  function handleAddProduct() {
+
+  // ADDING PRODUCT FUNCTIONALITY
+  async function handleAddProduct() {
     if (!newProduct.price || !newProduct.name) {
       alert("please fill in product price and name!");
       return;
     }
-    const newItem = {
-      ...newProduct,
-      // id: listings.length + 1,
-      // price: Number(newProduct.price),
-      // quantity: Number(newProduct.quantity),
-      id: Date.now(), // Unique identifier timestamp
-      price: Number(newProduct.price),
-      quantity: Number(newProduct.quantity),
-      farmerEmail: userEmail, // Link to this specific account
-      farmerName: savedUser?.fullName || "Anonymous Farmer",
-      location: savedUser?.farmLocation || "Unknown Location",
-    };
 
-    const globalProducts =
-      JSON.parse(localStorage.getItem("allProducts")) || initialListings;
-    const updatedGlobal = [...globalProducts, newItem];
-    localStorage.setItem("allProducts", JSON.stringify(updatedGlobal));
+    // INSERTS PRODUCT DATA TO DATABASE
+    const { data, error } = await supabase
+      .from("products")
+      .insert([
+        {
+          name: newProduct.name,
+          category: newProduct.category,
+          price: Number(newProduct.price),
+          unit: newProduct.unit,
+          quantity: Number(newProduct.quantity),
+          image: newProduct.image || null,
+          farmer_email: userEmail,
+          farmer_name: currentUser?.fullName || "Anonymous Farmer",
+          location: currentUser?.farmLocation || "Unknown Location",
+        },
+      ])
+      .select();
 
-    setListings([...listings, newItem]);
+    if (error) {
+      alert("Error saving product to cloud: " + error.message);
+      return;
+    }
+
+    // THE SELECTED DATA THAT HAS BEEN INSERTED TO DATABASE NOW MAPPED THROUGH AND SAVED AS A NEW OBJECT
+    if (data && data[0]) {
+      const savedItem = {
+        id: data[0].id,
+        name: data[0].name,
+        category: data[0].category,
+        price: Number(data[0].price),
+        unit: data[0].unit,
+        quantity: Number(data[0].quantity),
+        image: data[0].image,
+        farmerEmail: data[0].farmer_email,
+        farmerName: data[0].farmer_name,
+        location: data[0].location,
+      };
+
+      setListings([...listings, savedItem]);
+    }
+
     setNewProduct({
       name: "",
       category: "",
@@ -69,13 +125,16 @@ function Listings() {
     setShowForm(false);
   }
 
-  function handleDelete(id) {
-    setListings(listings.filter((item) => item.id !== id));
+  // DELETE THE PRODUCT FROM DATABASE AND UPDATE THE UI
+  async function handleDelete(id) {
+    const { error } = await supabase.from("products").delete().eq("id", id);
 
-    const globalProducts =
-      JSON.parse(localStorage.getItem("allProducts")) || [];
-    const updatedGlobal = globalProducts.filter((item) => item.id !== id);
-    localStorage.setItem("allProducts", JSON.stringify(updatedGlobal));
+    if (error) {
+      alert("Could not remove item from database: " + error.essage);
+      return;
+    }
+
+    setListings(listings.filter((item) => item.id !== id));
   }
   return (
     <div className="p-6">
@@ -148,36 +207,46 @@ function Listings() {
               </div>
             </div>
           )}
-          {/* listing grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {listings.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-2"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-gray-800">{item.name}</h3>
-                    <span className="text-xs text-white bg-[#2F6B3F] px-2 py-0.5 rounded-full">
-                      {item.category}
-                    </span>
+          {loading ? (
+            <div className="text-center py-12 text-gray-500 font-medium">
+              🔄 Loading your fresh farm produce listings from cloud...
+            </div>
+          ) : listings.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">
+              📦 No active listings found. Click "Add Product" to create your
+              first one!
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {listings.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-2"
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-bold text-gray-800">{item.name}</h3>
+                      <span className="text-xs text-white bg-[#2F6B3F] px-2 py-0.5 rounded-full">
+                        {item.category}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="text-red-400 hover:text-red-600 text-xs font-semibold transition-colors"
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="text-red-400 hover:text-red-600 text-xs font-semibold transition-colors"
-                  >
-                    Delete
-                  </button>
+                  <p className="text-[#FFA02E] font-bold text-sm">
+                    ₦{item.price.toLocaleString()} / {item.unit}
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    📦 {item.quantity} {item.unit}s available
+                  </p>
                 </div>
-                <p className="text-[#FFA02E] font-bold text-sm">
-                  ₦{item.price.toLocaleString()} / {item.unit}
-                </p>
-                <p className="text-gray-400 text-xs">
-                  📦 {item.quantity} {item.unit}s available
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

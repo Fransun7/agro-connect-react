@@ -55,7 +55,7 @@ function Dashboard({ currentUser }) {
   return (
     <div>
       {/* Mobile sidemenu */}
-      <div className="flex mt-20 md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 bg-white border-b border-gray-100">
+      <div className="flex mt-30 md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 bg-white border-b border-gray-100">
         {filteredLink.map((link) => (
           <NavLink
             key={link.path}

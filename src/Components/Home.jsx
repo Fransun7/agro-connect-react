@@ -8,6 +8,7 @@ import productsData from "../data/products";
 import ProductCard from "./ProductCard";
 import { farmerListings } from "../data/listings";
 import { initialListings } from "../data/dashboardData";
+import { supabase } from "../supabaseClient";
 
 // const images = [image1, image2, image3, image4];
 const slides = [
@@ -52,9 +53,42 @@ const slides = [
 ];
 
 function Home() {
-  const globalProducts =
-    JSON.parse(localStorage.getItem("allProducts")) || farmerListings;
+  // const globalProducts =
+  //   JSON.parse(localStorage.getItem("allProducts")) || farmerListings;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // FETCHING ALL PRODUCTS FROM DATABASE
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      setLoading(true);
+
+      const { data, error } = await supabase.from("products").select("*");
+
+      if (error) {
+        console.error("Error loading marketplace products:", error.message);
+      } else if (data) {
+        const mappedProdcuct = data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          category: item.category,
+          price: Number(item.price),
+          unit: item.unit,
+          quantity: Number(item.quantity),
+          image: item.image,
+          farmerEmail: item.farmer_email,
+          farmerName: item.farmer_name,
+          location: item.location,
+        }));
+
+        setProducts(mappedProdcuct);
+      }
+      setLoading(false);
+    };
+    fetchAllProducts();
+  }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -87,16 +121,6 @@ function Home() {
 
   useEffect(() => {
     const container = containerRef.current;
-    // requestAnimationFrame(() => checkArrrow());
-    // setTimeout(() => checkArrrow(), 300);
-    // container.addEventListener("scrollend", checkArrrow);
-    // const resizeObserver = new ResizeObserver(() => checkArrrow());
-    // resizeObserver.observe(container);
-
-    // return () => {
-    //   container.removeEventListener("scrollend", checkArrrow);
-    //   resizeObserver.disconnect();
-    // };
   }, []);
 
   return (
@@ -178,9 +202,22 @@ function Home() {
             onScroll={checkArrrow}
             className="flex overflow-x-auto gap-6 pb-6 pt-2 px-2 scrollbar-hide snap-x snap-mandatory scroll-smooth"
           >
-            {globalProducts.map((item) => (
+            {loading ? (
+              <div className="col-span-full text-center py-6 text-gray-500 font-medium">
+                🔄 Gathering fresh farm listings live from the cloud...
+              </div>
+            ) : products.length === 0 ? (
+              <div className="col-span-full text-center py-6 text-gray-400">
+                📦 No active products listed on the market right now.
+              </div>
+            ) : (
+              products
+                .slice(0, 4)
+                .map((item) => <ProductCard key={item.id} produce={item} />)
+            )}
+            {/* {globalProducts.map((item) => (
               <ProductCard key={item.id} produce={item} />
-            ))}
+            ))} */}
           </div>
 
           {showScrollRight && (

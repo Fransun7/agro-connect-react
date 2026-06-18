@@ -29,17 +29,17 @@ function Orders() {
       return order;
     });
 
-    // Save updated full stack back to the global LocalStorage "database"
+    // Save updated full stack back to the global LocalStorage
     localStorage.setItem("allOrders", JSON.stringify(updatedGlobal));
 
-    // Update local state so UI instantly re-renders
+    // Update the local state so that the UI can instantly re-renders
     setOrders(
       isFarmer
         ? updatedGlobal.filter((order) => order.farmerEmail === userEmail)
         : updatedGlobal.filter((order) => order.buyerEmail === userEmail),
     );
 
-    // Crucial: Fire custom event to tell the Overview tab to update its calculations immediately!
+    // Fire custom event to tell the Overview tab to update its calculations immediately!
     window.dispatchEvent(new Event("authUpdate"));
   }
 

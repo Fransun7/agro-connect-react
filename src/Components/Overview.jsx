@@ -15,14 +15,15 @@ import { useEffect, useState } from "react";
 
 function Overview() {
   const { currentUser } = useOutletContext();
+  console.log("current user:", currentUser);
 
   // getting the current user profile details
   const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-  const isFarmer = savedUser?.role === "Farmer";
-  const userEmail = savedUser?.email;
+  const isFarmer = currentUser?.role === "Farmer";
+  const userEmail = currentUser?.email;
   const userName = currentUser?.fullName || "Agro User";
-  const farmLocation = savedUser ? savedUser.farmLocation : "UNDEFINED";
   const farmName = currentUser?.farmName || "UNDEFINED";
+  const farmLocation = currentUser?.farmLocation || "UNDEFINED";
 
   // getting allOrders in local storage and filtering them, along with respective roles
   const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];
@@ -72,68 +73,79 @@ function Overview() {
       <div className="border-4 border-black/5 p-2 rounded-lg">
         {/*  Row 1, Welcome Banner */}
         <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20">
-          {/* Modern Aesthetic: Decorative translucent glowing blobs behind text */}
-          {/* <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl"></div>
-  <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-yellow-500/5 blur-3xl"></div> */}
+          <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-yellow-500/5 blur-3xl"></div>
 
           {/* Two-column layout grid: Stacks on mobile, splits 70/30 on desktop */}
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-center">
             {/* Left Column: Greeting, Farm Name & Status */}
             <div className="flex flex-col items-start text-left">
               {/* Translucent Capsule Badge */}
+
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-inset ring-emerald-400/20 mb-4 uppercase tracking-widest">
-                🧑‍🌾 Verified Partner
+                {isFarmer ? "🧑‍🌾 Verified Farmer" : "🛒 Verified Buyer"}
               </span>
 
               {/* Title (Uses Outfit Font automatically!) */}
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2 text-white">
-                Welcome back, {userName}
+                Welcome back {userName}
               </h1>
 
               {/* Sub-details row with location and farm */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-emerald-200/80 mb-4 font-medium">
-                <span>📍 {farmName}</span>
-                <span className="h-1 w-1 rounded-full bg-emerald-400/50 hidden sm:inline"></span>
-                <span>{farmLocation}</span>
-              </div>
+              {isFarmer && (
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-emerald-200/80 mb-4 font-medium">
+                  <span>📍{farmName} </span>
+                  <span className="h-1 w-1 rounded-full bg-emerald-400/50 hidden sm:inline"></span>
+                  <span>{farmLocation}</span>
+                </div>
+              )}
 
-              {/* Dynamic Status message */}
               <p className="text-sm md:text-base text-emerald-100/90 max-w-xl leading-relaxed">
-                Your digital shop is online and active. You have{" "}
-                <strong className="text-emerald-300 font-bold">
-                  {myProducts.length}
-                </strong>{" "}
-                listed for sale and{" "}
-                <strong className="text-yellow-400 font-bold">
-                  1 pending order
-                </strong>{" "}
-                waiting for your review.
+                {isFarmer ? (
+                  <>
+                    Your digital shop is online and active. You have{" "}
+                    <strong className="text-emerald-300 font-bold">
+                      {myProducts.length}
+                    </strong>{" "}
+                    listed for sale and{" "}
+                    <strong className="text-yellow-400 font-bold">
+                      1 pending order
+                    </strong>{" "}
+                    waiting for your review.
+                  </>
+                ) : (
+                  <>
+                    Discover premium, fresh farm produce directly from verified
+                    local suppliers today.
+                  </>
+                )}
               </p>
             </div>
 
             {/* Right Column: Sleek Frosted Glass Widget (Hidden on mobile for space) */}
-            <div className="hidden md:flex flex-col justify-between rounded-2xl bg-white/5 p-5 backdrop-blur-md border border-white/10 h-full min-h-35 shadow-inner">
-              <div className="text-left">
-                <p className="text-xs uppercase tracking-wider text-emerald-300 font-bold mb-1">
-                  {farmLocation} Market Alert
-                </p>
-                <p className="text-xs text-emerald-100/80 leading-snug">
-                  🌱 Grains and Tubers are in peak demand this weekend across
-                  {farmLocation} hubs.
-                </p>
+            {isFarmer && (
+              <div className="hidden md:flex flex-col justify-between rounded-2xl bg-white/5 p-5 backdrop-blur-md border border-white/10 h-full min-h-35 shadow-inner">
+                <div className="text-left">
+                  <p className="text-xs uppercase tracking-wider text-emerald-300 font-bold mb-1">
+                    {farmLocation} Market Alert
+                  </p>
+                  <p className="text-xs text-emerald-100/80 leading-snug">
+                    🌱 Grains and Tubers are in peak demand this weekend across
+                    {farmLocation} hubs.
+                  </p>
+                </div>
+                <div className="mt-4 border-t border-white/10 pt-3 text-left">
+                  <span className="text-xs font-semibold text-emerald-200">
+                    📅{" "}
+                    {new Date().toLocaleDateString("en-NG", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
               </div>
-              <div className="mt-4 border-t border-white/10 pt-3 text-left">
-                <span className="text-xs font-semibold text-emerald-200">
-                  📅{" "}
-                  {new Date().toLocaleDateString("en-NG", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -302,7 +314,7 @@ function Overview() {
 
         {/* ROW 4 */}
         {/* <div className="bg-white border border-slate-100/80 rounded-3xl p-6 shadow-sm grid grid-row md:grid-cols gap-4">
-      
+
        </div> */}
         {/* --- RECENT ORDERS SECTION --- */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">

@@ -44,7 +44,7 @@ function App() {
       // getting session user full name
       const { data: profile } = await supabase
         .from("profiles")
-        .select("full_name", "farm_name", "farm_location")
+        .select("full_name, farm_name, farm_location, role")
         .eq("id", sessionUser.id)
         .single();
 
@@ -53,6 +53,7 @@ function App() {
         fullName: profile?.full_name || "Agro User",
         farmName: profile?.farm_name,
         farmLocation: profile?.farm_location,
+        role: profile?.role,
       });
     };
 
@@ -135,8 +136,6 @@ function App() {
       .toUpperCase();
   };
 
-  console.log("current user is:", currentUser);
-
   return (
     <>
       <BrowserRouter>
@@ -185,7 +184,9 @@ function App() {
             {/* logo container */}
             <div className="w-[30%] md:w-[80%]">
               {/* logo image */}
-              <img className="" src={logo} alt="" />
+              <NavLink to="/">
+                <img className="" src={logo} alt="logo" />
+              </NavLink>
             </div>
 
             {isAuth ? (
@@ -486,7 +487,8 @@ function App() {
                   }}
                   className="text-white hover:bg-white/10 p-3 rounded-lg text-left"
                 >
-                  <i className="fa-solid fa-right-from-bracket w-5"></i> Logout
+                  <i className="fa-solid fa-right-from-bracket w-5 ml-2"></i>{" "}
+                  Logout
                 </button>
               </>
             ) : (

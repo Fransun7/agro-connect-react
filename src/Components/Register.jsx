@@ -88,7 +88,7 @@ function Register() {
             fullName: formData.fullName,
             role: userRole,
             farmName: userRole === "Farmer" ? formData.farmName : null,
-            farmLocation: userRole === "Farmer" ? formData.Location : null,
+            farmLocation: userRole === "Farmer" ? formData.farmLocation : null,
           },
         },
       });
