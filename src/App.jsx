@@ -552,8 +552,8 @@ function App() {
       </div>
 
       <div
-        className={`w-full min-h-screen bg-slate-500 transition-all duration-300 ${
-          location.pathname === "/marketplace" ? "pt-25 md:pt-40" : " md:pt-30"
+        className={`w-full h-screen bg-slate-500 transition-all duration-300 ${
+          location.pathname === "/marketplace" ? "pt-20 md:pt-40" : " md:pt-30"
         }`}
       >
         <Routes>

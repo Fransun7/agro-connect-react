@@ -41,7 +41,7 @@ function MarketPlace() {
   }, []);
 
   return (
-    <div className="bg-green-800">
+    <div className="bg-green-800 h-full">
       <div className="flex flex-col justify-center items-center p-4">
         <h3 className="text-white text-sm md:text-md font-bold leading-tight drop-shadow-lg">
           Browse
