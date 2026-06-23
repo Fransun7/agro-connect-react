@@ -10,7 +10,7 @@ import { farmerListings } from "../data/listings";
 import { initialListings } from "../data/dashboardData";
 import { supabase } from "../supabaseClient";
 
-// const images = [image1, image2, image3, image4];
+// ARRAY OF OBJECTS FOR THE IMAGE SLIDES
 const slides = [
   {
     image: image1,
@@ -26,7 +26,7 @@ const slides = [
     headline: "From Nigerian Soil,",
     headlineSpan: "To Your Doorstep",
     subtext:
-      "We partner with local farmers to bring you the freshest tubers, grains and vegetables öharvested and delivered with care.",
+      "We partner with local farmers to bring you the freshest tubers, grains and vegetables harvested and delivered with care.",
     primaryBtn: { label: "Shop Now", link: "/products" },
     secondaryBtn: { label: "List Your Farm", link: "/dashboard/" },
   },
@@ -53,8 +53,6 @@ const slides = [
 ];
 
 function Home() {
-  // const globalProducts =
-  //   JSON.parse(localStorage.getItem("allProducts")) || farmerListings;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,6 +87,7 @@ function Home() {
     fetchAllProducts();
   }, []);
 
+  // TIMER FOR THE SLIDES
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -97,24 +96,18 @@ function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // using useRef to point to my scrollable div or container
+  // POINTS TO SCROLLABLE DIV
   const containerRef = useRef(null);
 
   const [showScrollLeft, setShowScrollLeft] = useState(false);
   const [showScrollRight, setShowScrollRight] = useState(true);
+
   const checkArrrow = () => {
     // a variable to hold the ref that points to the card cntainer
     const container = containerRef.current;
 
     setShowScrollLeft(container.scrollLeft > 10);
     setShowScrollRight(
-      container.scrollLeft + container.clientWidth < container.scrollWidth - 1,
-    );
-    console.log("scrollLeft:", container.scrollLeft);
-    console.log("clientWidth:", container.clientWidth);
-    console.log("scrollWidth:", container.scrollWidth);
-    console.log(
-      "showRight should be:",
       container.scrollLeft + container.clientWidth < container.scrollWidth - 1,
     );
   };
@@ -125,6 +118,7 @@ function Home() {
 
   return (
     <>
+      {/* HERO SECTION, IMAGE SLIDES SECTION */}
       <section className="relative w-full h-screen overflow-hidden">
         {/* sliding images */}
         {slides.map((slide, index) => (
@@ -141,7 +135,7 @@ function Home() {
 
         {/* Hero content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pt-16 md:pt-20">
-          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4 drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-lg">
             {/* Fresh From the Farm,{" "} */} {slides[currentIndex].headline}
             <span className="text-green-400">
               {slides[currentIndex].headlineSpan}
@@ -154,7 +148,7 @@ function Home() {
             {slides[currentIndex].subtext}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 p-20">
             <NavLink
               to={slides[currentIndex].primaryBtn.link}
               className="bg-green-600 hover:bg-green-700 text-white font-semibold text-base px-8 py-3 rounded-full shadow-lg transition-all duration-300"
@@ -182,7 +176,7 @@ function Home() {
         </div>
       </section>
 
-      {/* produce section */}
+      {/* PRODUCTS SECTION */}
       <section className="bg-white p-3">
         <div className="flex justify-center">
           <h1 className="text-4xl md:text-6xl font-bold text-green-800 leading-tight mb-4 drop-shadow-lg">
@@ -226,7 +220,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* MISSION SECTION */}
       <section className="bg-[#1A5C2A] px-6 md:px-20 py-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Left Side */}
@@ -295,7 +289,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <footer className="bg-[#0F3D1A] text-white px-6 md:px-20 py-12">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}

@@ -1,4 +1,14 @@
 @import "tailwindcss";
+/* This replaces the default browser white background with a clean, matching premium soft slate */
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

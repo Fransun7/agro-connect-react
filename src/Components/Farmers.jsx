@@ -18,7 +18,7 @@ function Farmers({ searchTerm }) {
   };
 
   return (
-    <div className="bg-green-800  mt-20 md:mt-20 pt-4 md:pt-20">
+    <div className="bg-green-800 md:mt-20 pt-30 md:pt-20">
       <div className="flex flex-col justify-center items-center p-4">
         <h3 className="text-white text-sm md:text-md font-bold leading-tight drop-shadow-lg">
           Browse verified{" "}
