@@ -553,7 +553,7 @@ function App() {
 
       <div
         className={`w-full h-screen bg-slate-500 transition-all duration-300 ${
-          location.pathname === "/marketplace" ? "pt-20 md:pt-40" : " md:pt-30"
+          location.pathname === "/marketplace" ? "pt-15 md:pt-40" : " md:pt-30"
         }`}
       >
         <Routes>
