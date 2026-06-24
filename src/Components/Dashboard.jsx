@@ -55,14 +55,14 @@ function Dashboard({ currentUser }) {
   return (
     <div>
       {/* Mobile sidemenu */}
-      <div className="flex mt-30 md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 bg-white border-b border-gray-100">
+      <div className="flex md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 border-b border-gray-100 sticky top-25 z-30">
         {filteredLink.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                 isActive
                   ? "bg-[#1A5C2A] text-white"
                   : "text-gray-500 hover:bg-gray-100 hover:text-[#1A5C2A]"
@@ -76,10 +76,10 @@ function Dashboard({ currentUser }) {
       </div>
 
       {/* Two column layout */}
-      <div className="flex  md:grid-cols-2 bg-white min-h-screen gap-2">
-        {/* left panel */}
-        <div className=" fixed bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20 hidden md:flex min-h-screen w-[30%]  top-0 mt-35 ">
-          <div className="border-r border-gray-100  w-full ">
+      <div className="flex w-full">
+        {/* LEFT PANEL */}
+        <div className="hidden md:flex sticky top-30 w-[30%] h-[calc(100vh-120px)] bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 z-30 shadow-xl shadow-emerald-950/10">
+          <div className="border-r border-gray-100  w-full px-4 py-6 ">
             <p className="text-xs font-bold text-emerald-300 uppercase tracking-widest px-4 mb-3">
               Dashboard
             </p>
@@ -104,8 +104,9 @@ function Dashboard({ currentUser }) {
             </div>
           </div>
         </div>
-        {/* right panel */}
-        <div className="min-h-screen w-full md:w-[70%] md:ml-[30%] md:mt-40">
+
+        {/* RIGHT PANEL  */}
+        <div className="w-full md:w-[70%]overflow-y-auto">
           <Outlet context={{ currentUser }} />
         </div>
       </div>

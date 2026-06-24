@@ -169,7 +169,7 @@ function App() {
         </div>
       )}
       <div
-        className={`bg-emerald-50/70 backdrop-blur-md w-full fixed top-0 left-0 right-0 z-40 flex flex-col border-emerald-100 shadow-xs gap-3 rounded-b-xl border-2 border-b ${location.pathname === "marketplace" ? "gap-3 pb-0" : "gap-0 pb-0"}`}
+        className={`bg-emerald-50/70 h-25 md:h-30 backdrop-blur-md w-full fixed top-0 left-0 right-0 z-40 flex flex-col border-emerald-100 shadow-xs gap-3 rounded-b-xl border-2 border-b ${location.pathname === "marketplace" ? "gap-3 pb-0" : "gap-0 pb-0"}`}
       >
         <nav
           id="navigation"
@@ -185,7 +185,7 @@ function App() {
               </NavLink>
             </div>
 
-            {isAuth ? (
+            {isAuth && (
               <NavLink to="/dashboard" className="relative group md:hidden">
                 {/* The Initials Circle */}
                 <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
@@ -195,27 +195,27 @@ function App() {
                 {/* Optional: Small Green Dot to show they are "Active" */}
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
               </NavLink>
-            ) : (
-              <div className="flex md:hidden items-center">
-                <NavLink to="/register">
-                  <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
-                    <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
-                      <button
-                        // onClick={() => navigate("/register")}
-                        className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
-                      >
-                        <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
-                          <div className="flex gap-2 items-center justify-center w-full h-full">
-                            <span className="font-semibold text-lg">
-                              Get Started
-                            </span>
-                          </div>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </NavLink>
-              </div>
+              // ) : (
+              //   <div className="flex md:hidden items-center">
+              //     <NavLink to="/register">
+              //       <div className="flex items-center gap-12 h-[90%] w-full text-green-800">
+              //         <div className="w-full items-center h-full bg-linear-to-b from-stone-300/40 to-transparent p-1 rounded-2xl">
+              //           <button
+              //             // onClick={() => navigate("/register")}
+              //             className="items-center w-full h-full group p-1 rounded-xl bg-linear-to-b from-white to-stone-200/40 shadow-[0_1px_3px_rgba(0,0,0,0.5)] active:shadow-[0_0px_1px_rgba(0,0,0,0.5)] active:scale-[0.995]"
+              //           >
+              //             <div className="items-center h-full bg-linear-to-b from-stone-200/40 to-white/80 rounded-lg px-1 py-1">
+              //               <div className="flex gap-2 items-center justify-center w-full h-full">
+              //                 <span className="font-semibold text-lg">
+              //                   Get Started
+              //                 </span>
+              //               </div>
+              //             </div>
+              //           </button>
+              //         </div>
+              //       </div>
+              //     </NavLink>
+              //   </div>
             )}
           </div>
 
@@ -296,7 +296,7 @@ function App() {
 
             <div className="flex grow"></div>
 
-            {/* right side of the menu */}
+            {/* RIGHT SIDE OF THE MENU */}
             <div className="flex items-center gap-4">
               {isAuth ? (
                 <>
@@ -343,14 +343,22 @@ function App() {
                   <div className="hidden  md:flex items-center justify-center  h-ful px-2 py-2">
                     {/* <div className="bg-linear-to-bg-green-800 to-transparent p-1 rounded-2xl bg-red-800"> */}
                     <NavLink to="/register">
-                      <button
+                      {/* <button
                         // onClick={() => navigate("/register")}
                         className="group px-2 py-2 rounded-[50px]  bg-linear-to-b bg-green-800 text-emerald-50/100  active:scale-[0.995]"
                       >
                         <span className="font-semibold text-base">
                           Get Started
                         </span>
-                      </button>
+                      </button> */}
+                      <div class="flex items-center space-x-4">
+                        <a
+                          href="#"
+                          class="hidden md:flex items-center justify-center px-4 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-50 transitions"
+                        >
+                          Get Started
+                        </a>
+                      </div>
                     </NavLink>
                   </div>
                 </>
@@ -358,6 +366,7 @@ function App() {
             </div>
           </div>
         </nav>
+
         <div className="hidden pl-50 pr-50 bg-transparent pb-4 md:flex items-center">
           {/* SEARCH INPUT FOR LARGE SCREEN */}
           {location.pathname === "/marketplace" && (
@@ -388,40 +397,81 @@ function App() {
 
       {/* SIDEMENU  */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-[#1A5C2A] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`fixed flex-col top-0 right-0 h-full bg-white w-80 z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Close button */}
-        <div className="flex justify-end p-4">
-          <button className="text-white" onClick={() => setMenuOpen(false)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
+        {isAuth ? (
+          // TOP DIV
+          <div className="bg-green-800 h-[30%] rounded-b-[50px] border-b-8 border-b-green-900">
+            {/* Close button */}
+            <div className="flex justify-end p-4">
+              <button className="text-white" onClick={() => setMenuOpen(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
 
-        {/* Logo */}
-        <div className="flex justify-center mb-6">
-          <img className="w-28" src={logo} alt="AgroConnect logo" />
-        </div>
+            {/* Logo */}
+            <div className="flex justify-center mb-6">
+              <NavLink to="/dashboard" className="relative group md:hidden">
+                {/* The Initials Circle */}
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
+                  {getInitials()}
+                </div>
+
+                {/* Optional: Small Green Dot to show they are "Active" */}
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
+              </NavLink>
+            </div>
+          </div>
+        ) : (
+          // TOP DIV
+          <div className=" bg-[#1A5C2A]">
+            {/* Close button */}
+            <div className="flex justify-end p-4">
+              <button className="text-white" onClick={() => setMenuOpen(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Logo */}
+            <div className="flex justify-center mb-6">
+              <img className="w-28" src={logo} alt="AgroConnect logo" />
+            </div>
+          </div>
+        )}
 
         {/* Divider */}
         <div className="border-t border-white/20 mx-6 mb-6" />
 
-        {/* search input for mobile */}
-        <div className="flex items-center bg-white/10 border border-white/20 rounded-full overflow-hidden mx-6 mb-4">
+        {/* search input for mobile
+        <div className="flex items-center bg-green-800 border border-white/20 rounded-full overflow-hidden mx-6 mb-6">
           <input
             type="text"
             value={searchTerm}
@@ -440,18 +490,18 @@ function App() {
               <path strokeLinecap="round" d="m21 21-4.35-4.35" />
             </svg>
           </button>
-        </div>
+        </div> */}
 
         {/* Nav Links */}
-        <nav className="flex flex-col px-6 gap-2">
+        <nav className="flex flex-col px-6 py-10 gap-6">
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+              `flex items-center gap-4 text-base px-4 py-3 transition-all duration-200 font-semibold ${
                 isActive
-                  ? "bg-white text-[#1A5C2A]"
-                  : "text-white hover:bg-white/10"
+                  ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                  : " hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
               }`
             }
           >
@@ -462,10 +512,10 @@ function App() {
             to="/farmers"
             onClick={() => setMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+              `flex items-center gap-4 text-base px-4 py-3 transition-all duration-200 font-semibold ${
                 isActive
-                  ? "bg-white text-[#1A5C2A]"
-                  : "text-white hover:bg-white/10"
+                  ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                  : " hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
               }`
             }
           >
@@ -476,10 +526,10 @@ function App() {
             to="/marketplace"
             onClick={() => setMenuOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+              `flex items-center gap-4 text-base px-4 py-3 transition-all duration-200 font-semibold ${
                 isActive
-                  ? "bg-white text-[#1A5C2A]"
-                  : "text-white hover:bg-white/10"
+                  ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                  : "hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
               }`
             }
           >
@@ -491,26 +541,25 @@ function App() {
                 to="/dashboard"
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
+                  `flex items-center gap-4 text-base font-medium px-4 py-3  transition-all duration-200 ${
                     isActive
-                      ? "bg-white text-[#1A5C2A]"
-                      : "text-white hover:bg-white/10"
+                      ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                      : "hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
                   }`
                 }
               >
                 <i className="fa-solid fa-gauge w-5"></i> Dashboard
               </NavLink>
 
-              <button
+              <NavLink
                 onClick={() => {
                   setMenuOpen(false);
                   triggerLogoutPopup();
                 }}
-                className="text-white hover:bg-white/10 p-3 rounded-lg text-left"
+                className="flex items-center gap-4 text-base font-medium px-4 py-3  transition-all duration-200  text-[#1A5C2A]"
               >
-                <i className="fa-solid fa-right-from-bracket w-5 ml-2"></i>{" "}
-                Logout
-              </button>
+                <i className="fa-solid fa-right-from-bracket w-5"></i> Logout
+              </NavLink>
             </>
           ) : (
             <>
@@ -520,8 +569,8 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? "bg-white text-[#1A5C2A]"
-                      : "text-white hover:bg-white/10"
+                      ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                      : "bg-green-800 hover:bg-green-900 rounded-full  text-white hover:text-white"
                   }`
                 }
               >
@@ -534,8 +583,8 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? "bg-white text-[#1A5C2A]"
-                      : "text-white hover:bg-white/10"
+                      ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                      : "bg-green-800 hover:bg-green-900 rounded-full  text-white hover:text-white"
                   }`
                 }
               >
@@ -547,13 +596,17 @@ function App() {
 
         {/* Bottom tag */}
         <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-          <p className="text-white/40 text-xs">© 2026 AgroConnect</p>
+          <p className="text-green-800 text-xs font-semibold">
+            © 2026 AgroConnect
+          </p>
         </div>
       </div>
 
       <div
-        className={`w-full h-screen bg-slate-500 transition-all duration-300 ${
-          location.pathname === "/marketplace" ? "pt-15 md:pt-40" : " md:pt-30"
+        className={`w-full min-h-screen transition-all duration-300 ${
+          location.pathname === "/marketplace"
+            ? "pt-16 md:pt-30"
+            : "pt-16  md:pt-30"
         }`}
       >
         <Routes>

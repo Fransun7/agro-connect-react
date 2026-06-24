@@ -138,7 +138,6 @@ function Listings() {
   }
   return (
     <div className="p-6">
-      <h2 className="text-xl font-bold text-[#1A5C2A]">Listings</h2>
       {isFarmer && (
         <div className="mt-10">
           <div className="flex justify-between items-center mb-4">
