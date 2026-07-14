@@ -34,6 +34,7 @@ function App() {
   const [logoutConfirm, setLogConfirm] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   // DECIDE ACTION IF SESSION EXIST OR NOT
@@ -57,6 +58,7 @@ function App() {
         farmLocation: profile?.farm_location,
         role: profile?.role,
       });
+      setLoading(false);
     };
 
     // GETTING THE SESSION
@@ -64,6 +66,8 @@ function App() {
       if (session) {
         setIsAuth(true);
         profileName(session.user);
+      } else {
+        setLoading(false);
       }
     });
 
@@ -126,6 +130,16 @@ function App() {
       .join(" ")
       .toUpperCase();
   };
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-emerald-50">
+        <div className="text-center text-green-800 font-bold">
+          🔄 Connecting to AgroConnect...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -337,7 +351,10 @@ function App() {
                       }`
                     }
                   >
-                    <i className="fa-solid fa-right-to-bracket w-5"></i> Login
+                    <button className="w-[83.84px] h-11 border-2 border-[#2E2F35] bg-[#FFFFFF] shadow-[3px_3px_0px_0px_#2E2F35] rounded-xl text-[15px] cursor-pointer">
+                      Login
+                    </button>
+                    {/* <i className="fa-solid fa-right-to-bracket w-5"></i> Login */}
                   </NavLink>
 
                   <div className="hidden  md:flex items-center justify-center  h-ful px-2 py-2">
@@ -352,12 +369,9 @@ function App() {
                         </span>
                       </button> */}
                       <div class="flex items-center space-x-4">
-                        <a
-                          href="#"
-                          class="hidden md:flex items-center justify-center px-4 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-50 transitions"
-                        >
+                        <button className="w-[184.86px] h-11 border-2 border-[#072e1e] bg-[#FFFFFF] shadow-[3px_3px_0px_0px_#072e1e] rounded-xl text-[#2F6B3F] text-[15px] font-bold cursor-pointer  ">
                           Get Started
-                        </a>
+                        </button>
                       </div>
                     </NavLink>
                   </div>
@@ -397,16 +411,19 @@ function App() {
 
       {/* SIDEMENU  */}
       <div
-        className={`fixed flex-col top-0 right-0 h-full bg-white w-80 z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed flex-col top-0 right-0 h-screen bg-white w-80 z-50  transform transition-transform duration-300 ease-in-out shadow-[0_0_50px_rgba(0,0,0,0.15)] ${
+          menuOpen ? "translate-x-0" : "translate-x-full "
         }`}
       >
         {isAuth ? (
           // TOP DIV
-          <div className="bg-green-800 h-[30%] rounded-b-[50px] border-b-8 border-b-green-900">
-            {/* Close button */}
+          <div className="bg-[#0A3915] h-[30%] rounded-b-[50px] flex flex-col shrink-0">
+            {/* CLOSE BUTTON */}
             <div className="flex justify-end p-4">
-              <button className="text-white" onClick={() => setMenuOpen(false)}>
+              <button
+                className=" text-emerald-300/80 hover:text-white transition-colors bg-white/10 rounded-full p-1 cursor-pointer"
+                onClick={() => setMenuOpen(false)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-8 w-8"
@@ -424,22 +441,36 @@ function App() {
               </button>
             </div>
 
-            {/* Logo */}
-            <div className="flex justify-center mb-6">
-              <NavLink to="/dashboard" className="relative group md:hidden">
-                {/* The Initials Circle */}
-                <div className="w-10 h-10 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
-                  {getInitials()}
-                </div>
+            <div className="w-full h-full flex items-center gap-2 p-8">
+              {/* Logo */}
+              <div className="flex justify-center mb-6">
+                <NavLink to="/dashboard" className="relative group md:hidden">
+                  {/* The Initials Circle */}
+                  <div className="w-15 h-15 rounded-full bg-linear-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] text-white flex items-center justify-center font-bold text-sm border-2 border-white shadow-md active:scale-95 transition-transform">
+                    {getInitials()}
+                  </div>
 
-                {/* Optional: Small Green Dot to show they are "Active" */}
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span>
-              </NavLink>
+                  {/* Optional: Small Green Dot to show they are "Active"
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full"></span> */}
+                </NavLink>
+              </div>
+
+              <div className="flex flex-col min-w-0">
+                <span className="text-emerald-300 text-xs font-bold uppercase tracking-wider">
+                  Welcome Back
+                </span>
+                <h3 className="text-white font-bold text-lg truncate">
+                  {currentUser.fullName}
+                </h3>
+                <span className="text-white/60 text-xs truncate font-medium">
+                  {currentUser.role || "Buyer"} Profile
+                </span>
+              </div>
             </div>
           </div>
         ) : (
           // TOP DIV
-          <div className=" bg-[#1A5C2A]">
+          <div className=" bg-[#1A5C2A]  flex flex-col shrink-0 relative z-10 p-8">
             {/* Close button */}
             <div className="flex justify-end p-4">
               <button className="text-white" onClick={() => setMenuOpen(false)}>
@@ -460,17 +491,51 @@ function App() {
               </button>
             </div>
 
-            {/* Logo */}
+            {/* Logo
             <div className="flex justify-center mb-6">
               <img className="w-28" src={logo} alt="AgroConnect logo" />
+            </div> */}
+
+            <div className="flex flex-col  justify-center gap-2 animate-fadeIn">
+              <span className="text-[#C4A77D] text-[10px] font-extrabold uppercase tracking-widest">
+                Join AgroConnect
+              </span>
+              <h3 className="text-white font-black text-2xl tracking-tight mt-1 leading-tight">
+                Fresh Farm Produce,
+                <br />
+                Direct to You.
+              </h3>
+              <p className="text-emerald-100/70 text-xs mt-1.5 font-medium leading-relaxed">
+                Connecting local farmers directly with homes & vendors.
+              </p>
+
+              {/* Visual Platform Stats Container */}
+              <div className="flex gap-4 mt-4 bg-white/5 border border-white/10 rounded-2xl p-3 shadow-inner backdrop-blur-xs">
+                <div className="flex flex-col">
+                  <span className="text-white font-black text-sm tracking-tight">
+                    50+ Hubs
+                  </span>
+                  <span className="text-[9px] text-[#C4A77D] font-bold uppercase tracking-wider">
+                    Verified Farms
+                  </span>
+                </div>
+                <div className="w-1 bg-white/10"></div>
+                <div className="flex flex-col">
+                  <span className="text-white font-black text-sm tracking-tight">
+                    100% Fresh
+                  </span>
+                  <span className="text-[9px] text-[#C4A77D] font-bold uppercase tracking-wider">
+                    Harvest Delivery
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         )}
-
         {/* Divider */}
         <div className="border-t border-white/20 mx-6 mb-6" />
 
-        {/* search input for mobile
+        {/* SEARCH INPUT FOR MOBILE
         <div className="flex items-center bg-green-800 border border-white/20 rounded-full overflow-hidden mx-6 mb-6">
           <input
             type="text"
@@ -493,7 +558,7 @@ function App() {
         </div> */}
 
         {/* Nav Links */}
-        <nav className="flex flex-col px-6 py-10 gap-6">
+        <nav className="px-6 pt-4 pb-8 gap-2 flex flex-col">
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}
@@ -563,43 +628,44 @@ function App() {
             </>
           ) : (
             <>
-              <NavLink
-                to="/login"
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
-                    isActive
-                      ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
-                      : "bg-green-800 hover:bg-green-900 rounded-full  text-white hover:text-white"
-                  }`
-                }
-              >
-                <i className="fa-solid fa-right-to-bracket w-5"></i> Login
-              </NavLink>
+              <div>
+                <NavLink
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-base font-medium px-4 py-3  transition-all duration-200 ${
+                      isActive
+                        ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                        : "hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-right-to-bracket w-5"></i> Login
+                </NavLink>
 
-              <NavLink
-                to="/register"
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center gap-4 text-base font-medium px-4 py-3 rounded-xl transition-all duration-200 ${
-                    isActive
-                      ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
-                      : "bg-green-800 hover:bg-green-900 rounded-full  text-white hover:text-white"
-                  }`
-                }
-              >
-                <i className="fa-solid fa-user-plus w-5"></i> Sign Up
-              </NavLink>
+                <NavLink
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-4 text-base font-medium px-4 py-3  transition-all duration-200 ${
+                      isActive
+                        ? "bg-black/5 border-2 rounded-full text-[#1A5C2A] hover:bg-black/10 hover:font-bold"
+                        : "hover:bg-green-900 rounded-full  text-[#1A5C2A] hover:text-white"
+                    }`
+                  }
+                >
+                  <i className="fa-solid fa-user-plus w-5"></i> Sign Up
+                </NavLink>
+              </div>
             </>
           )}
         </nav>
-
-        {/* Bottom tag */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+        {/* Bottom tag
+        <div className="absolute bottom-0 left-0 right-0 flex justify-center">
           <p className="text-green-800 text-xs font-semibold">
             © 2026 AgroConnect
           </p>
-        </div>
+        </div> */}
       </div>
 
       <div
