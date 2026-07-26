@@ -74,7 +74,6 @@ function Overview() {
         {/*  Row 1, Welcome Banner */}
         <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20">
           <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-yellow-500/5 blur-3xl"></div>
-
           {/* Two-column layout grid: Stacks on mobile, splits 70/30 on desktop */}
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-center">
             {/* Left Column: Greeting, Farm Name & Status */}
@@ -149,7 +148,7 @@ function Overview() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-8">
           {isFarmer ? (
             <>
               <StatsCard
@@ -210,7 +209,8 @@ function Overview() {
           )}
         </div>
         {/* ==================== ROW 3: INSIGHTS PANEL ==================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-8">
           {/* ---- LEFT PANEL: Top Selling Crops ---- */}
           <div className="bg-white border border-slate-100/80 rounded-3xl p-6 shadow-sm">
             {/* Panel Header */}

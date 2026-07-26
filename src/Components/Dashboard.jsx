@@ -54,8 +54,8 @@ function Dashboard({ currentUser }) {
 
   return (
     <div>
-      {/* Mobile sidemenu */}
-      <div className="flex md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 border-b border-gray-100 sticky top-25 z-30">
+      {/* Mobile sidemenu  */}
+      <div className="bg-white flex md:hidden overflow-x-auto scrollbar-hide gap-2 px-4 py-3 border-b-4 border-gray-100 sticky top-25 z-30">
         {filteredLink.map((link) => (
           <NavLink
             key={link.path}
@@ -106,7 +106,7 @@ function Dashboard({ currentUser }) {
         </div>
 
         {/* RIGHT PANEL  */}
-        <div className="w-full md:w-[70%]overflow-y-auto">
+        <div className="w-full md:w-[70%]">
           <Outlet context={{ currentUser }} />
         </div>
       </div>

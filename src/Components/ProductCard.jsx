@@ -1,24 +1,26 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Order from "./Order";
 import { farmersData } from "../data/farmers";
 
-function ProductCard({ produce }) {
+function ProductCard({ produce, isAuth }) {
+  const [orderAuth, setOrderAuth] = useState(false);
   const navigate = useNavigate();
-  // const producto = productsData.find((p) => p.id === Number(id));
+  const handleOrderClick = () => {
+    if (!isAuth) {
+      setOrderAuth(true);
+    } else {
+      navigate(`/order/${produce.id}`);
+    }
+  };
 
   return (
-    <div className="w-72.5 sm:w-[320px] shrink-0 snap-start bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      {/* <img
-        src={produce.image}
-        alt={produce.name}
-        className="w-full h-48 object-cover"
-      /> */}
-
+    <div className="w-100 shrink-0 snap-start bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {produce.image && produce.image.trim() !== "" ? (
         <img
           src={produce.image}
           alt={produce.name}
-          className="w-full h-48 object-cover"
+          className="w-full h-50 object-cover"
         />
       ) : (
         /* Sleek CSS Image Placeholder box that draws if the farmer didn't upload a file */
@@ -58,11 +60,51 @@ function ProductCard({ produce }) {
 
         {/* Order button */}
         <button
-          onClick={() => navigate(`/order/${produce.id}`)}
+          onClick={handleOrderClick}
           className="mt-2 bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300"
         >
           Order Now
         </button>
+
+        {orderAuth && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-gray-100 transform transition-all scale-100">
+              {/* Lock / Key Icon Circle */}
+              <div className="w-16 h-16 bg-emerald-100 text-[#1A5C2A] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                <i className="fa-solid fa-lock"></i>
+              </div>
+
+              {/* Modal Heading & Body Text */}
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                Authentication Required
+              </h3>
+              <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+                Please log in to your account first before placing an order for{" "}
+                <span className="font-semibold text-gray-700">
+                  "{produce?.name || "this item"}"
+                </span>
+                .
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-2.5">
+                <button
+                  onClick={() => navigate("/login")}
+                  className="w-full bg-[#1A5C2A] hover:bg-emerald-800 text-white font-bold py-3 rounded-2xl shadow-md transition-all active:scale-95"
+                >
+                  Go to Login Page
+                </button>
+
+                <button
+                  onClick={() => setOrderAuth(false)}
+                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-2xl transition-all active:scale-95"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -262,16 +262,6 @@ function Order() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 1. Check Auth Status securely
-  const loggedInUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-  const isAuth = localStorage.getItem("isAuth") === "true";
-
-  // SECURITY GATE: If logged out, redirect cleanly to login WITHOUT an alert box.
-  // We pass 'state: { from: location }' so the login page knows where to send them back after signing in!
-  if (!isAuth || !loggedInUser) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-
   // 2. Fetch the dynamic inventory database safely
   const globalProducts =
     JSON.parse(localStorage.getItem("allProducts")) || initialListings;
@@ -375,7 +365,7 @@ function Order() {
               your dashboard...
             </p>
             <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-[#2F6B3F] h-full transition-all duration-[3500ms] ease-linear w-full"></div>
+              <div className="bg-[#2F6B3F] h-full transition-all duration-3500ms ease-linear w-full"></div>
             </div>
           </div>
         </div>

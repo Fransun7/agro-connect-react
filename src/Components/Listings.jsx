@@ -17,6 +17,8 @@ function Listings() {
   const [showForm, setShowForm] = useState(false);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageFile, setImageFile] = useState(null);
+  const [newProductLoading, setNewProductLoading] = useState(false);
 
   // FETCHING FARMER LISTED PRODUCT AND UPDATING IT TO LOCAL STATE
   useEffect(() => {
@@ -72,6 +74,30 @@ function Listings() {
       alert("please fill in product price and name!");
       return;
     }
+    setNewProductLoading(true);
+
+    let imageUrl = null;
+    // UPLAODING PRODUCT IMAGE
+    if (imageFile) {
+      const fileName = `${Date.now()}-${imageFile.name}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("farmers-product-images")
+        .upload(fileName, imageFile);
+
+      //  GETTING THE URL
+      const { data: publicUrl } = supabase.storage
+        .from("farmers-product-images")
+        .getPublicUrl(fileName);
+
+      //  I NEED TO SAVE THE URL INTO A VARIABLE I CAN USE
+      imageUrl = publicUrl.publicUrl;
+
+      if (uploadError) {
+        alert("Error uploading image: " + uploadError.message);
+        setNewProductLoading(false);
+        return;
+      }
+    }
 
     // INSERTS PRODUCT DATA TO DATABASE
     const { data, error } = await supabase
@@ -83,7 +109,7 @@ function Listings() {
           price: Number(newProduct.price),
           unit: newProduct.unit,
           quantity: Number(newProduct.quantity),
-          image: newProduct.image || null,
+          image: imageUrl || null,
           farmer_email: userEmail,
           farmer_name: currentUser?.fullName || "Anonymous Farmer",
           location: currentUser?.farmLocation || "Unknown Location",
@@ -93,6 +119,7 @@ function Listings() {
 
     if (error) {
       alert("Error saving product to cloud: " + error.message);
+      setNewProductLoading(false);
       return;
     }
 
@@ -122,6 +149,7 @@ function Listings() {
       quantity: "",
       image: "",
     });
+    setNewProductLoading(false);
     setShowForm(false);
   }
 
@@ -136,6 +164,12 @@ function Listings() {
 
     setListings(listings.filter((item) => item.id !== id));
   }
+
+  const handleFile = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
+  };
+
   return (
     <div className="p-6">
       {isFarmer && (
@@ -184,24 +218,58 @@ function Listings() {
 
               <div className="flex flex-col gap-1 mt-2">
                 <label className="text-xs font-semibold text-gray-600 text-left">
-                  Product Image URL (Optional)
+                  Insert an image for the product(optional)
                 </label>
                 <input
-                  type="text"
+                  type="file"
+                  accept="image/*"
                   name="image"
-                  placeholder="Paste an image link address (e.g. https://...)"
-                  value={newProduct.image}
-                  onChange={handleChange}
+                  placeholder="Insert an image"
+                  onChange={handleFile}
                   className="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#2F6B3F]"
                 />
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="flex flex-col gap-2 sm:col-span-2">
                 <button
                   onClick={handleAddProduct}
-                  className="w-full bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold py-3 rounded-xl transition-all"
+                  disabled={newProductLoading}
+                  className="w-full bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 disabled:bg-gray-400"
                 >
-                  Save Product
+                  {newProductLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      <span>Saving Product...</span>
+                    </>
+                  ) : (
+                    "Save Product"
+                  )}
+                </button>
+
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="w-full bg-red-700 hover:bg-red-800 text-white font-semibold py-3 rounded-xl transition-all"
+                >
+                  Cancel
                 </button>
               </div>
             </div>

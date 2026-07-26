@@ -10,7 +10,6 @@ function MarketPlace() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchAllProducts = async () => {
       setLoading(true);
@@ -58,7 +57,7 @@ function MarketPlace() {
       </div>
 
       {/* PRODUCTS GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-4 p-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-4 max-w-7xl mx-auto">
         {loading ? (
           <div className="col-span-full text-center py-6 text-gray-500 font-medium">
             🔄 Gathering fresh farm listings live from the cloud...
