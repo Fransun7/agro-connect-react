@@ -11,6 +11,7 @@ function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccessCard, setShowSuccessCard] = useState(false);
+  const [loginLoad, setLoginLoad] = useState(false);
 
   // const handleLogin = (e) => {
   //   e.preventDefault();
@@ -37,6 +38,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoginLoad(true);
 
     try {
       const { data, error: authError } = await supabase.auth.signInWithPassword(
@@ -48,6 +50,7 @@ function Login() {
 
       if (authError) {
         alert(authError.message);
+        setLoginLoad(false);
         return;
       }
 
@@ -68,10 +71,13 @@ function Login() {
 
         if (profile?.role === "Farmer") {
           navigate("/dashboard");
+          setLoginLoad(false);
         } else if (profile?.role === "Buyer") {
           navigate("/dashboard");
+          setLoginLoad(false);
         } else {
           alert("Account layout configuration conflict detected.");
+          setLoginLoad(false);
         }
       }
     } catch (err) {
@@ -79,6 +85,7 @@ function Login() {
       alert(
         "Server routing disruption encountered. Please test connection state.",
       );
+      setLoginLoad(false);
     }
   };
 
@@ -233,8 +240,41 @@ function Login() {
             </div>
 
             {/* Submit */}
-            <button className="mt-2 bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold text-base py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg">
+            {/* <button className="mt-2 bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold text-base py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg">
               Login
+            </button> */}
+            <button
+              onClick={handleLogin}
+              disabled={loginLoad}
+              className="w-full bg-[#1A5C2A] hover:bg-green-800 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 disabled:bg-gray-400"
+            >
+              {loginLoad ? (
+                <>
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <span>loggin In...</span>
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
 
             {/* Divider */}

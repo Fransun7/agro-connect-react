@@ -24,6 +24,21 @@ function Overview() {
   const userName = currentUser?.fullName || "Agro User";
   const farmName = currentUser?.farmName || "UNDEFINED";
   const farmLocation = currentUser?.farmLocation || "UNDEFINED";
+  const [databaseProducts, setDatabaseProducts] = useState([]);
+
+  // I NEED TO FETCH PRODUCTS FROM THE DATABASE
+  useEffect(() => {
+    const fetchSupabaseProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*");
+
+      if (error) {
+        console.error("Error fetching overview products:", error.message);
+      } else if (data) {
+        setDatabaseProducts(data);
+      }
+    };
+    fetchSupabaseProducts();
+  }, []);
 
   // getting allOrders in local storage and filtering them, along with respective roles
   const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];
@@ -35,8 +50,8 @@ function Overview() {
     : globalOrders.filter((order) => order.buyerEmail === userEmail);
 
   // filtering globalProduct
-  const myProducts = globalProducts.filter(
-    (item) => item.farmerEmail === userEmail,
+  const myProducts = databaseProducts.filter(
+    (item) => item.farmer_email === userEmail,
   );
 
   // const Order = isFarmer ? farmerOrders : buyerOrder
@@ -74,6 +89,7 @@ function Overview() {
         {/*  Row 1, Welcome Banner */}
         <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20">
           <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-yellow-500/5 blur-3xl"></div>
+
           {/* Two-column layout grid: Stacks on mobile, splits 70/30 on desktop */}
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-center">
             {/* Left Column: Greeting, Farm Name & Status */}

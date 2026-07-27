@@ -1,12 +1,15 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { farmersData } from "../data/farmers";
 import ProductCard from "./ProductCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { supabase } from "../supabaseClient";
+// import { useOutletContext } from "react-router-dom";
+import { useAuth } from "./Context/AuthContext";
 
 function MarketPlace() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuth } = useAuth();
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,9 +70,7 @@ function MarketPlace() {
             📦 No active products listed on the market right now.
           </div>
         ) : (
-          products
-            .slice(0, 4)
-            .map((item) => <ProductCard key={item.id} produce={item} />)
+          products.map((item) => <ProductCard key={item.id} produce={item} />)
         )}
       </div>
     </div>

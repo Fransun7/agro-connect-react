@@ -1,47 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { farmerOrders } from "../data/dashboardData";
+import { useAuth } from "./Context/AuthContext";
+import { supabase } from "../supabaseClient";
 
 function Orders() {
-  // Figuring out the user details
-  const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
-  const isFarmer = savedUser?.role === "Farmer";
-  const userEmail = savedUser?.email;
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
-  const [orders, setOrders] = useState(() => {
-    const globalOrders =
-      JSON.parse(localStorage.getItem("allOrders")) || farmerOrders;
+  // I NEED TO GET THE USER DETAILS
+  const isFarmer = currentUser?.role === "Farmer";
+  const userEmail = currentUser?.email;
 
-    // filtering globalOrders to get the orders that is directed to the specific farmer
-    return isFarmer
-      ? globalOrders.filter((order) => order.farmerEmail === userEmail)
-      : globalOrders.filter((order) => order.buyerEmail === userEmail);
-  });
+  // I NEED TO FETCH THE ORDERS
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!userEmail) return;
+      setLoading(false);
 
-  function updateOrderStatus(orderId, newStatus) {
-    // Pull latest global stack
-    const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];
+      let query = supabase
+        .from("orders")
+        .select("*")
+        .order("id", { ascending: false });
 
-    // Map over it to change the status of the matching order ID
-    const updatedGlobal = globalOrders.map((order) => {
-      if (order.id === orderId) {
-        return { ...order, status: newStatus };
+      if (isFarmer) {
+        query = query.eq("farmer_email", userEmail);
+      } else {
+        query = query.eq("buyer_email", userEmail);
       }
-      return order;
-    });
 
-    // Save updated full stack back to the global LocalStorage
-    localStorage.setItem("allOrders", JSON.stringify(updatedGlobal));
+      const { data, error } = await query;
 
-    // Update the local state so that the UI can instantly re-renders
-    setOrders(
-      isFarmer
-        ? updatedGlobal.filter((order) => order.farmerEmail === userEmail)
-        : updatedGlobal.filter((order) => order.buyerEmail === userEmail),
+      if (error) {
+        console.log("Unable to fetch orders:", error.message);
+        setOrders([]);
+      } else {
+        setOrders(data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchOrders();
+  }, [isFarmer, userEmail]);
+
+  async function updateOrderStatus(orderId, newStatus) {
+    supabase.from("orders").update({ status: newStatus }).eq("id", orderId);
+
+    if (error) {
+      console.error("Error updating status:", error.message);
+      alert("Unable to update order status. Please try again.");
+      return;
+    }
+
+    setOrders((currentOrders) =>
+      currentOrders.map((order) =>
+        order.id === orderId ? { ...order, status: newStatus } : order,
+      ),
     );
-
-    // Fire custom event to tell the Overview tab to update its calculations immediately!
-    window.dispatchEvent(new Event("authUpdate"));
   }
+
+  // Fire custom event to tell the Overview tab to update its calculations immediately!
+  window.dispatchEvent(new Event("authUpdate"));
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -89,8 +108,8 @@ function Orders() {
                 <p className="text-xs text-gray-500">
                   👤{" "}
                   {isFarmer
-                    ? `Buyer: ${item.buyerName || item.buyerEmail}`
-                    : `Farmer: ${item.farmerName || "Agro Farmer"}`}
+                    ? `Buyer: ${item.buyer_name || item.buyer_email}`
+                    : `Farmer: ${item.farmer_name || "Agro Farmer"}`}
                 </p>
               </div>
 

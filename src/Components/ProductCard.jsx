@@ -2,14 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Order from "./Order";
 import { farmersData } from "../data/farmers";
+import { useAuth } from "./Context/AuthContext";
 
-function ProductCard({ produce, isAuth }) {
+function ProductCard({ produce }) {
   const [orderAuth, setOrderAuth] = useState(false);
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
+
   const handleOrderClick = () => {
     if (!isAuth) {
       setOrderAuth(true);
     } else {
+      setOrderAuth(false);
       navigate(`/order/${produce.id}`);
     }
   };

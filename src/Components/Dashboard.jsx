@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { useAuth } from "./Context/AuthContext";
 
 const dashboardLinks = [
   { label: "Overview", path: "/dashboard", icon: "fa-solid fa-chart-line" },
@@ -15,10 +16,12 @@ const dashboardLinks = [
   { label: "Settings", path: "/dashboard/settings", icon: "fa-solid fa-gear" },
 ];
 
-function Dashboard({ currentUser }) {
+function Dashboard() {
   // getting the registerUser from local storage and setting the role
   // const savedUser = JSON.parse(localStorage.getItem("theRegisteredUser"));
   // const isFarmer = savedUser?.role === "Farmer";
+
+  const { isAuth, currentUser } = useAuth();
 
   const [isFarmer, setIsFarmer] = useState(false);
 

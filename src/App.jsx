@@ -1,3 +1,4 @@
+import { useAuth } from "./Components/Context/AuthContext";
 import { supabase } from "./supabaseClient";
 
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
@@ -35,61 +36,7 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [logoutConfirm, setLogConfirm] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // DECIDE ACTION IF SESSION EXIST OR NOT
-  useEffect(() => {
-    const profileName = async (sessionUser) => {
-      if (!sessionUser) {
-        setCurrentUser(null);
-        return;
-      }
-      // getting session user full name
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name, farm_name, farm_location, role")
-        .eq("id", sessionUser.id)
-        .single();
-
-      setCurrentUser({
-        ...sessionUser,
-        fullName: profile?.full_name || "Agro User",
-        farmName: profile?.farm_name,
-        farmLocation: profile?.farm_location,
-        role: profile?.role,
-      });
-      setLoading(false);
-    };
-
-    // GETTING THE SESSION
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setIsAuth(true);
-        profileName(session.user);
-      } else {
-        setLoading(false);
-      }
-    });
-
-    // LISTEN TO LOGIN STATE AND DECIDE ACTION BASED ON THE STATE
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session) {
-        setIsAuth(true);
-        profileName(session.user);
-      } else {
-        setIsAuth(false);
-        setCurrentUser(null);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  const { isAuth, currentUser, loading } = useAuth();
 
   useEffect(() => {
     // checks if there are items for allFarmerProducts in localstarage and put initial listing in the local staorage if not
@@ -740,10 +687,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/dashboard"
-            element={<Dashboard currentUser={currentUser} isAuth={isAuth} />}
-          >
+          <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<Overview />} />
             <Route path="listings" element={<Listings />} />
 
