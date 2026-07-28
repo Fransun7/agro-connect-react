@@ -218,7 +218,7 @@ function Listings() {
 
               <div className="flex flex-col gap-1 mt-2">
                 <label className="text-xs font-semibold text-gray-600 text-left">
-                  Insert an image for the product(optional)
+                  Insert an image for the product.
                 </label>
                 <input
                   type="file"
