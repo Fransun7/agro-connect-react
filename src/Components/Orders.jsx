@@ -44,7 +44,10 @@ function Orders() {
   }, [isFarmer, userEmail]);
 
   async function updateOrderStatus(orderId, newStatus) {
-    supabase.from("orders").update({ status: newStatus }).eq("id", orderId);
+    const { error } = await supabase
+      .from("orders")
+      .update({ status: newStatus })
+      .eq("id", orderId);
 
     if (error) {
       console.error("Error updating status:", error.message);
@@ -52,6 +55,8 @@ function Orders() {
       return;
     }
 
+    /*I NEED TO UPDATE ORDERS WHEN THE STATUS OF THE ORDER CHANGES, I AM USING CURRENTORDERS AS THE CURRENT STATE OF ORDERS,
+      MAP THROUGH THE STATE AND CHANGE THE STATUS OF THE ORDER THAT MATCHES THE ID AND LEAVE THE ONES THAT DOESN'T */
     setOrders((currentOrders) =>
       currentOrders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order,
@@ -75,67 +80,67 @@ function Orders() {
 
       <div className="flex flex-col gap-4">
         {orders.length > 0 ? (
-          orders.map((item) => (
+          orders.map((order) => (
             <div
-              key={item.id}
+              key={order.id}
               className="bg-white rounded-2xl p-5 shadow-xs border border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition-shadow duration-200"
             >
               {/* Order Essentials */}
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-bold text-gray-800 text-base">
-                    {item.product}
+                    {order.product}
                   </h3>
                   <span
                     className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight ${
-                      item.status === "Delivered"
+                      order.status === "Delivered"
                         ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                        : item.status === "Pending"
+                        : order.status === "Pending"
                           ? "bg-amber-50 text-amber-600 border border-amber-200"
-                          : item.status === "Confirmed"
+                          : order.status === "Confirmed"
                             ? "bg-blue-50 text-blue-600 border border-blue-200"
                             : "bg-rose-50 text-rose-600 border border-rose-200"
                     }`}
                   >
-                    {item.status}
+                    {order.status}
                   </span>
                 </div>
                 <p className="text-xs text-gray-400">
                   Order ID:{" "}
-                  <span className="font-mono text-gray-600">#{item.id}</span> |
-                  Date: {item.date || "Today"}
+                  <span className="font-mono text-gray-600">#{order.id}</span> |
+                  Date: {order.date || "Today"}
                 </p>
                 <p className="text-xs text-gray-500">
                   👤{" "}
                   {isFarmer
-                    ? `Buyer: ${item.buyer_name || item.buyer_email}`
-                    : `Farmer: ${item.farmer_name || "Agro Farmer"}`}
+                    ? `Buyer: ${order.buyer_name || order.buyer_email}`
+                    : `Farmer: ${order.farmer_name || "Agro Farmer"}`}
                 </p>
               </div>
 
               {/* Financial Metrics */}
               <div className="flex flex-col md:items-end gap-1">
                 <span className="text-[#FFA02E] font-black text-base">
-                  ₦{item.total ? item.total.toLocaleString() : "0"}
+                  ₦{order.total ? order.total.toLocaleString() : "0"}
                 </span>
                 <span className="text-xs text-gray-400 font-medium">
-                  {item.quantity} units requested
+                  {order.quantity} units requested
                 </span>
               </div>
 
               {/* Action Operations Machine (Only accessible to Farmers) */}
               {isFarmer && (
                 <div className="flex items-center gap-2 border-t pt-3 md:border-t-0 md:pt-0">
-                  {item.status === "Pending" && (
+                  {order.status === "Pending" && (
                     <>
                       <button
-                        onClick={() => updateOrderStatus(item.id, "Cancelled")}
+                        onClick={() => updateOrderStatus(order.id, "Cancelled")}
                         className="text-xs font-bold text-rose-500 hover:bg-rose-50 px-3 py-2 rounded-xl transition-colors"
                       >
                         Decline
                       </button>
                       <button
-                        onClick={() => updateOrderStatus(item.id, "Confirmed")}
+                        onClick={() => updateOrderStatus(order.id, "Confirmed")}
                         className="text-xs font-bold bg-[#1A5C2A] hover:bg-green-800 text-white px-4 py-2 rounded-xl shadow-xs transition-all"
                       >
                         Accept Order
@@ -143,17 +148,17 @@ function Orders() {
                     </>
                   )}
 
-                  {item.status === "Confirmed" && (
+                  {order.status === "Confirmed" && (
                     <button
-                      onClick={() => updateOrderStatus(item.id, "Delivered")}
+                      onClick={() => updateOrderStatus(order.id, "Delivered")}
                       className="text-xs font-bold w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl shadow-xs transition-all"
                     >
                       Mark as Delivered
                     </button>
                   )}
 
-                  {(item.status === "Delivered" ||
-                    item.status === "Cancelled") && (
+                  {(order.status === "Delivered" ||
+                    order.status === "Cancelled") && (
                     <span className="text-xs text-gray-400 italic bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
                       Archived Transaction
                     </span>

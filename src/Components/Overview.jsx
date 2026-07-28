@@ -25,6 +25,7 @@ function Overview() {
   const farmName = currentUser?.farmName || "UNDEFINED";
   const farmLocation = currentUser?.farmLocation || "UNDEFINED";
   const [databaseProducts, setDatabaseProducts] = useState([]);
+  const [myOrders, setMyOrders] = useState([]);
 
   // I NEED TO FETCH PRODUCTS FROM THE DATABASE
   useEffect(() => {
@@ -40,14 +41,34 @@ function Overview() {
     fetchSupabaseProducts();
   }, []);
 
-  // getting allOrders in local storage and filtering them, along with respective roles
-  const globalOrders = JSON.parse(localStorage.getItem("allOrders")) || [];
-  const globalProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
+  // I NEED TO FETCH ORDERS FROM SUPABASE
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!userEmail) return;
 
-  // filterring the orders
-  const myOrders = isFarmer
-    ? globalOrders.filter((order) => order.farmerEmail === userEmail)
-    : globalOrders.filter((order) => order.buyerEmail === userEmail);
+      let query = supabase
+        .from("orders")
+        .select("*")
+        .order("id", { ascending: false });
+
+      if (isFarmer) {
+        query = query.eq("farmer_email", userEmail);
+      } else {
+        query = query.eq("buyer_email", userEmail);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.log("Unable to fetch orders:", error.message);
+        setMyOrders([]);
+      } else {
+        setMyOrders(data || []);
+      }
+    };
+
+    fetchOrders();
+  }, [isFarmer, userEmail]);
 
   // filtering globalProduct
   const myProducts = databaseProducts.filter(
