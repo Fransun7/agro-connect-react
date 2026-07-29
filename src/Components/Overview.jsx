@@ -78,9 +78,10 @@ function Overview() {
   // const Order = isFarmer ? farmerOrders : buyerOrder
 
   // const [listings, setListings] = useState(initialListings);
+  const pendingOrders = myOrders.filter((order) => order.status === "Pending");
 
   const totalEarnings = myOrders
-    .filter((o) => o.status === "Delivered")
+    .filter((o) => o.status === "Pending")
     .reduce((sum, o) => sum + o.total, 0);
 
   // creating an object that takes the produce sales of the farmer and saving it into a variable
@@ -107,7 +108,7 @@ function Overview() {
     <div className="flex flex-col gap-8 p-3">
       <h2 className="text-xl font-bold text-[#1A5C2A]">Overview</h2>
       <div className="border-4 border-black/5 p-2 rounded-lg">
-        {/*  Row 1, Welcome Banner */}
+        {/* WELCOME BANNER */}
         <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-950 via-emerald-900 to-green-800 p-6 md:p-8 text-white shadow-xl shadow-emerald-950/20">
           <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-yellow-500/5 blur-3xl"></div>
 
@@ -144,7 +145,7 @@ function Overview() {
                     </strong>{" "}
                     listed for sale and{" "}
                     <strong className="text-yellow-400 font-bold">
-                      1 pending order
+                      {pendingOrders.length} pending order
                     </strong>{" "}
                     waiting for your review.
                   </>

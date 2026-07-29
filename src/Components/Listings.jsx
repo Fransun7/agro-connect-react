@@ -26,26 +26,45 @@ function Listings() {
       if (!userEmail) return;
       setLoading(true);
 
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .eq("farmer_email", userEmail);
+      const [
+        { data: productData, error: productDataError },
+        { data: orderData, error: orderDataError },
+      ] = await Promise.all([
+        supabase.from("products").select("*").eq("farmer_email", userEmail),
 
-      if (error) {
-        alert("Error fetching listings:", error.message);
-      } else if (data) {
-        const mappedListings = data.map((item) => ({
-          id: item.id,
-          name: item.name,
-          category: item.category,
-          price: Number(item.price),
-          unit: item.unit,
-          quantity: Number(item.quantity),
-          image: item.image,
-          farmerEmail: item.farmer_email,
-          farmerName: item.farmer_name,
-          location: item.location,
-        }));
+        supabase
+          .from("orders")
+          .select("product_id, quantity")
+          .eq("status", "Delivered"),
+      ]);
+
+      if (productDataError || orderDataError) {
+        alert(
+          "Error fetching listings:",
+          productDataError?.message || orderDataError?.message,
+        );
+      } else if (productData) {
+        const mappedListings = productData.map((item) => {
+          const soldQuantity = orderData
+            .filter((order) => order.product_id === item.id)
+            .reduce((total, order) => total + Number(order.quantity), 0);
+
+          const availableQuantity = Number(item.quantity) - soldQuantity;
+          return {
+            id: item.id,
+            name: item.name,
+            category: item.category,
+            price: Number(item.price),
+            unit: item.unit,
+            quantity: Number(item.quantity),
+            soldQuantity,
+            availableQuantity,
+            image: item.image,
+            farmerEmail: item.farmer_email,
+            farmerName: item.farmer_name,
+            location: item.location,
+          };
+        });
         setListings(mappedListings);
       }
       setLoading(false);
@@ -276,7 +295,29 @@ function Listings() {
           )}
           {loading ? (
             <div className="text-center py-12 text-gray-500 font-medium">
-              🔄 Loading your fresh farm produce listings from cloud...
+              <svg
+                className="animate-spin h-10 w-10 text-[#1A5C2A]"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <span>
+                Loading your fresh farm produce listings from cloud...
+              </span>
             </div>
           ) : listings.length === 0 ? (
             <div className="text-center py-12 text-gray-400">
@@ -309,6 +350,9 @@ function Listings() {
                   </p>
                   <p className="text-gray-400 text-xs">
                     📦 {item.quantity} {item.unit}s available
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    📦 {item.soldQuantity} {item.unit}s sold
                   </p>
                 </div>
               ))}

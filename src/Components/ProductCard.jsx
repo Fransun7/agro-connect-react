@@ -58,7 +58,8 @@ function ProductCard({ produce }) {
           <span>🧑‍🌾 {produce.farmerName}</span>
           <span>📍 {produce.location}</span>
           <span>
-            📦 {produce.quantity} {produce.unit}s available
+            📦 {produce.availableQuantity} {produce.unit}s available out of{" "}
+            {produce.quantity}
           </span>
         </div>
 
