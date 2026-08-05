@@ -63,7 +63,7 @@ function Order() {
         buyer_phone: form.phone,
         delivery_address: form.address,
         additional_note: form.note,
-        farmer_email: product?.farmer_email || "admin@agroconnect.com",
+        farmer_email: product?.farmer_email || "admin@cropbit.com",
         farmer_name: product?.farmer_name || "Agro Farmer",
       }])
       .select();
@@ -81,12 +81,12 @@ function Order() {
     }, 3500);
   }
 
-  const inputClass = "border border-[#334155] bg-[#1E293B] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[#F8FAFC] outline-none transition-all placeholder-[#475569] w-full resize-none";
+  const inputClass = "border border-[var(--border)] bg-[var(--surface)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full resize-none";
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-[#0F172A]">
-        <div className="w-10 h-10 border-2 border-[#334155] border-t-[#10B981] rounded-full animate-spin" />
+      <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-[var(--bg)]">
+        <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
         <span className="text-sm font-bold text-[#10B981] tracking-wide">Loading product...</span>
       </div>
     );
@@ -94,9 +94,9 @@ function Order() {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[#0F172A]">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[var(--bg)]">
         <div className="text-4xl mb-2">🔍</div>
-        <p className="text-[#94A3B8] text-lg font-medium">Product not found or unavailable.</p>
+        <p className="text-[var(--muted)] text-lg font-medium">Product not found or unavailable.</p>
         <button
           onClick={() => navigate("/marketplace")}
           className="bg-[#10B981] hover:bg-[#059669] text-[#0F172A] px-6 py-3 rounded-xl font-bold transition-all"
@@ -108,14 +108,14 @@ function Order() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A] py-12 px-4 sm:px-6 lg:px-8 mt-4">
+    <div className="min-h-screen bg-[var(--bg)] py-12 px-4 sm:px-6 lg:px-8 mt-4">
       {/* Success modal */}
       {submitted && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#1E293B] border border-[#334155] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
             <div className="w-16 h-16 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">✓</div>
-            <h2 className="text-2xl font-bold text-[#F8FAFC] mb-2">Order Placed!</h2>
-            <p className="text-[#94A3B8] mb-6 text-sm">
+            <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Order Placed!</h2>
+            <p className="text-[var(--muted)] mb-6 text-sm">
               Your order has been sent to the farmer. Redirecting to your dashboard...
             </p>
             <div className="w-full bg-[#334155] h-1.5 rounded-full overflow-hidden">
@@ -125,26 +125,26 @@ function Order() {
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto bg-[#1E293B] border border-[#334155] rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-2xl shadow-black/30">
+      <div className="max-w-3xl mx-auto bg-[var(--surface)] border border-[var(--border)] rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-2xl shadow-black/30">
         {/* Left: Product info */}
-        <div className="p-8 bg-gradient-to-br from-[#065F46]/30 to-[#1E293B] border-b md:border-b-0 md:border-r border-[#334155] flex flex-col justify-between">
+        <div className="p-8 bg-gradient-to-br from-[#065F46]/30 to-[#1E293B] border-b md:border-b-0 md:border-r border-[var(--border)] flex flex-col justify-between">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/20 px-3 py-1 rounded-full">
               Review Order
             </span>
-            <h1 className="mt-4 text-2xl font-extrabold text-[#F8FAFC] tracking-tight">{product.name}</h1>
-            <p className="text-sm text-[#94A3B8] mt-1">📍 {product.location || "Local Farm"}</p>
-            <p className="text-sm text-[#94A3B8] mt-1">🧑‍🌾 {product.farmer_name || "Agro Farmer"}</p>
+            <h1 className="mt-4 text-2xl font-extrabold text-[var(--text)] tracking-tight">{product.name}</h1>
+            <p className="text-sm text-[var(--muted)] mt-1">📍 {product.location || "Local Farm"}</p>
+            <p className="text-sm text-[var(--muted)] mt-1">🧑‍🌾 {product.farmer_name || "Agro Farmer"}</p>
 
             <div className="mt-6 flex items-baseline gap-1">
               <span className="text-3xl font-extrabold text-[#10B981]">₦{product.price.toLocaleString()}</span>
-              <span className="text-sm text-[#94A3B8]">/ {product.unit || "unit"}</span>
+              <span className="text-sm text-[var(--muted)]">/ {product.unit || "unit"}</span>
             </div>
 
             {/* Total estimate */}
-            <div className="mt-4 bg-[#0F172A] border border-[#334155] rounded-xl p-4">
+            <div className="mt-4 bg-[var(--bg)] border border-[var(--border)] rounded-xl p-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider">Total Estimate</span>
+                <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Total Estimate</span>
                 <span className="text-[#F59E0B] font-extrabold text-xl">
                   ₦{(Number(product?.price || 0) * Number(form.quantity)).toLocaleString()}
                 </span>
@@ -152,18 +152,18 @@ function Order() {
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-[#334155] flex items-center gap-2 text-xs text-[#94A3B8]">
+          <div className="mt-8 pt-6 border-t border-[var(--border)] flex items-center gap-2 text-xs text-[var(--muted)]">
             <span className="text-[#10B981]">🔒</span>
-            Secure transaction powered by AgroConnect
+            Secure transaction powered by Cropbit
           </div>
         </div>
 
         {/* Right: Form */}
         <div className="p-8 flex flex-col gap-5">
-          <h2 className="text-lg font-bold text-[#F8FAFC]">Delivery Details</h2>
+          <h2 className="text-lg font-bold text-[var(--text)]">Delivery Details</h2>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider">Quantity</label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Quantity</label>
             <div className="flex items-center gap-3">
               <input
                 type="number"
@@ -173,14 +173,14 @@ function Order() {
                 onChange={handleChange}
                 className={inputClass}
               />
-              <span className="text-xs font-bold text-[#94A3B8] bg-[#334155] px-3 py-3 rounded-xl border border-[#475569] shrink-0">
+              <span className="text-xs font-bold text-[var(--muted)] bg-[#334155] px-3 py-3 rounded-xl border border-[#475569] shrink-0">
                 {product.unit || "units"}
               </span>
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider">Delivery Address</label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Delivery Address</label>
             <textarea
               name="address"
               placeholder="Enter your clear doorstep delivery address..."
@@ -192,7 +192,7 @@ function Order() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider">Phone Number</label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Phone Number</label>
             <input
               type="tel"
               name="phone"
@@ -204,8 +204,8 @@ function Order() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider">
-              Additional Note <span className="text-[#475569] font-normal normal-case">(optional)</span>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+              Additional Note <span className="text-[var(--subtle)] font-normal normal-case">(optional)</span>
             </label>
             <textarea
               name="note"

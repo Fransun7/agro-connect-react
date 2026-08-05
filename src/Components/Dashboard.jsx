@@ -38,9 +38,9 @@ function Dashboard() {
   });
 
   return (
-    <div className="bg-[#0F172A] min-h-screen">
+    <div className="bg-[var(--bg)] min-h-screen">
       {/* Mobile tab bar */}
-      <div className="bg-[#0F172A] border-b border-[#1E293B] flex md:hidden overflow-x-auto scrollbar-hide gap-1 px-3 py-2 sticky top-16 z-30">
+      <div className="bg-[var(--bg)] border-b border-[var(--border-2)] flex md:hidden overflow-x-auto scrollbar-hide gap-1 px-3 py-2 sticky top-16 z-30">
         {filteredLink.map((link) => (
           <NavLink
             key={link.path}
@@ -50,7 +50,7 @@ function Dashboard() {
               `flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 whitespace-nowrap ${
                 isActive
                   ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B]"
+                  : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
               }`
             }
           >
@@ -62,7 +62,7 @@ function Dashboard() {
       {/* Desktop two-column layout */}
       <div className="flex w-full">
         {/* Sidebar */}
-        <div className="hidden md:flex sticky top-18 w-64 h-[calc(100vh-72px)] bg-gradient-to-b from-[#0a1f14] to-[#0F172A] border-r border-[#1E293B] flex-col p-5 z-30 shrink-0">
+        <div className="hidden md:flex sticky top-18 w-64 h-[calc(100vh-72px)] bg-gradient-to-b from-[var(--s2)] to-[var(--bg)] border-r border-[var(--border-2)] flex-col p-5 z-30 shrink-0">
           <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest px-3 mb-4">Navigation</p>
           <div className="flex flex-col gap-1">
             {filteredLink.map((link) => (
@@ -74,7 +74,7 @@ function Dashboard() {
                   `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                     isActive
                       ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20"
-                      : "text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B]"
+                      : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                   }`
                 }
               >
@@ -86,14 +86,14 @@ function Dashboard() {
 
           {/* User info at bottom */}
           {currentUser && (
-            <div className="mt-auto pt-5 border-t border-[#1E293B]">
+            <div className="mt-auto pt-5 border-t border-[var(--border-2)]">
               <div className="flex items-center gap-3 px-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#10B981] to-[#065F46] flex items-center justify-center text-white text-xs font-bold shrink-0">
                   {(currentUser.fullName || "AU").split(" ").map(w => w[0]).join("").toUpperCase()}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[#F8FAFC] text-xs font-semibold truncate">{currentUser.fullName || "Agro User"}</p>
-                  <p className="text-[#94A3B8] text-[10px] truncate">{currentUser.role || "Buyer"}</p>
+                  <p className="text-[var(--text)] text-xs font-semibold truncate">{currentUser.fullName || "Agro User"}</p>
+                  <p className="text-[var(--muted)] text-[10px] truncate">{currentUser.role || "Buyer"}</p>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ function Dashboard() {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 min-w-0 bg-[#0F172A]">
+        <div className="flex-1 min-w-0 bg-[var(--bg)]">
           <Outlet context={{ currentUser }} />
         </div>
       </div>

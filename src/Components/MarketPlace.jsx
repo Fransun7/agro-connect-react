@@ -57,15 +57,15 @@ function MarketPlace() {
   }, []);
 
   return (
-    <div className="bg-[#0F172A] min-h-screen">
+    <div className="bg-[var(--bg)] min-h-screen">
       {/* Header banner */}
       <div className="bg-gradient-to-r from-[#065F46] to-[#0a2918] border-b border-[#10B981]/20 px-5 py-8 md:py-10">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Verified Listings</p>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#F8FAFC] tracking-tight mb-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] tracking-tight mb-1">
             Farm Marketplace
           </h1>
-          <p className="text-[#94A3B8] text-sm">
+          <p className="text-[var(--muted)] text-sm">
             Browse produce from verified{" "}
             <span className="text-[#F59E0B]">✓</span>{" "}
             farmers across Nigeria
@@ -76,15 +76,15 @@ function MarketPlace() {
       {/* Products grid */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {loading ? (
-          <div className="flex flex-col items-center gap-4 py-20 text-[#94A3B8]">
-            <div className="w-10 h-10 border-2 border-[#334155] border-t-[#10B981] rounded-full animate-spin" />
+          <div className="flex flex-col items-center gap-4 py-20 text-[var(--muted)]">
+            <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
             <span className="font-medium text-sm">Gathering fresh farm listings from the cloud...</span>
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-4xl mb-4">📦</div>
-            <p className="text-[#94A3B8] font-medium">No active products listed on the market right now.</p>
-            <p className="text-[#475569] text-sm mt-2">Check back later or list your own produce.</p>
+            <p className="text-[var(--muted)] font-medium">No active products listed on the market right now.</p>
+            <p className="text-[var(--subtle)] text-sm mt-2">Check back later or list your own produce.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-items-center">

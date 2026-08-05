@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { LogoMark, Wordmark } from "./CropbitLogo";
 import image1 from "../assets/hero-section-image-1.jpg";
 import image2 from "../assets/hero-section-image-2.jpg";
 import image3 from "../assets/hero-section-image-3.jpg";
@@ -15,7 +16,7 @@ const slides = [
     image: image1,
     headline: "Fresh From the Farm,",
     headlineSpan: " Straight to You",
-    subtext: "AgroConnect links Nigerian farmers directly with buyers.",
+    subtext: "Cropbit links Nigerian farmers directly with buyers.",
     primaryBtn: { label: "Order Fresh Produce", link: "/marketplace" },
     secondaryBtn: { label: "List Your Farm", link: "/register" },
   },
@@ -112,7 +113,7 @@ function Home() {
         ))}
 
         {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-black/60 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-black/60 to-black/30" />
 
         {/* Emerald tint strip at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#065F46]/40 to-transparent" />
@@ -129,7 +130,7 @@ function Home() {
             <span className="text-[#10B981]"> {slides[currentIndex].headlineSpan}</span>
           </h1>
 
-          <p className="text-base md:text-xl text-[#94A3B8] max-w-2xl mb-10 leading-relaxed">
+          <p className="text-base md:text-xl text-[var(--muted)] max-w-2xl mb-10 leading-relaxed">
             {slides[currentIndex].subtext}
           </p>
 
@@ -151,7 +152,7 @@ function Home() {
           {/* Trust badges */}
           <div className="flex gap-6 mt-12 flex-wrap justify-center">
             {[["✓", "Verified Farmers"], ["🛡️", "Secure Payments"], ["⚡", "Fast Delivery"]].map(([icon, label]) => (
-              <div key={label} className="flex items-center gap-2 text-[#94A3B8] text-sm font-medium">
+              <div key={label} className="flex items-center gap-2 text-[var(--muted)] text-sm font-medium">
                 <span className="text-[#10B981]">{icon}</span> {label}
               </div>
             ))}
@@ -175,12 +176,12 @@ function Home() {
       </section>
 
       {/* PRODUCTS SECTION */}
-      <section className="bg-[#0F172A] px-4 py-14 md:py-20">
+      <section className="bg-[var(--bg)] px-4 py-14 md:py-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
               <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Fresh From the Market</p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#F8FAFC] tracking-tight">Featured Products</h2>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--text)] tracking-tight">Featured Products</h2>
             </div>
             <NavLink
               to="/marketplace"
@@ -197,12 +198,12 @@ function Home() {
               className="flex overflow-x-auto gap-5 pb-4 pt-2 px-1 scrollbar-hide snap-x snap-mandatory scroll-smooth"
             >
               {loading ? (
-                <div className="flex items-center justify-center gap-3 py-16 w-full text-[#94A3B8] font-medium">
-                  <div className="w-6 h-6 border-2 border-[#334155] border-t-[#10B981] rounded-full animate-spin" />
+                <div className="flex items-center justify-center gap-3 py-16 w-full text-[var(--muted)] font-medium">
+                  <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
                   Gathering fresh farm listings...
                 </div>
               ) : products.length === 0 ? (
-                <div className="w-full text-center py-16 text-[#94A3B8]">
+                <div className="w-full text-center py-16 text-[var(--muted)]">
                   📦 No active products listed on the market right now.
                 </div>
               ) : (
@@ -248,8 +249,8 @@ function Home() {
               We're connecting Nigeria's{" "}
               <span className="text-[#10B981]">farmers to the world.</span>
             </h2>
-            <p className="text-[#94A3B8] text-base md:text-lg leading-relaxed">
-              AgroConnect is committed to closing the gap between Nigerian farmers and buyers. We make fresh produce accessible, affordable, and traceable, starting from Ibadan, spreading across Nigeria.
+            <p className="text-[var(--muted)] text-base md:text-lg leading-relaxed">
+              Cropbit is committed to closing the gap between Nigerian farmers and buyers. We make fresh produce accessible, affordable, and traceable, starting from Ibadan, spreading across Nigeria.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mt-2">
@@ -268,7 +269,7 @@ function Home() {
           </div>
 
           <div className="flex justify-center">
-            <div className="bg-[#0F172A] border border-[#334155] rounded-3xl p-4 shadow-2xl w-full max-w-sm">
+            <div className="bg-[var(--bg)] border border-[var(--border)] rounded-3xl p-4 shadow-2xl w-full max-w-sm">
               <video
                 src="https://res.cloudinary.com/dzerw6edh/video/upload/v1779789746/home-page-video_esbith.mp4"
                 autoPlay
@@ -278,10 +279,10 @@ function Home() {
                 className="w-full h-72 object-cover rounded-2xl"
               />
               <div className="mt-4 px-2 pb-2 flex items-center gap-3">
-                <div className="w-8 h-8 bg-[#10B981] rounded-lg flex items-center justify-center text-sm shrink-0">🌿</div>
+                <LogoMark size={32} />
                 <div>
-                  <p className="text-[#F8FAFC] font-bold text-sm">Farm fresh, always.</p>
-                  <p className="text-[#94A3B8] text-xs">Sourced directly from verified farms across Nigeria.</p>
+                  <p className="text-[var(--text)] font-bold text-sm">Farm fresh, always.</p>
+                  <p className="text-[var(--muted)] text-xs">Sourced directly from verified farms across Nigeria.</p>
                 </div>
               </div>
             </div>
@@ -290,23 +291,22 @@ function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#0a0f1a] border-t border-[#1E293B] text-white px-6 md:px-20 py-12">
+      <footer className="bg-[var(--bg-deep)] border-t border-[var(--border-2)] text-white px-6 md:px-20 py-12">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#10B981] rounded-lg flex items-center justify-center text-base">🌿</div>
-              <h3 className="text-xl font-bold text-[#10B981]">AgroConnect</h3>
+            <div>
+              <Wordmark size="md" lightText />
             </div>
-            <p className="text-[#94A3B8] text-sm leading-relaxed">
+            <p className="text-[var(--muted)] text-sm leading-relaxed">
               Bridging the gap between Nigerian farmers and buyers. Fresh produce, trusted farmers, fast delivery.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-bold text-[#F8FAFC] uppercase tracking-widest">Quick Links</h4>
+            <h4 className="text-sm font-bold text-[var(--text)] uppercase tracking-widest">Quick Links</h4>
             <nav className="flex flex-col gap-2">
               {[["Home", "/"], ["Marketplace", "/marketplace"], ["Farmers", "/farmers"], ["Dashboard", "/dashboard"]].map(([label, to]) => (
-                <NavLink key={to} to={to} className="text-[#94A3B8] text-sm hover:text-[#10B981] transition-colors">
+                <NavLink key={to} to={to} className="text-[var(--muted)] text-sm hover:text-[#10B981] transition-colors">
                   {label}
                 </NavLink>
               ))}
@@ -314,7 +314,7 @@ function Home() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-bold text-[#F8FAFC] uppercase tracking-widest">Follow Us</h4>
+            <h4 className="text-sm font-bold text-[var(--text)] uppercase tracking-widest">Follow Us</h4>
             <div className="flex gap-3">
               {[
                 { label: "Facebook", path: "M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.988H7.898V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" },
@@ -325,7 +325,7 @@ function Home() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="w-9 h-9 bg-[#1E293B] hover:bg-[#10B981] border border-[#334155] hover:border-[#10B981] transition-all duration-300 rounded-full flex items-center justify-center"
+                  className="w-9 h-9 bg-[var(--surface)] hover:bg-[#10B981] border border-[var(--border)] hover:border-[#10B981] transition-all duration-300 rounded-full flex items-center justify-center"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-[#94A3B8] group-hover:fill-white" viewBox="0 0 24 24">
                     <path d={path} />
@@ -336,9 +336,9 @@ function Home() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-10 pt-6 border-t border-[#1E293B] flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-[#475569] text-xs">© 2026 AgroConnect. All rights reserved.</p>
-          <p className="text-[#475569] text-xs">Built with ❤️ for Nigerian farmers.</p>
+        <div className="max-w-6xl mx-auto mt-10 pt-6 border-t border-[var(--border-2)] flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-[var(--subtle)] text-xs">© 2026 Cropbit. All rights reserved.</p>
+          <p className="text-[var(--subtle)] text-xs">Built with ❤️ for Nigerian farmers.</p>
         </div>
       </footer>
     </>

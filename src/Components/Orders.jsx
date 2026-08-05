@@ -59,13 +59,13 @@ function Orders() {
   };
 
   return (
-    <div className="p-4 md:p-6 max-w-5xl bg-[#0F172A] min-h-screen">
+    <div className="p-4 md:p-6 max-w-5xl bg-[var(--bg)] min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-lg font-bold text-[#F8FAFC]">
+          <h2 className="text-lg font-bold text-[var(--text)]">
             {isFarmer ? "Farm Orders" : "My Purchase Orders"}
           </h2>
-          <p className="text-[#94A3B8] text-xs mt-0.5">{orders.length} total orders</p>
+          <p className="text-[var(--muted)] text-xs mt-0.5">{orders.length} total orders</p>
         </div>
         <span className="text-xs bg-[#10B981]/10 text-[#10B981] font-bold px-3 py-1.5 rounded-full border border-[#10B981]/20">
           {orders.length} orders
@@ -77,20 +77,20 @@ function Orders() {
           orders.map((order) => (
             <div
               key={order.id}
-              className="bg-[#1E293B] border border-[#334155] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#10B981]/20 transition-all duration-200"
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#10B981]/20 transition-all duration-200"
             >
               {/* Order info */}
               <div className="flex flex-col gap-1.5 flex-1">
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <h3 className="font-bold text-[#F8FAFC] text-base">{order.product}</h3>
+                  <h3 className="font-bold text-[var(--text)] text-base">{order.product}</h3>
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight border ${statusStyle(order.status)}`}>
                     {order.status}
                   </span>
                 </div>
-                <p className="text-xs text-[#94A3B8] font-mono">
+                <p className="text-xs text-[var(--muted)] font-mono">
                   #{order.id} · {order.date || "Today"}
                 </p>
-                <p className="text-xs text-[#94A3B8]">
+                <p className="text-xs text-[var(--muted)]">
                   👤 {isFarmer
                     ? `Buyer: ${order.buyer_name || order.buyer_email}`
                     : `Farmer: ${order.farmer_name || "Agro Farmer"}`}
@@ -102,12 +102,12 @@ function Orders() {
                 <span className="text-[#F59E0B] font-black text-base">
                   ₦{order.total ? order.total.toLocaleString() : "0"}
                 </span>
-                <span className="text-xs text-[#94A3B8] font-medium">{order.quantity} units</span>
+                <span className="text-xs text-[var(--muted)] font-medium">{order.quantity} units</span>
               </div>
 
               {/* Farmer actions */}
               {isFarmer && (
-                <div className="flex items-center gap-2 border-t border-[#334155] pt-3 md:border-t-0 md:pt-0 shrink-0">
+                <div className="flex items-center gap-2 border-t border-[var(--border)] pt-3 md:border-t-0 md:pt-0 shrink-0">
                   {order.status === "Pending" && (
                     <>
                       <button
@@ -133,7 +133,7 @@ function Orders() {
                     </button>
                   )}
                   {(order.status === "Delivered" || order.status === "Cancelled") && (
-                    <span className="text-xs text-[#94A3B8] italic bg-[#334155]/50 px-3 py-1.5 rounded-lg border border-[#334155]">
+                    <span className="text-xs text-[var(--muted)] italic bg-[#334155]/50 px-3 py-1.5 rounded-lg border border-[var(--border)]">
                       Archived
                     </span>
                   )}
@@ -142,9 +142,9 @@ function Orders() {
             </div>
           ))
         ) : (
-          <div className="text-center py-16 bg-[#1E293B] border border-dashed border-[#334155] rounded-2xl">
+          <div className="text-center py-16 bg-[var(--surface)] border border-dashed border-[var(--border)] rounded-2xl">
             <div className="text-4xl mb-3">📭</div>
-            <p className="text-[#94A3B8] font-medium text-sm">No orders recorded yet on your account.</p>
+            <p className="text-[var(--muted)] font-medium text-sm">No orders recorded yet on your account.</p>
           </div>
         )}
       </div>

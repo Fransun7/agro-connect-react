@@ -69,16 +69,16 @@ function Overview() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6 bg-[#0F172A] min-h-screen">
+    <div className="flex flex-col gap-6 p-4 md:p-6 bg-[var(--bg)] min-h-screen">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[#F8FAFC]">Overview</h2>
+        <h2 className="text-lg font-bold text-[var(--text)]">Overview</h2>
         <span className="text-[#10B981] text-xs font-bold uppercase tracking-widest">
           {new Date().toLocaleDateString("en-NG", { weekday: "short", day: "numeric", month: "short" })}
         </span>
       </div>
 
       {/* WELCOME BANNER */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[#0F172A] p-6 md:p-8 border border-[#10B981]/20">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] p-6 md:p-8 border border-[#10B981]/20">
         <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-[#F59E0B]/5 blur-3xl" />
         <div className="absolute -right-10 -top-10 h-60 w-60 rounded-full bg-[#10B981]/10 blur-3xl" />
 
@@ -87,17 +87,17 @@ function Overview() {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/20 px-3 py-1 text-xs font-bold text-[#10B981] mb-4 uppercase tracking-widest">
               {isFarmer ? "🧑‍🌾 Verified Farmer" : "🛒 Verified Buyer"}
             </span>
-            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 text-[#F8FAFC]">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 text-[var(--text)]">
               Welcome back, {userName}
             </h1>
             {isFarmer && (
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[#94A3B8] mb-4 font-medium">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--muted)] mb-4 font-medium">
                 <span>📍 {farmName}</span>
                 <span className="h-1 w-1 rounded-full bg-[#10B981]/50 hidden sm:inline" />
                 <span>{farmLocation}</span>
               </div>
             )}
-            <p className="text-sm md:text-base text-[#94A3B8] max-w-xl leading-relaxed">
+            <p className="text-sm md:text-base text-[var(--muted)] max-w-xl leading-relaxed">
               {isFarmer ? (
                 <>
                   Your digital shop is online and active. You have{" "}
@@ -116,10 +116,10 @@ function Overview() {
             <div className="hidden md:flex flex-col justify-between rounded-2xl bg-white/5 border border-white/10 p-5 h-full min-h-36">
               <div>
                 <p className="text-xs uppercase tracking-wider text-[#10B981] font-bold mb-1">{farmLocation} Market Alert</p>
-                <p className="text-xs text-[#94A3B8] leading-snug">🌱 Grains and Tubers are in peak demand this weekend across {farmLocation} hubs.</p>
+                <p className="text-xs text-[var(--muted)] leading-snug">🌱 Grains and Tubers are in peak demand this weekend across {farmLocation} hubs.</p>
               </div>
               <div className="mt-4 border-t border-white/10 pt-3">
-                <span className="text-xs font-semibold text-[#94A3B8]">
+                <span className="text-xs font-semibold text-[var(--muted)]">
                   📅 {new Date().toLocaleDateString("en-NG", { weekday: "long", year: "numeric", month: "short", day: "numeric" })}
                 </span>
               </div>
@@ -150,10 +150,10 @@ function Overview() {
       {/* INSIGHTS ROW */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Top Selling Crops */}
-        <div className="bg-[#1E293B] border border-[#334155] rounded-2xl p-5">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-sm font-bold text-[#F8FAFC]">📈 Top Selling Crops</h2>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#94A3B8]">By Revenue</span>
+            <h2 className="text-sm font-bold text-[var(--text)]">📈 Top Selling Crops</h2>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)]">By Revenue</span>
           </div>
           <div className="flex flex-col gap-4">
             {Object.entries(produceSales)
@@ -163,10 +163,10 @@ function Overview() {
                 return (
                   <div key={cropName}>
                     <div className="flex justify-between items-center mb-1.5">
-                      <span className="text-sm font-semibold text-[#F8FAFC]">{cropName}</span>
+                      <span className="text-sm font-semibold text-[var(--text)]">{cropName}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-bold text-[#10B981]">₦{cropTotal.toLocaleString()}</span>
-                        <span className="text-[10px] font-bold text-[#94A3B8]">{percentage}%</span>
+                        <span className="text-[10px] font-bold text-[var(--muted)]">{percentage}%</span>
                       </div>
                     </div>
                     <div className="h-2 w-full rounded-full bg-[#334155] overflow-hidden">
@@ -179,16 +179,16 @@ function Overview() {
                 );
               })}
             {Object.keys(produceSales).length === 0 && (
-              <p className="text-[#94A3B8] text-sm text-center py-4">No sales data yet</p>
+              <p className="text-[var(--muted)] text-sm text-center py-4">No sales data yet</p>
             )}
           </div>
         </div>
 
         {/* Stock Levels */}
-        <div className="bg-[#1E293B] border border-[#334155] rounded-2xl p-5">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-sm font-bold text-[#F8FAFC]">🚨 Stock Levels</h2>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#94A3B8]">Live Inventory</span>
+            <h2 className="text-sm font-bold text-[var(--text)]">🚨 Stock Levels</h2>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)]">Live Inventory</span>
           </div>
           <div className="flex flex-col gap-4">
             {myOrders.map((item) => {
@@ -196,8 +196,8 @@ function Overview() {
               return (
                 <div key={item.id} className="flex items-center justify-between gap-4">
                   <div className="flex flex-col min-w-0">
-                    <span className="text-sm font-semibold text-[#F8FAFC] truncate">{item.name}</span>
-                    <span className="text-xs text-[#94A3B8]">{item.quantity} {item.unit}s remaining</span>
+                    <span className="text-sm font-semibold text-[var(--text)] truncate">{item.name}</span>
+                    <span className="text-xs text-[var(--muted)]">{item.quantity} {item.unit}s remaining</span>
                   </div>
                   <span className={`shrink-0 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${
                     isLow ? "bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20" : "bg-[#10B981]/10 text-[#10B981] border-[#10B981]/20"
@@ -208,58 +208,58 @@ function Overview() {
               );
             })}
             {myOrders.length === 0 && (
-              <p className="text-[#94A3B8] text-sm text-center py-4">No inventory data</p>
+              <p className="text-[var(--muted)] text-sm text-center py-4">No inventory data</p>
             )}
           </div>
         </div>
       </div>
 
       {/* RECENT ORDERS TABLE */}
-      <div className="bg-[#1E293B] border border-[#334155] rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#334155] flex justify-between items-center">
-          <h3 className="font-bold text-[#F8FAFC] text-sm">Recent Orders</h3>
-          <span className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-widest">{myOrders.length} Total</span>
+      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[var(--border)] flex justify-between items-center">
+          <h3 className="font-bold text-[var(--text)] text-sm">Recent Orders</h3>
+          <span className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-widest">{myOrders.length} Total</span>
         </div>
 
-        <div className="hidden md:grid grid-cols-6 border-b border-[#334155] px-5 py-3 bg-[#0F172A]/50">
+        <div className="hidden md:grid grid-cols-6 border-b border-[var(--border)] px-5 py-3 bg-[var(--bg)]/50">
           {["Customer", "Product", "Qty", "Total", "Status", "Date"].map((h) => (
-            <span key={h} className="text-[10px] font-bold text-[#94A3B8] uppercase">{h}</span>
+            <span key={h} className="text-[10px] font-bold text-[var(--muted)] uppercase">{h}</span>
           ))}
         </div>
 
-        <div className="divide-y divide-[#1E293B]">
+        <div className="divide-y divide-[var(--border-2)]">
           {myOrders.map((item, index) => (
-            <div key={index} className="grid grid-cols-1 md:grid-cols-6 px-5 py-4 items-center hover:bg-[#0F172A]/30 transition-colors gap-y-2 md:gap-y-0">
+            <div key={index} className="grid grid-cols-1 md:grid-cols-6 px-5 py-4 items-center hover:bg-[var(--bg)]/30 transition-colors gap-y-2 md:gap-y-0">
               <div className="flex justify-between md:block">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Customer</span>
-                <span className="text-sm font-semibold text-[#F8FAFC]">{isFarmer ? item.buyer : "My Order"}</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Customer</span>
+                <span className="text-sm font-semibold text-[var(--text)]">{isFarmer ? item.buyer : "My Order"}</span>
               </div>
               <div className="flex justify-between md:block">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Product</span>
-                <span className="text-sm text-[#94A3B8]">{item.product}</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Product</span>
+                <span className="text-sm text-[var(--muted)]">{item.product}</span>
               </div>
               <div className="flex justify-between md:block">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Quantity</span>
-                <span className="text-sm text-[#94A3B8] font-medium">{item.quantity} units</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Quantity</span>
+                <span className="text-sm text-[var(--muted)] font-medium">{item.quantity} units</span>
               </div>
               <div className="flex justify-between md:block">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Total</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Total</span>
                 <span className="text-sm font-bold text-[#10B981]">₦{item.total.toLocaleString()}</span>
               </div>
               <div className="flex justify-between md:block">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Status</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Status</span>
                 <span className={`inline-block px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter ${statusColor(item.status)}`}>
                   {item.status}
                 </span>
               </div>
               <div className="flex justify-between md:block md:text-right">
-                <span className="md:hidden text-[10px] font-bold text-[#94A3B8] uppercase">Date</span>
-                <span className="text-[11px] font-medium text-[#94A3B8] uppercase">{item.date || "Today"}</span>
+                <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Date</span>
+                <span className="text-[11px] font-medium text-[var(--muted)] uppercase">{item.date || "Today"}</span>
               </div>
             </div>
           ))}
           {myOrders.length === 0 && (
-            <div className="py-12 text-center text-[#94A3B8] text-sm">No orders yet</div>
+            <div className="py-12 text-center text-[var(--muted)] text-sm">No orders yet</div>
           )}
         </div>
       </div>

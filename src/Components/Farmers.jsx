@@ -17,15 +17,15 @@ function Farmers({ searchTerm }) {
   };
 
   return (
-    <div className="bg-[#0F172A] min-h-screen">
+    <div className="bg-[var(--bg)] min-h-screen">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#065F46] to-[#0a2918] border-b border-[#10B981]/20 px-5 py-8 md:py-10">
         <div className="max-w-7xl mx-auto">
           <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Our Network</p>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#F8FAFC] tracking-tight mb-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] tracking-tight mb-1">
             Verified Farmers
           </h1>
-          <p className="text-[#94A3B8] text-sm">
+          <p className="text-[var(--muted)] text-sm">
             Browse verified{" "}
             <span className="text-[#F59E0B]">✓</span>{" "}
             farmers across Nigeria and order fresh produce directly from the source.

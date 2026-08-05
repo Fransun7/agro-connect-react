@@ -18,7 +18,7 @@ function ProductCard({ produce }) {
   };
 
   return (
-    <div className="w-72 md:w-80 shrink-0 snap-start bg-[#1E293B] border border-[#334155] rounded-2xl overflow-hidden hover:border-[#10B981]/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20">
+    <div className="w-72 md:w-80 shrink-0 snap-start bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[#10B981]/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20">
       {produce.image && produce.image.trim() !== "" ? (
         <img
           src={produce.image}
@@ -26,9 +26,9 @@ function ProductCard({ produce }) {
           className="w-full h-48 object-cover"
         />
       ) : (
-        <div className="w-full h-48 bg-[#0F172A] border-b border-[#334155] flex flex-col items-center justify-center gap-2 select-none">
-          <div className="w-14 h-14 rounded-full bg-[#1E293B] border border-[#334155] flex items-center justify-center text-3xl">🌾</div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#475569]">No Image Provided</span>
+        <div className="w-full h-48 bg-[var(--bg)] border-b border-[var(--border)] flex flex-col items-center justify-center gap-2 select-none">
+          <div className="w-14 h-14 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-3xl">🌾</div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--subtle)]">No Image Provided</span>
         </div>
       )}
 
@@ -37,13 +37,13 @@ function ProductCard({ produce }) {
           {produce.category}
         </span>
 
-        <h2 className="text-base font-bold text-[#F8FAFC] leading-tight">{produce.name}</h2>
+        <h2 className="text-base font-bold text-[var(--text)] leading-tight">{produce.name}</h2>
 
         <p className="text-[#F59E0B] font-bold text-base">
-          ₦{produce.price.toLocaleString()} <span className="text-[#94A3B8] font-normal text-sm">/ {produce.unit}</span>
+          ₦{produce.price.toLocaleString()} <span className="text-[var(--muted)] font-normal text-sm">/ {produce.unit}</span>
         </p>
 
-        <div className="text-sm text-[#94A3B8] flex flex-col gap-1">
+        <div className="text-sm text-[var(--muted)] flex flex-col gap-1">
           <span>🧑‍🌾 {produce.farmerName}</span>
           <span>📍 {produce.location}</span>
           <span>📦 {produce.availableQuantity} {produce.unit}s available</span>
@@ -58,14 +58,14 @@ function ProductCard({ produce }) {
 
         {orderAuth && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-            <div className="bg-[#1E293B] border border-[#334155] rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center">
+            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center">
               <div className="w-14 h-14 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                 🔒
               </div>
-              <h3 className="text-xl font-bold text-[#F8FAFC] mb-2">Sign in Required</h3>
-              <p className="text-sm text-[#94A3B8] mb-6 leading-relaxed">
+              <h3 className="text-xl font-bold text-[var(--text)] mb-2">Sign in Required</h3>
+              <p className="text-sm text-[var(--muted)] mb-6 leading-relaxed">
                 Please log in before placing an order for{" "}
-                <span className="font-semibold text-[#F8FAFC]">"{produce?.name || "this item"}"</span>.
+                <span className="font-semibold text-[var(--text)]">"{produce?.name || "this item"}"</span>.
               </p>
               <div className="flex flex-col gap-2.5">
                 <button
@@ -76,7 +76,7 @@ function ProductCard({ produce }) {
                 </button>
                 <button
                   onClick={() => setOrderAuth(false)}
-                  className="w-full bg-[#334155] hover:bg-[#475569] text-[#94A3B8] font-bold py-3 rounded-2xl transition-all"
+                  className="w-full bg-[#334155] hover:bg-[#475569] text-[var(--muted)] font-bold py-3 rounded-2xl transition-all"
                 >
                   Cancel
                 </button>

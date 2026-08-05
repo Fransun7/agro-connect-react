@@ -1,4 +1,5 @@
 import { supabase } from "../supabaseClient";
+import { Wordmark } from "./CropbitLogo";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -61,20 +62,19 @@ function Register() {
     }
   };
 
-  const inputClass = "bg-[#1E293B] border border-[#334155] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[#F8FAFC] outline-none transition-all placeholder-[#475569] w-full";
+  const inputClass = "bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full";
 
   return (
-    <div className="min-h-screen flex bg-[#0F172A]">
+    <div className="min-h-screen flex bg-[var(--bg)]">
       {/* Left Panel */}
-      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[#0F172A] px-12 py-20 relative overflow-hidden">
+      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
         <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#10B981]/5" />
         <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[#10B981]/5" />
         <div className="absolute -bottom-10 left-20 w-96 h-96 rounded-full bg-[#10B981]/5" />
 
         <div className="relative z-10 flex flex-col gap-10 h-full justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#10B981] rounded-xl flex items-center justify-center text-lg">🌿</div>
-            <span className="text-white font-bold text-xl">AgroConnect</span>
+          <div>
+            <Wordmark size="md" lightText />
           </div>
 
           <div className="flex flex-col gap-8">
@@ -85,8 +85,8 @@ function Register() {
               <br />
               Nigerian farms.
             </h1>
-            <p className="text-[#94A3B8] text-base leading-relaxed max-w-xs">
-              Whether you grow it or eat it, AgroConnect was built for you. Join a growing community of Nigerian farmers and buyers who are cutting out the middleman.
+            <p className="text-[var(--muted)] text-base leading-relaxed max-w-xs">
+              Whether you grow it or eat it, Cropbit was built for you. Join a growing community of Nigerian farmers and buyers who are cutting out the middleman.
             </p>
 
             <div className="flex gap-6">
@@ -103,8 +103,8 @@ function Register() {
           </div>
 
           <div className="border-l-2 border-[#10B981] pl-4">
-            <p className="text-[#94A3B8] text-sm italic leading-relaxed">
-              "AgroConnect helped me reach buyers across three states without leaving my farm."
+            <p className="text-[var(--muted)] text-sm italic leading-relaxed">
+              "Cropbit helped me reach buyers across three states without leaving my farm."
             </p>
             <p className="text-white text-xs font-semibold mt-2">Emeka Okafor, Benue State</p>
           </div>
@@ -112,17 +112,16 @@ function Register() {
       </div>
 
       {/* Right Panel */}
-      <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-16 py-16 bg-[#0F172A] overflow-y-auto">
+      <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-16 py-16 bg-[var(--bg)] overflow-y-auto">
         <div className="max-w-md w-full mx-auto">
-          <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 bg-[#10B981] rounded-lg flex items-center justify-center text-base">🌿</div>
-            <span className="text-[#F8FAFC] font-bold text-lg">AgroConnect</span>
+          <div className="mb-8 lg:hidden">
+            <Wordmark size="sm" />
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#F8FAFC] mb-2 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-2 tracking-tight">
             Create your account
           </h2>
-          <p className="text-[#94A3B8] text-sm mb-6">
+          <p className="text-[var(--muted)] text-sm mb-6">
             Already have an account?{" "}
             <NavLink to="/login" className="text-[#10B981] font-semibold hover:underline">
               Log in
@@ -130,13 +129,13 @@ function Register() {
           </p>
 
           {/* Role toggle */}
-          <div className="flex bg-[#1E293B] border border-[#334155] rounded-xl p-1 mb-6">
+          <div className="flex bg-[var(--surface)] border border-[var(--border)] rounded-xl p-1 mb-6">
             <button
               onClick={() => setRole("buyer")}
               className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
                 role === "buyer"
                   ? "bg-[#10B981] text-[#0F172A] shadow-sm"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               🛒 I'm a Buyer
@@ -146,7 +145,7 @@ function Register() {
               className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
                 role === "farmer"
                   ? "bg-[#10B981] text-[#0F172A] shadow-sm"
-                  : "text-[#94A3B8] hover:text-[#F8FAFC]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               🌾 I'm a Farmer
@@ -156,27 +155,27 @@ function Register() {
           <form onSubmit={handleRegister}>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Full Name</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Full Name</label>
                 <input type="text" name="fullName" value={formData.fullName} placeholder="e.g. Chidi Okafor" onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Email Address</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Email Address</label>
                 <input type="email" name="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Phone Number</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Phone Number</label>
                 <input type="tel" placeholder="08087654321" className={inputClass} />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Age</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Age</label>
                 <input type="number" id="age" name="age" min="0" max="120" className={inputClass} placeholder="e.g. 25" required />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Gender</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Gender</label>
                 <select id="gender" name="gender" className={inputClass} required>
                   <option value="" disabled>Select an option</option>
                   <option value="male">Male</option>
@@ -190,18 +189,18 @@ function Register() {
               {role === "farmer" && (
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-semibold text-[#94A3B8]">Farm Location</label>
+                    <label className="text-sm font-semibold text-[var(--muted)]">Farm Location</label>
                     <input type="text" name="farmLocation" value={formData.farmLocation} onChange={handleChange} placeholder="e.g. Akure, Ondo State" className={inputClass} />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-semibold text-[#94A3B8]">Farm Name</label>
+                    <label className="text-sm font-semibold text-[var(--muted)]">Farm Name</label>
                     <input name="farmName" type="text" value={formData.farmName} onChange={handleChange} placeholder="e.g. Green Valley Farm" className={inputClass} />
                   </div>
                 </div>
               )}
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Password</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -214,7 +213,7 @@ function Register() {
                   <button
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#F8FAFC] text-xs font-bold"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--text)] text-xs font-bold"
                   >
                     {showPassword ? "HIDE" : "SHOW"}
                   </button>
@@ -223,8 +222,8 @@ function Register() {
 
               <div className="flex items-start gap-3 mt-1">
                 <input type="checkbox" id="terms" className="mt-0.5 accent-[#10B981] w-4 h-4 cursor-pointer" />
-                <label htmlFor="terms" className="text-xs text-[#94A3B8] leading-relaxed cursor-pointer">
-                  I agree to AgroConnect's{" "}
+                <label htmlFor="terms" className="text-xs text-[var(--muted)] leading-relaxed cursor-pointer">
+                  I agree to Cropbit's{" "}
                   <span className="text-[#10B981] font-semibold hover:underline cursor-pointer">Terms of Service</span>{" "}
                   and{" "}
                   <span className="text-[#10B981] font-semibold hover:underline cursor-pointer">Privacy Policy</span>
@@ -239,14 +238,14 @@ function Register() {
               </button>
 
               <div className="flex items-center gap-3 my-1">
-                <div className="flex-1 h-px bg-[#1E293B]" />
-                <span className="text-[#475569] text-xs">or continue with</span>
-                <div className="flex-1 h-px bg-[#1E293B]" />
+                <div className="flex-1 h-px bg-[var(--surface)]" />
+                <span className="text-[var(--subtle)] text-xs">or continue with</span>
+                <div className="flex-1 h-px bg-[var(--surface)]" />
               </div>
 
               <button
                 type="button"
-                className="flex items-center justify-center gap-3 bg-[#1E293B] border border-[#334155] hover:border-[#475569] text-[#94A3B8] font-semibold text-sm py-3 rounded-xl transition-all"
+                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[#475569] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -263,10 +262,10 @@ function Register() {
 
       {showSuccessCard && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#1E293B] border border-[#334155] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
             <div className="w-20 h-20 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">✓</div>
-            <h2 className="text-2xl font-bold text-[#F8FAFC] mb-2">Welcome Aboard!</h2>
-            <p className="text-[#94A3B8] mb-8">Your account has been created successfully. Ready to explore the farm?</p>
+            <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Welcome Aboard!</h2>
+            <p className="text-[var(--muted)] mb-8">Your account has been created successfully. Ready to explore the farm?</p>
             <button
               onClick={() => navigate("/login")}
               className="w-full bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold py-4 rounded-2xl transition-all"

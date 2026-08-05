@@ -1,4 +1,5 @@
 import { supabase } from "../supabaseClient";
+import { Wordmark } from "./CropbitLogo";
 import { useState } from "react";
 import { Navigate, NavLink } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -63,9 +64,9 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#0F172A]">
+    <div className="min-h-screen flex bg-[var(--bg)]">
       {/* Left Panel */}
-      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[#0F172A] px-12 py-20 relative overflow-hidden">
+      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
         {/* Decorative circles */}
         <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#10B981]/5" />
         <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[#10B981]/5" />
@@ -73,9 +74,8 @@ function Login() {
 
         <div className="relative z-10 flex flex-col gap-10 h-full justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#10B981] rounded-xl flex items-center justify-center text-lg">🌿</div>
-            <span className="text-white font-bold text-xl">AgroConnect</span>
+          <div>
+            <Wordmark size="md" lightText />
           </div>
 
           <div className="flex flex-col gap-8">
@@ -86,7 +86,7 @@ function Login() {
               <br />
               fresh for you.
             </h1>
-            <p className="text-[#94A3B8] text-base leading-relaxed max-w-xs">
+            <p className="text-[var(--muted)] text-base leading-relaxed max-w-xs">
               Your favourite farmers are still harvesting, your orders are still moving, and fresh produce is still waiting to reach your doorstep.
             </p>
 
@@ -106,8 +106,8 @@ function Login() {
 
           {/* Quote */}
           <div className="border-l-2 border-[#10B981] pl-4">
-            <p className="text-[#94A3B8] text-sm italic leading-relaxed">
-              "Every morning I log in to check my orders. AgroConnect has made selling my harvest faster than going to the market."
+            <p className="text-[var(--muted)] text-sm italic leading-relaxed">
+              "Every morning I log in to check my orders. Cropbit has made selling my harvest faster than going to the market."
             </p>
             <p className="text-white text-xs font-semibold mt-2">John Dee, Abuja</p>
           </div>
@@ -115,18 +115,17 @@ function Login() {
       </div>
 
       {/* Right Panel */}
-      <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-16 py-16 bg-[#0F172A]">
+      <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-16 py-16 bg-[var(--bg)]">
         <div className="max-w-md w-full mx-auto">
           {/* Mobile logo */}
-          <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 bg-[#10B981] rounded-lg flex items-center justify-center text-base">🌿</div>
-            <span className="text-[#F8FAFC] font-bold text-lg">AgroConnect</span>
+          <div className="mb-8 lg:hidden">
+            <Wordmark size="sm" />
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-extrabold text-[#F8FAFC] mb-2 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-2 tracking-tight">
             Login to your account
           </h2>
-          <p className="text-[#94A3B8] text-sm mb-8">
+          <p className="text-[var(--muted)] text-sm mb-8">
             Don't have an account?{" "}
             <NavLink to="/register" className="text-[#10B981] font-semibold hover:underline">
               Sign up free
@@ -136,30 +135,30 @@ function Login() {
           <form onSubmit={handleLogin}>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Email Address</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Email Address</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="bg-[#1E293B] border border-[#334155] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[#F8FAFC] outline-none transition-all placeholder-[#475569]"
+                  className="bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#94A3B8]">Password</label>
+                <label className="text-sm font-semibold text-[var(--muted)]">Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Min. 8 characters"
-                    className="w-full bg-[#1E293B] border border-[#334155] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[#F8FAFC] outline-none transition-all placeholder-[#475569]"
+                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
                   />
                   <button
                     onClick={() => setShowPassword(!showPassword)}
                     type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#F8FAFC] text-xs font-bold"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--text)] text-xs font-bold"
                   >
                     {showPassword ? "HIDE" : "SHOW"}
                   </button>
@@ -169,7 +168,7 @@ function Login() {
               <button
                 onClick={handleLogin}
                 disabled={loginLoad}
-                className="w-full bg-[#10B981] hover:bg-[#059669] disabled:bg-[#334155] disabled:text-[#94A3B8] text-[#0F172A] font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/20 mt-2"
+                className="w-full bg-[#10B981] hover:bg-[#059669] disabled:bg-[#334155] disabled:text-[var(--muted)] text-[#0F172A] font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/20 mt-2"
               >
                 {loginLoad ? (
                   <>
@@ -182,14 +181,14 @@ function Login() {
               </button>
 
               <div className="flex items-center gap-3 my-1">
-                <div className="flex-1 h-px bg-[#1E293B]" />
-                <span className="text-[#475569] text-xs">or continue with</span>
-                <div className="flex-1 h-px bg-[#1E293B]" />
+                <div className="flex-1 h-px bg-[var(--surface)]" />
+                <span className="text-[var(--subtle)] text-xs">or continue with</span>
+                <div className="flex-1 h-px bg-[var(--surface)]" />
               </div>
 
               <button
                 type="button"
-                className="flex items-center justify-center gap-3 bg-[#1E293B] border border-[#334155] hover:border-[#475569] text-[#94A3B8] font-semibold text-sm py-3 rounded-xl transition-all"
+                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[#475569] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -206,9 +205,9 @@ function Login() {
 
       {showSuccessCard && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#1E293B] border border-[#334155] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
+          <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
             <div className="w-16 h-16 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-3xl">✓</div>
-            <h2 className="text-2xl font-bold text-[#F8FAFC] mb-2">Login Successful!</h2>
+            <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Login Successful!</h2>
           </div>
         </div>
       )}
