@@ -1,34 +1,24 @@
-@import "tailwindcss";
-/* This replaces the default browser white background with a clean, matching premium soft slate */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
 * {
-  margin: 0;
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 0;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  background-color: #0F172A;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-
-/* Main Hero & Dashboard Greetings */
-h1 {
-  font-family: 'Outfit', sans-serif !important;
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* Section Titles, Card Headers, Subheadings */
-h2, h3 {
-  font-family: 'Sora', sans-serif !important;
-}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Body Text, Labels, Metric Numbers, and Buttons */
-p, span, div, a, button, input, textarea, select {
-  font-family: 'Inter', sans-serif !important;
+input, textarea, select {
+  color-scheme: dark;
 }

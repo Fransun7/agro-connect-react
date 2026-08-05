@@ -1,52 +1,17 @@
-// function StatsCard({ label, value, icon, bg }) {
-//   return (
-//     <div className={`${bg} h-50 w-50 grid grid-cols-2`}>
-//       <div className="w-[30%]">{icon}</div>
-//       <div className="w-[70%] flex flex-row">
-//         <p>{value}</p>
-//         <p>{label}</p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default StatsCard;
-
-// function StatsCard({ label, value, icon, bg }) {
-//   return (
-//     <div className={`${bg} rounded-2xl p-5 flex items-center gap-4 shadow-sm`}>
-//       <div className="text-3xl">{icon}</div>
-//       <div className="flex flex-col">
-//         <span className="text-2xl font-bold text-white">{value}</span>
-//         <span className="text-white/70 text-sm">{label}</span>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default StatsCard;
-
-function StatsCard({ label, value, icon, iconColor }) {
+function StatsCard({ label, value, icon, iconColor, bg }) {
   return (
-    <div className="bg-white border border-slate-100/80 rounded-3xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-      
-      {/* Sleek Circular Icon Badge */}
-      <div className={`w-6 h-6 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl shrink-0 ${iconColor}`}>
+    <div className="bg-[#1E293B] border border-[#334155] rounded-2xl p-4 md:p-5 flex items-center gap-4 hover:border-[#10B981]/30 hover:-translate-y-0.5 transition-all duration-300 cursor-default">
+      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-xl shrink-0 ${iconColor || "bg-[#10B981]/10 text-[#10B981]"}`}>
         {icon}
       </div>
-      
-      {/* Metric details */}
-      <div className="flex flex-col text-left">
-        {/* Bold, premium dark text for the metric */}
-        <span className="text-xl md:text-2xl font-extrabold text-slate-800 tracking-tight">
+      <div className="flex flex-col text-left min-w-0">
+        <span className="text-xl md:text-2xl font-extrabold text-[#F8FAFC] tracking-tight truncate">
           {value}
         </span>
-        {/* Subdued uppercase tracking for the label */}
-        <span className="text-[10px] font-bold text-slate-400 mt-0.5 uppercase tracking-widest">
+        <span className="text-[10px] font-bold text-[#94A3B8] mt-0.5 uppercase tracking-widest truncate">
           {label}
         </span>
       </div>
-      
     </div>
   );
 }
