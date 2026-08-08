@@ -1,34 +1,74 @@
-@import "tailwindcss";
-/* This replaces the default browser white background with a clean, matching premium soft slate */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+/* ── Theme tokens ─────────────────────────────────────────── */
+:root {
+  --bg:          #0F172A;
+  --bg-deep:     #0a0f1a;
+  --surface:     #1E293B;
+  --surface-2:   #0a1f14;
+  --s2:          #0a1f14;
+  --border:      #334155;
+  --border-2:    #1E293B;
+  --text:        #F8FAFC;
+  --muted:       #94A3B8;
+  --subtle:      #475569;
+  --hero-overlay: rgba(15,23,42,0.7);
+}
+
+[data-theme="light"] {
+  --bg:          #F0FDF4;
+  --bg-deep:     #ECFDF5;
+  --surface:     #FFFFFF;
+  --surface-2:   #D1FAE5;
+  --s2:          #D1FAE5;
+  --border:      #D1FAE5;
+  --border-2:    #E2E8F0;
+  --text:        #0F172A;
+  --muted:       #4B5563;
+  --subtle:      #9CA3AF;
+  --hero-overlay: rgba(6,95,70,0.6);
+}
+
+/* ── Tailwind theme mapping ────────────────────────────────── */
+@theme inline {
+  --color-t-bg:      var(--bg);
+  --color-t-deep:    var(--bg-deep);
+  --color-t-surface: var(--surface);
+  --color-t-s2:      var(--surface-2);
+  --color-t-border:  var(--border);
+  --color-t-border2: var(--border-2);
+  --color-t-text:    var(--text);
+  --color-t-muted:   var(--muted);
+  --color-t-subtle:  var(--subtle);
+}
+
 * {
-  margin: 0;
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 0;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-/* Main Hero & Dashboard Greetings */
-h1 {
-  font-family: 'Outfit', sans-serif !important;
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* Section Titles, Card Headers, Subheadings */
-h2, h3 {
-  font-family: 'Sora', sans-serif !important;
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+input, textarea, select {
+  color-scheme: dark;
 }
 
-/* Body Text, Labels, Metric Numbers, and Buttons */
-p, span, div, a, button, input, textarea, select {
-  font-family: 'Inter', sans-serif !important;
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  color-scheme: light;
 }

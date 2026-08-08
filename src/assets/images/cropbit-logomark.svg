@@ -1,0 +1,10 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stem -->
+  <rect x="26" y="30" width="4" height="21" rx="2" fill="#10B981"/>
+  <!-- Left leaf — emerald -->
+  <path d="M28 34 C20 34 4 28 5 14 C6 4 18 8 28 24 Z" fill="#10B981"/>
+  <!-- Right leaf — forest green -->
+  <path d="M28 30 C36 28 52 22 51 9 C50 1 37 5 28 20 Z" fill="#065F46"/>
+  <!-- Amber bit pixel -->
+  <rect x="21" y="1" width="14" height="14" rx="3" fill="#F59E0B"/>
+</svg>

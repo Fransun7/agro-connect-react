@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Order from "./Order";
 import { farmersData } from "../data/farmers";
 import { useAuth } from "./Context/AuthContext";
 
@@ -19,90 +18,65 @@ function ProductCard({ produce }) {
   };
 
   return (
-    <div className="w-100 shrink-0 snap-start bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="w-72 md:w-80 shrink-0 snap-start bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[#10B981]/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20">
       {produce.image && produce.image.trim() !== "" ? (
         <img
           src={produce.image}
           alt={produce.name}
-          className="w-full h-50 object-cover"
+          className="w-full h-48 object-cover"
         />
       ) : (
-        /* Sleek CSS Image Placeholder box that draws if the farmer didn't upload a file */
-        <div className="w-full h-48 bg-slate-50 border-b border-gray-100 flex flex-col items-center justify-center gap-2 text-slate-300 select-none">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-            <i className="fa-solid fa-basket-shopping text-xl"></i>
-          </div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-            No Image Provided
-          </span>
+        <div className="w-full h-48 bg-[var(--bg)] border-b border-[var(--border)] flex flex-col items-center justify-center gap-2 select-none">
+          <div className="w-14 h-14 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-3xl">🌾</div>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--subtle)]">No Image Provided</span>
         </div>
       )}
 
-      {/* Card Body */}
-      <div className="p-4 flex flex-col gap-2">
-        {/* Category tag */}
-        <span className="text-xs font-semibold text-white bg-[#2F6B3F] px-2 py-1 rounded-full w-fit">
+      <div className="p-4 flex flex-col gap-2.5">
+        <span className="text-xs font-bold text-[#0F172A] bg-[#10B981] px-2.5 py-1 rounded-full w-fit">
           {produce.category}
         </span>
 
-        {/* Product name */}
-        <h2 className="text-lg font-bold text-gray-800">{produce.name}</h2>
+        <h2 className="text-base font-bold text-[var(--text)] leading-tight">{produce.name}</h2>
 
-        {/* Price */}
-        <p className="text-[#FFA02E] font-bold text-base">
-          ₦{produce.price.toLocaleString()} / {produce.unit}
+        <p className="text-[#F59E0B] font-bold text-base">
+          ₦{produce.price.toLocaleString()} <span className="text-[var(--muted)] font-normal text-sm">/ {produce.unit}</span>
         </p>
 
-        {/* Farmer details */}
-        <div className="text-sm text-gray-500 flex flex-col gap-1">
+        <div className="text-sm text-[var(--muted)] flex flex-col gap-1">
           <span>🧑‍🌾 {produce.farmerName}</span>
           <span>📍 {produce.location}</span>
-          <span>
-            📦 {produce.availableQuantity} {produce.unit}s available out of{" "}
-            {produce.quantity}
-          </span>
+          <span>📦 {produce.availableQuantity} {produce.unit}s available</span>
         </div>
 
-        {/* Order button */}
         <button
           onClick={handleOrderClick}
-          className="mt-2 bg-[#2F6B3F] hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-full transition-all duration-300"
+          className="mt-1 bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold text-sm px-4 py-2.5 rounded-xl transition-all duration-300 shadow-md shadow-[#10B981]/20"
         >
           Order Now
         </button>
 
         {orderAuth && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-gray-100 transform transition-all scale-100">
-              {/* Lock / Key Icon Circle */}
-              <div className="w-16 h-16 bg-emerald-100 text-[#1A5C2A] rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
-                <i className="fa-solid fa-lock"></i>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+            <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center">
+              <div className="w-14 h-14 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                🔒
               </div>
-
-              {/* Modal Heading & Body Text */}
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
-                Authentication Required
-              </h3>
-              <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-                Please log in to your account first before placing an order for{" "}
-                <span className="font-semibold text-gray-700">
-                  "{produce?.name || "this item"}"
-                </span>
-                .
+              <h3 className="text-xl font-bold text-[var(--text)] mb-2">Sign in Required</h3>
+              <p className="text-sm text-[var(--muted)] mb-6 leading-relaxed">
+                Please log in before placing an order for{" "}
+                <span className="font-semibold text-[var(--text)]">"{produce?.name || "this item"}"</span>.
               </p>
-
-              {/* Action Buttons */}
               <div className="flex flex-col gap-2.5">
                 <button
                   onClick={() => navigate("/login")}
-                  className="w-full bg-[#1A5C2A] hover:bg-emerald-800 text-white font-bold py-3 rounded-2xl shadow-md transition-all active:scale-95"
+                  className="w-full bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold py-3 rounded-2xl transition-all"
                 >
-                  Go to Login Page
+                  Go to Login
                 </button>
-
                 <button
                   onClick={() => setOrderAuth(false)}
-                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-3 rounded-2xl transition-all active:scale-95"
+                  className="w-full bg-[#334155] hover:bg-[#475569] text-[var(--muted)] font-bold py-3 rounded-2xl transition-all"
                 >
                   Cancel
                 </button>

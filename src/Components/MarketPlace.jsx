@@ -3,7 +3,6 @@ import { farmersData } from "../data/farmers";
 import ProductCard from "./ProductCard";
 import { useState, useEffect, useContext } from "react";
 import { supabase } from "../supabaseClient";
-// import { useOutletContext } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 
 function MarketPlace() {
@@ -14,7 +13,6 @@ function MarketPlace() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // I NEED TO FETCH PRODUCTS THAT FARMERS HAS LISTED FROM SUPABASE
   useEffect(() => {
     const fetchAllProducts = async () => {
       setLoading(true);
@@ -24,17 +22,11 @@ function MarketPlace() {
         { data: ordersData, error: ordersDataError },
       ] = await Promise.all([
         supabase.from("products").select("*"),
-
-        supabase
-          .from("orders")
-          .select("product_id, quantity")
-          .eq("status", "Delivered"),
+        supabase.from("orders").select("product_id, quantity").eq("status", "Delivered"),
       ]);
+
       if (productsDataError || ordersDataError) {
-        console.error(
-          "Error loading marketplace products:",
-          productsDataError?.message || ordersDataError?.message,
-        );
+        console.error("Error loading marketplace products:", productsDataError?.message || ordersDataError?.message);
       } else if (productsData) {
         const mappedProdcuct = productsData.map((item) => {
           const soldQuantity = ordersData
@@ -57,7 +49,6 @@ function MarketPlace() {
             location: item.location,
           };
         });
-
         setProducts(mappedProdcuct);
       }
       setLoading(false);
@@ -66,56 +57,39 @@ function MarketPlace() {
   }, []);
 
   return (
-    <div className="bg-green-800 h-full pt-15">
-      <div className="flex flex-col justify-center items-center p-4">
-        <h3 className="text-white text-sm md:text-md font-bold leading-tight drop-shadow-lg">
-          Browse
-          {"                     "}
-          produce of verified{" "}
-          <span>
-            <i
-              className="fa-solid fa-circle-check"
-              style={{ color: "#FFD700" }}
-            ></i>
-          </span>{" "}
-          farmers across Nigeria{" "}
-        </h3>
+    <div className="bg-[var(--bg)] min-h-screen">
+      {/* Header banner */}
+      <div className="bg-gradient-to-r from-[#065F46] to-[#0a2918] border-b border-[#10B981]/20 px-5 py-8 md:py-10">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Verified Listings</p>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] tracking-tight mb-1">
+            Farm Marketplace
+          </h1>
+          <p className="text-[var(--muted)] text-sm">
+            Browse produce from verified{" "}
+            <span className="text-[#F59E0B]">✓</span>{" "}
+            farmers across Nigeria
+          </p>
+        </div>
       </div>
 
-      {/* PRODUCTS GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center px-4 max-w-7xl mx-auto">
+      {/* Products grid */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {loading ? (
-          <div className="col-span-full text-center py-6 text-gray-500 font-medium  flex flex-col items-center gap-5">
-            <div className="bg-white rounded-full">
-              <svg
-                className="animate-spin h-15 w-15 text-[#1A5C2A]"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            </div>
-            Gathering fresh farm listings live from the cloud...
+          <div className="flex flex-col items-center gap-4 py-20 text-[var(--muted)]">
+            <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
+            <span className="font-medium text-sm">Gathering fresh farm listings from the cloud...</span>
           </div>
         ) : products.length === 0 ? (
-          <div className="col-span-full text-center py-6 text-gray-400">
-            📦 No active products listed on the market right now.
+          <div className="text-center py-20">
+            <div className="text-4xl mb-4">📦</div>
+            <p className="text-[var(--muted)] font-medium">No active products listed on the market right now.</p>
+            <p className="text-[var(--subtle)] text-sm mt-2">Check back later or list your own produce.</p>
           </div>
         ) : (
-          products.map((item) => <ProductCard key={item.id} produce={item} />)
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-items-center">
+            {products.map((item) => <ProductCard key={item.id} produce={item} />)}
+          </div>
         )}
       </div>
     </div>

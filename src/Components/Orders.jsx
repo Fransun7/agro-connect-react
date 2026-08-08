@@ -8,20 +8,15 @@ function Orders() {
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
 
-  // I NEED TO GET THE USER DETAILS
   const isFarmer = currentUser?.role === "Farmer";
   const userEmail = currentUser?.email;
 
-  // I NEED TO FETCH THE ORDERS
   useEffect(() => {
     const fetchOrders = async () => {
       if (!userEmail) return;
       setLoading(false);
 
-      let query = supabase
-        .from("orders")
-        .select("*")
-        .order("id", { ascending: false });
+      let query = supabase.from("orders").select("*").order("id", { ascending: false });
 
       if (isFarmer) {
         query = query.eq("farmer_email", userEmail);
@@ -39,128 +34,107 @@ function Orders() {
       }
       setLoading(false);
     };
-
     fetchOrders();
   }, [isFarmer, userEmail]);
 
   async function updateOrderStatus(orderId, newStatus) {
-    const { error } = await supabase
-      .from("orders")
-      .update({ status: newStatus })
-      .eq("id", orderId);
-
+    const { error } = await supabase.from("orders").update({ status: newStatus }).eq("id", orderId);
     if (error) {
       console.error("Error updating status:", error.message);
       alert("Unable to update order status. Please try again.");
       return;
     }
-
-    /*I NEED TO UPDATE ORDERS WHEN THE STATUS OF THE ORDER CHANGES, I AM USING CURRENTORDERS AS THE CURRENT STATE OF ORDERS,
-      MAP THROUGH THE STATE AND CHANGE THE STATUS OF THE ORDER THAT MATCHES THE ID AND LEAVE THE ONES THAT DOESN'T */
     setOrders((currentOrders) =>
-      currentOrders.map((order) =>
-        order.id === orderId ? { ...order, status: newStatus } : order,
-      ),
+      currentOrders.map((order) => order.id === orderId ? { ...order, status: newStatus } : order)
     );
   }
 
-  // Fire custom event to tell the Overview tab to update its calculations immediately!
   window.dispatchEvent(new Event("authUpdate"));
 
+  const statusStyle = (status) => {
+    if (status === "Delivered") return "bg-[#10B981]/10 text-[#10B981] border-[#10B981]/20";
+    if (status === "Pending") return "bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20";
+    if (status === "Confirmed") return "bg-[#0284C7]/10 text-[#0284C7] border-[#0284C7]/20";
+    return "bg-red-500/10 text-red-400 border-red-500/20";
+  };
+
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-4 md:p-6 max-w-5xl bg-[var(--bg)] min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-[#1A5C2A]">
-          {isFarmer ? "Manage Farm Orders" : "My Purchase Orders"}
-        </h2>
-        <span className="text-xs bg-green-50 text-[#1A5C2A] font-bold px-3 py-1 rounded-full border border-green-200">
-          Total: {orders.length} orders
+        <div>
+          <h2 className="text-lg font-bold text-[var(--text)]">
+            {isFarmer ? "Farm Orders" : "My Purchase Orders"}
+          </h2>
+          <p className="text-[var(--muted)] text-xs mt-0.5">{orders.length} total orders</p>
+        </div>
+        <span className="text-xs bg-[#10B981]/10 text-[#10B981] font-bold px-3 py-1.5 rounded-full border border-[#10B981]/20">
+          {orders.length} orders
         </span>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {orders.length > 0 ? (
           orders.map((order) => (
             <div
               key={order.id}
-              className="bg-white rounded-2xl p-5 shadow-xs border border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:shadow-md transition-shadow duration-200"
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#10B981]/20 transition-all duration-200"
             >
-              {/* Order Essentials */}
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-bold text-gray-800 text-base">
-                    {order.product}
-                  </h3>
-                  <span
-                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight ${
-                      order.status === "Delivered"
-                        ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                        : order.status === "Pending"
-                          ? "bg-amber-50 text-amber-600 border border-amber-200"
-                          : order.status === "Confirmed"
-                            ? "bg-blue-50 text-blue-600 border border-blue-200"
-                            : "bg-rose-50 text-rose-600 border border-rose-200"
-                    }`}
-                  >
+              {/* Order info */}
+              <div className="flex flex-col gap-1.5 flex-1">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h3 className="font-bold text-[var(--text)] text-base">{order.product}</h3>
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-tight border ${statusStyle(order.status)}`}>
                     {order.status}
                   </span>
                 </div>
-                <p className="text-xs text-gray-400">
-                  Order ID:{" "}
-                  <span className="font-mono text-gray-600">#{order.id}</span> |
-                  Date: {order.date || "Today"}
+                <p className="text-xs text-[var(--muted)] font-mono">
+                  #{order.id} · {order.date || "Today"}
                 </p>
-                <p className="text-xs text-gray-500">
-                  👤{" "}
-                  {isFarmer
+                <p className="text-xs text-[var(--muted)]">
+                  👤 {isFarmer
                     ? `Buyer: ${order.buyer_name || order.buyer_email}`
                     : `Farmer: ${order.farmer_name || "Agro Farmer"}`}
                 </p>
               </div>
 
-              {/* Financial Metrics */}
+              {/* Financial info */}
               <div className="flex flex-col md:items-end gap-1">
-                <span className="text-[#FFA02E] font-black text-base">
+                <span className="text-[#F59E0B] font-black text-base">
                   ₦{order.total ? order.total.toLocaleString() : "0"}
                 </span>
-                <span className="text-xs text-gray-400 font-medium">
-                  {order.quantity} units requested
-                </span>
+                <span className="text-xs text-[var(--muted)] font-medium">{order.quantity} units</span>
               </div>
 
-              {/* Action Operations Machine (Only accessible to Farmers) */}
+              {/* Farmer actions */}
               {isFarmer && (
-                <div className="flex items-center gap-2 border-t pt-3 md:border-t-0 md:pt-0">
+                <div className="flex items-center gap-2 border-t border-[var(--border)] pt-3 md:border-t-0 md:pt-0 shrink-0">
                   {order.status === "Pending" && (
                     <>
                       <button
                         onClick={() => updateOrderStatus(order.id, "Cancelled")}
-                        className="text-xs font-bold text-rose-500 hover:bg-rose-50 px-3 py-2 rounded-xl transition-colors"
+                        className="text-xs font-bold text-red-400 hover:bg-red-500/10 px-3 py-2 rounded-xl transition-colors border border-red-500/20"
                       >
                         Decline
                       </button>
                       <button
                         onClick={() => updateOrderStatus(order.id, "Confirmed")}
-                        className="text-xs font-bold bg-[#1A5C2A] hover:bg-green-800 text-white px-4 py-2 rounded-xl shadow-xs transition-all"
+                        className="text-xs font-bold bg-[#10B981] hover:bg-[#059669] text-[#0F172A] px-4 py-2 rounded-xl transition-all shadow-md shadow-[#10B981]/20"
                       >
-                        Accept Order
+                        Accept
                       </button>
                     </>
                   )}
-
                   {order.status === "Confirmed" && (
                     <button
                       onClick={() => updateOrderStatus(order.id, "Delivered")}
-                      className="text-xs font-bold w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl shadow-xs transition-all"
+                      className="text-xs font-bold bg-[#0284C7] hover:bg-[#0369a1] text-white px-4 py-2 rounded-xl transition-all"
                     >
-                      Mark as Delivered
+                      Mark Delivered
                     </button>
                   )}
-
-                  {(order.status === "Delivered" ||
-                    order.status === "Cancelled") && (
-                    <span className="text-xs text-gray-400 italic bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                      Archived Transaction
+                  {(order.status === "Delivered" || order.status === "Cancelled") && (
+                    <span className="text-xs text-[var(--muted)] italic bg-[#334155]/50 px-3 py-1.5 rounded-lg border border-[var(--border)]">
+                      Archived
                     </span>
                   )}
                 </div>
@@ -168,13 +142,9 @@ function Orders() {
             </div>
           ))
         ) : (
-          <div className="text-center py-16 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400">
-              <i className="fa-solid fa-box-open text-xl"></i>
-            </div>
-            <p className="text-gray-400 font-medium text-sm">
-              No orders recorded yet on your account.
-            </p>
+          <div className="text-center py-16 bg-[var(--surface)] border border-dashed border-[var(--border)] rounded-2xl">
+            <div className="text-4xl mb-3">📭</div>
+            <p className="text-[var(--muted)] font-medium text-sm">No orders recorded yet on your account.</p>
           </div>
         )}
       </div>
