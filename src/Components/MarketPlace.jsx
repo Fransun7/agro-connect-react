@@ -59,15 +59,15 @@ function MarketPlace() {
   return (
     <div className="bg-[var(--bg)] min-h-screen">
       {/* Header banner */}
-      <div className="bg-gradient-to-r from-[#065F46] to-[#0a2918] border-b border-[#10B981]/20 px-5 py-8 md:py-10">
+      <div className="bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary-deep)] border-b border-[var(--color-primary)]/20 px-5 py-8 md:py-10">
         <div className="max-w-7xl mx-auto">
-          <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Verified Listings</p>
+          <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest mb-2">Verified Listings</p>
           <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] tracking-tight mb-1">
             Farm Marketplace
           </h1>
           <p className="text-[var(--muted)] text-sm">
             Browse produce from verified{" "}
-            <span className="text-[#F59E0B]">✓</span>{" "}
+            <span className="text-[var(--color-accent)]">✓</span>{" "}
             farmers across Nigeria
           </p>
         </div>
@@ -77,7 +77,7 @@ function MarketPlace() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {loading ? (
           <div className="flex flex-col items-center gap-4 py-20 text-[var(--muted)]">
-            <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
             <span className="font-medium text-sm">Gathering fresh farm listings from the cloud...</span>
           </div>
         ) : products.length === 0 ? (

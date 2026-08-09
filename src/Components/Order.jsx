@@ -81,13 +81,13 @@ function Order() {
     }, 3500);
   }
 
-  const inputClass = "border border-[var(--border)] bg-[var(--surface)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full resize-none";
+  const inputClass = "border border-[var(--border)] bg-[var(--surface)] focus:border-[var(--color-primary)] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full resize-none";
 
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-[var(--bg)]">
-        <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
-        <span className="text-sm font-bold text-[#10B981] tracking-wide">Loading product...</span>
+        <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
+        <span className="text-sm font-bold text-[var(--color-primary)] tracking-wide">Loading product...</span>
       </div>
     );
   }
@@ -99,7 +99,7 @@ function Order() {
         <p className="text-[var(--muted)] text-lg font-medium">Product not found or unavailable.</p>
         <button
           onClick={() => navigate("/marketplace")}
-          className="bg-[#10B981] hover:bg-[#059669] text-[#0F172A] px-6 py-3 rounded-xl font-bold transition-all"
+          className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] px-6 py-3 rounded-xl font-bold transition-all"
         >
           Return to Market
         </button>
@@ -113,13 +113,13 @@ function Order() {
       {submitted && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
-            <div className="w-16 h-16 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">✓</div>
+            <div className="w-16 h-16 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-4xl">✓</div>
             <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Order Placed!</h2>
             <p className="text-[var(--muted)] mb-6 text-sm">
               Your order has been sent to the farmer. Redirecting to your dashboard...
             </p>
-            <div className="w-full bg-[#334155] h-1.5 rounded-full overflow-hidden">
-              <div className="bg-[#10B981] h-full rounded-full w-full transition-all duration-[3500ms] ease-linear" />
+            <div className="w-full bg-[var(--border)] h-1.5 rounded-full overflow-hidden">
+              <div className="bg-[var(--color-primary)] h-full rounded-full w-full transition-all duration-[3500ms] ease-linear" />
             </div>
           </div>
         </div>
@@ -127,9 +127,9 @@ function Order() {
 
       <div className="max-w-3xl mx-auto bg-[var(--surface)] border border-[var(--border)] rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-2xl shadow-black/30">
         {/* Left: Product info */}
-        <div className="p-8 bg-gradient-to-br from-[#065F46]/30 to-[#1E293B] border-b md:border-b-0 md:border-r border-[var(--border)] flex flex-col justify-between">
+        <div className="p-8 bg-gradient-to-br from-[var(--color-secondary)]/30 to-[var(--surface)] border-b md:border-b-0 md:border-r border-[var(--border)] flex flex-col justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/20 px-3 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-3 py-1 rounded-full">
               Review Order
             </span>
             <h1 className="mt-4 text-2xl font-extrabold text-[var(--text)] tracking-tight">{product.name}</h1>
@@ -137,7 +137,7 @@ function Order() {
             <p className="text-sm text-[var(--muted)] mt-1">🧑‍🌾 {product.farmer_name || "Agro Farmer"}</p>
 
             <div className="mt-6 flex items-baseline gap-1">
-              <span className="text-3xl font-extrabold text-[#10B981]">₦{product.price.toLocaleString()}</span>
+              <span className="text-3xl font-extrabold text-[var(--color-primary)]">₦{product.price.toLocaleString()}</span>
               <span className="text-sm text-[var(--muted)]">/ {product.unit || "unit"}</span>
             </div>
 
@@ -145,7 +145,7 @@ function Order() {
             <div className="mt-4 bg-[var(--bg)] border border-[var(--border)] rounded-xl p-4">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Total Estimate</span>
-                <span className="text-[#F59E0B] font-extrabold text-xl">
+                <span className="text-[var(--color-accent)] font-extrabold text-xl">
                   ₦{(Number(product?.price || 0) * Number(form.quantity)).toLocaleString()}
                 </span>
               </div>
@@ -153,7 +153,7 @@ function Order() {
           </div>
 
           <div className="mt-8 pt-6 border-t border-[var(--border)] flex items-center gap-2 text-xs text-[var(--muted)]">
-            <span className="text-[#10B981]">🔒</span>
+            <span className="text-[var(--color-primary)]">🔒</span>
             Secure transaction powered by Cropbit
           </div>
         </div>
@@ -173,7 +173,7 @@ function Order() {
                 onChange={handleChange}
                 className={inputClass}
               />
-              <span className="text-xs font-bold text-[var(--muted)] bg-[#334155] px-3 py-3 rounded-xl border border-[#475569] shrink-0">
+              <span className="text-xs font-bold text-[var(--muted)] bg-[var(--border)] px-3 py-3 rounded-xl border border-[var(--subtle)] shrink-0">
                 {product.unit || "units"}
               </span>
             </div>
@@ -219,7 +219,7 @@ function Order() {
 
           <button
             onClick={handleSubmit}
-            className="w-full bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold text-base py-3.5 rounded-xl shadow-lg shadow-[#10B981]/20 transition-all mt-2"
+            className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] font-bold text-base py-3.5 rounded-xl shadow-lg shadow-[var(--color-primary)]/20 transition-all mt-2"
           >
             Confirm & Place Order →
           </button>

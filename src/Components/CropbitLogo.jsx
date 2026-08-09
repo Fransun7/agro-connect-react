@@ -1,6 +1,6 @@
-const emerald = "#10B981";
-const forest = "#065F46";
-const amber = "#F59E0B";
+const emerald = "var(--color-primary)";
+const forest = "var(--color-secondary)";
+const amber = "var(--color-accent)";
 
 // ── Logo Mark: two leaves + amber pixel ──────────────────────────────────────
 export function LogoMark({ size = 36 }) {
@@ -18,7 +18,7 @@ export function LogoMark({ size = 36 }) {
 export function LetterMark({ size = 36 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none">
-      <rect width="56" height="56" rx="12" fill="#1E293B" />
+      <rect width="56" height="56" rx="12" fill="var(--surface)" />
       <path d="M30 14 C18 14 12 20 12 28 C12 36 18 42 30 42" stroke={emerald} strokeWidth="5.5" strokeLinecap="round" fill="none" />
       <rect x="29" y="14" width="4.5" height="28" rx="2" fill={forest} />
       <path d="M33 14 C40 14 44 18 44 21.5 C44 25 40 28 33 28" stroke={forest} strokeWidth="4.5" strokeLinecap="round" fill="none" />

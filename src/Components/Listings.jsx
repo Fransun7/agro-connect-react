@@ -144,7 +144,7 @@ function Listings() {
     setImageFile(file);
   };
 
-  const inputClass = "border border-[var(--border)] bg-[var(--bg)] rounded-xl px-4 py-2.5 text-sm text-[var(--text)] outline-none focus:border-[#10B981] transition-all placeholder-[var(--subtle)] w-full";
+  const inputClass = "border border-[var(--border)] bg-[var(--bg)] rounded-xl px-4 py-2.5 text-sm text-[var(--text)] outline-none focus:border-[var(--color-primary)] transition-all placeholder-[var(--subtle)] w-full";
 
   return (
     <div className="p-4 md:p-6 bg-[var(--bg)] min-h-screen">
@@ -157,7 +157,7 @@ function Listings() {
             </div>
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-[#10B981] hover:bg-[#059669] text-[#0F172A] text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[#10B981]/20 flex items-center gap-2"
+              className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[var(--color-primary)]/20 flex items-center gap-2"
             >
               {showForm ? "✕ Cancel" : "+ Add Product"}
             </button>
@@ -199,18 +199,18 @@ function Listings() {
                   accept="image/*"
                   name="image"
                   onChange={handleFile}
-                  className="border border-[var(--border)] bg-[var(--bg)] rounded-xl px-3 py-2 text-sm text-[var(--muted)] outline-none focus:border-[#10B981] file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#10B981] file:text-[#0F172A] cursor-pointer"
+                  className="border border-[var(--border)] bg-[var(--bg)] rounded-xl px-3 py-2 text-sm text-[var(--muted)] outline-none focus:border-[var(--color-primary)] file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[var(--color-primary)] file:text-[var(--bg)] cursor-pointer"
                 />
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <button
                   onClick={handleAddProduct}
                   disabled={newProductLoading}
-                  className="w-full bg-[#10B981] hover:bg-[#059669] disabled:bg-[#334155] disabled:text-[var(--muted)] text-[#0F172A] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-[#10B981]/20"
+                  className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] disabled:bg-[var(--border)] disabled:text-[var(--muted)] text-[var(--bg)] font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-[var(--color-primary)]/20"
                 >
                   {newProductLoading ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-[#0F172A]/30 border-t-[#0F172A] rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-[var(--bg)]/30 border-t-[var(--bg)] rounded-full animate-spin" />
                       Saving Product...
                     </>
                   ) : (
@@ -224,7 +224,7 @@ function Listings() {
           {/* Listings */}
           {loading ? (
             <div className="flex flex-col items-center gap-4 py-16 text-[var(--muted)]">
-              <div className="w-8 h-8 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-[var(--border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
               <span className="text-sm font-medium">Loading your farm listings...</span>
             </div>
           ) : listings.length === 0 ? (
@@ -236,14 +236,14 @@ function Listings() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {listings.map((item) => (
-                <div key={item.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 flex flex-col gap-3 hover:border-[#10B981]/30 transition-all">
+                <div key={item.id} className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-4 flex flex-col gap-3 hover:border-[var(--color-primary)]/30 transition-all">
                   {item.image && (
                     <img src={item.image} alt={item.name} className="w-full h-36 object-cover rounded-xl" />
                   )}
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-bold text-[var(--text)] text-sm">{item.name}</h3>
-                      <span className="text-xs text-[#0F172A] bg-[#10B981] px-2 py-0.5 rounded-full font-bold mt-1 inline-block">
+                      <span className="text-xs text-[var(--bg)] bg-[var(--color-primary)] px-2 py-0.5 rounded-full font-bold mt-1 inline-block">
                         {item.category}
                       </span>
                     </div>
@@ -254,7 +254,7 @@ function Listings() {
                       Delete
                     </button>
                   </div>
-                  <p className="text-[#F59E0B] font-bold text-sm">
+                  <p className="text-[var(--color-accent)] font-bold text-sm">
                     ₦{item.price.toLocaleString()} <span className="text-[var(--muted)] font-normal">/ {item.unit}</span>
                   </p>
                   <div className="flex gap-3 text-xs text-[var(--muted)]">

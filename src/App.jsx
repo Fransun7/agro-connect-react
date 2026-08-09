@@ -81,7 +81,7 @@ function App() {
     return (
       <div className="h-screen w-screen fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--bg)]">
         <div className="flex flex-col items-center gap-5 bg-[var(--surface)] p-10 rounded-3xl border border-[var(--border)]">
-          <div className="w-12 h-12 border-3 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
+          <div className="w-12 h-12 border-3 border-[var(--border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
           <div className="flex items-center gap-3">
             <Wordmark size="md" />
           </div>
@@ -109,7 +109,7 @@ function App() {
             <div className="flex gap-3">
               <button
                 onClick={cancelLogout}
-                className="flex-1 bg-[#334155] hover:bg-[#475569] text-[var(--text)] font-bold py-3 rounded-2xl transition-all"
+                className="flex-1 bg-[var(--border)] hover:bg-[var(--subtle)] text-[var(--text)] font-bold py-3 rounded-2xl transition-all"
               >
                 Stay
               </button>
@@ -146,7 +146,7 @@ function App() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "bg-[#10B981]/10 text-[#10B981]"
+                      ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                       : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                   }`
                 }
@@ -158,8 +158,8 @@ function App() {
 
           {/* DESKTOP SEARCH (marketplace only) */}
           {location.pathname === "/marketplace" && (
-            <div className="hidden md:flex flex-1 max-w-xs mx-6 items-center bg-[var(--surface)] border border-[var(--border)] focus-within:border-[#10B981] rounded-full overflow-hidden transition-all duration-200">
-              <button className="bg-[#10B981] hover:bg-[#059669] rounded-full p-1.5 m-1 flex items-center justify-center">
+            <div className="hidden md:flex flex-1 max-w-xs mx-6 items-center bg-[var(--surface)] border border-[var(--border)] focus-within:border-[var(--color-primary)] rounded-full overflow-hidden transition-all duration-200">
+              <button className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-full p-1.5 m-1 flex items-center justify-center">
                 <svg className="w-3.5 h-3.5 stroke-white fill-none" strokeWidth="2.5" viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="8" />
                   <path strokeLinecap="round" d="m21 21-4.35-4.35" />
@@ -197,14 +197,14 @@ function App() {
             {isAuth ? (
               <>
                 <NavLink to="/dashboard" className="relative">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#10B981] to-[#065F46] text-white flex items-center justify-center font-bold text-sm border-2 border-[#10B981]/30">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white flex items-center justify-center font-bold text-sm border-2 border-[var(--color-primary)]/30">
                     {getInitials()}
                   </div>
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#10B981] border-2 border-[#0F172A] rounded-full" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[var(--color-primary)] border-2 border-[var(--bg)] rounded-full" />
                 </NavLink>
                 <button
                   onClick={triggerLogoutPopup}
-                  className="text-sm font-semibold text-[var(--muted)] hover:text-[var(--text)] bg-[var(--surface)] hover:bg-[#334155] border border-[var(--border)] px-4 py-2 rounded-xl transition-all"
+                  className="text-sm font-semibold text-[var(--muted)] hover:text-[var(--text)] bg-[var(--surface)] hover:bg-[var(--border)] border border-[var(--border)] px-4 py-2 rounded-xl transition-all"
                 >
                   Logout
                 </button>
@@ -217,7 +217,7 @@ function App() {
                   </button>
                 </NavLink>
                 <NavLink to="/register">
-                  <button className="text-sm font-bold text-[#0F172A] bg-[#10B981] hover:bg-[#059669] px-5 py-2 rounded-xl transition-all shadow-lg shadow-[#10B981]/20">
+                  <button className="text-sm font-bold text-[var(--bg)] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] px-5 py-2 rounded-xl transition-all shadow-lg shadow-[var(--color-primary)]/20">
                     Get Started
                   </button>
                 </NavLink>
@@ -229,7 +229,7 @@ function App() {
           <div className="flex md:hidden items-center gap-3">
             {isAuth && (
               <NavLink to="/dashboard">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#10B981] to-[#065F46] text-white flex items-center justify-center font-bold text-xs border border-[#10B981]/30">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] text-white flex items-center justify-center font-bold text-xs border border-[var(--color-primary)]/30">
                   {getInitials()}
                 </div>
               </NavLink>
@@ -249,7 +249,7 @@ function App() {
         {location.pathname === "/marketplace" && (
           <div className="md:hidden px-4 pb-3">
             <div className="flex items-center bg-[var(--surface)] border border-[var(--border)] rounded-full overflow-hidden">
-              <button className="bg-[#10B981] rounded-full p-1.5 m-1 flex items-center justify-center">
+              <button className="bg-[var(--color-primary)] rounded-full p-1.5 m-1 flex items-center justify-center">
                 <svg className="w-3.5 h-3.5 stroke-white fill-none" strokeWidth="2.5" viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="8" />
                   <path strokeLinecap="round" d="m21 21-4.35-4.35" />
@@ -281,7 +281,7 @@ function App() {
       >
         {/* Side menu header */}
         {isAuth ? (
-          <div className="bg-gradient-to-br from-[#065F46] to-[var(--bg)] p-6 pt-8">
+          <div className="bg-gradient-to-br from-[var(--color-secondary)] to-[var(--bg)] p-6 pt-8">
             <div className="flex justify-end mb-4">
               <button
                 onClick={() => setMenuOpen(false)}
@@ -293,18 +293,18 @@ function App() {
               </button>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#10B981] to-[#065F46] flex items-center justify-center font-bold text-white text-sm border-2 border-[#10B981]/40">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center font-bold text-white text-sm border-2 border-[var(--color-primary)]/40">
                 {getInitials()}
               </div>
               <div>
-                <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-0.5">Welcome back</p>
+                <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest mb-0.5">Welcome back</p>
                 <p className="text-white font-bold text-base truncate">{currentUser?.fullName || "Agro User"}</p>
                 <p className="text-[var(--muted)] text-xs font-medium">{currentUser?.role || "Buyer"} · Cropbit</p>
               </div>
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-[#065F46] to-[var(--bg)] p-6 pt-8">
+          <div className="bg-gradient-to-br from-[var(--color-secondary)] to-[var(--bg)] p-6 pt-8">
             <div className="flex justify-end mb-4">
               <button
                 onClick={() => setMenuOpen(false)}
@@ -318,7 +318,7 @@ function App() {
             <div className="mb-3">
               <Wordmark size="md" lightText />
             </div>
-            <h3 className="text-white font-extrabold text-xl leading-tight mb-2">Fresh Farm Produce,<br/><span className="text-[#10B981]">Direct to You.</span></h3>
+            <h3 className="text-white font-extrabold text-xl leading-tight mb-2">Fresh Farm Produce,<br/><span className="text-[var(--color-primary)]">Direct to You.</span></h3>
             <p className="text-[var(--muted)] text-xs leading-relaxed">Connecting local farmers directly with homes & vendors.</p>
           </div>
         )}
@@ -340,7 +340,7 @@ function App() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20"
+                    ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20"
                     : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                 }`
               }
@@ -381,7 +381,7 @@ function App() {
               <NavLink
                 to="/register"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold bg-[#10B981] text-[#0F172A] hover:bg-[#059669] transition-all mt-1"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold bg-[var(--color-primary)] text-[var(--bg)] hover:bg-[var(--color-primary-hover)] transition-all mt-1"
               >
                 ✨ Sign Up Free
               </NavLink>
