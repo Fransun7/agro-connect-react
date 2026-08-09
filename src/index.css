@@ -2,25 +2,132 @@
 @import './design-system/tokens.css';
 @import 'tailwindcss';
 
-/* ── Tailwind color mappings from CSS tokens ───────────────── */
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * TAILWIND TOKEN MAPPING
+ *
+ * This block wires the design system tokens (from tokens.css) into Tailwind's
+ * utility class system. Because we use @theme inline, every --* variable here
+ * overrides Tailwind's default for that utility — no JSX changes required.
+ *
+ * SECTIONS:
+ *   A. Color utilities    — bg-primary, text-t-bg, border-t-border, etc.
+ *   B. Font size scale    — text-xs → text-6xl use our design system px values
+ *   C. Font weight scale  — font-bold → font-extrabold use our token weights
+ *   D. Letter spacing     — tracking-tight, tracking-widest, etc.
+ *   E. Border radius      — rounded-md, rounded-2xl, rounded-3xl, etc.
+ *   F. Shadow scale       — shadow-sm, shadow-md, shadow-lg, shadow-xl
+ *   G. Spacing base unit  — p-1=4px, p-4=16px, p-6=24px via --spacing
+ *   H. Z-index            — z-10, z-20, z-50 for layering consistency
+ * ════════════════════════════════════════════════════════════════════════════
+ */
 @theme inline {
-  /* Theme-sensitive surfaces */
-  --color-t-bg:      var(--bg);
-  --color-t-deep:    var(--bg-deep);
-  --color-t-surface: var(--surface);
-  --color-t-s2:      var(--surface-2);
-  --color-t-border:  var(--border);
-  --color-t-border2: var(--border-2);
-  --color-t-text:    var(--text);
-  --color-t-muted:   var(--muted);
-  --color-t-subtle:  var(--subtle);
 
-  /* Brand colors as Tailwind utilities */
-  --color-primary:   var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-accent:    var(--color-accent);
-  --color-info:      var(--color-info);
+  /* ── A. Color utilities ─────────────────────────────────────────────────
+     bg-t-bg, text-t-text, border-t-border, etc. auto-switch in light mode.
+     bg-primary, bg-secondary, bg-accent stay constant across themes.        */
+
+  /* Theme-sensitive: background, surface, border, text */
+  --color-t-bg:       var(--bg);
+  --color-t-deep:     var(--bg-deep);
+  --color-t-surface:  var(--surface);
+  --color-t-s2:       var(--surface-2);
+  --color-t-border:   var(--border);
+  --color-t-border2:  var(--border-2);
+  --color-t-text:     var(--text);
+  --color-t-muted:    var(--muted);
+  --color-t-subtle:   var(--subtle);
+
+  /* Brand (constant) */
+  --color-primary:          var(--color-primary);
+  --color-primary-hover:    var(--color-primary-hover);
+  --color-primary-subtle:   var(--color-primary-subtle);
+  --color-secondary:        var(--color-secondary);
+  --color-secondary-deep:   var(--color-secondary-deep);
+  --color-accent:           var(--color-accent);
+  --color-accent-hover:     var(--color-accent-hover);
+  --color-info:             var(--color-info);
+  --color-info-hover:       var(--color-info-hover);
+
+  /* Status */
+  --color-status-success:   var(--status-success);
+  --color-status-warning:   var(--status-warning);
+  --color-status-confirmed: var(--status-confirmed);
+  --color-status-danger:    var(--status-danger);
+
+  /* ── B. Font size scale ─────────────────────────────────────────────────
+     Overrides Tailwind's built-in text-* classes with our design system px
+     values. Change any --ds-text-* in tokens.css → all uses update globally. */
+
+  --text-xs:   var(--ds-text-xs);    /* 12px — labels, category pills, metadata */
+  --text-sm:   var(--ds-text-sm);    /* 14px — body small, nav links, most copy */
+  --text-base: var(--ds-text-base);  /* 16px — body base, form values           */
+  --text-lg:   var(--ds-text-lg);    /* 18px — body large, section intros       */
+  --text-xl:   var(--ds-text-xl);    /* 20px — card titles, sidebar headings    */
+  --text-2xl:  var(--ds-text-2xl);   /* 24px — section headings, stat numbers   */
+  --text-3xl:  var(--ds-text-3xl);   /* 28px — page titles on desktop           */
+  --text-4xl:  var(--ds-text-4xl);   /* 36px — display, login/register headlines*/
+  --text-5xl:  var(--ds-text-5xl);   /* 48px — hero headline on desktop         */
+  --text-6xl:  var(--ds-text-6xl);   /* 60px — fullscreen hero on large viewport*/
+
+  /* ── C. Font weight scale ───────────────────────────────────────────────
+     Overrides Tailwind's font-bold etc. to guarantee our exact weight values. */
+
+  --font-weight-normal:    var(--ds-weight-regular);    /* 400 */
+  --font-weight-medium:    var(--ds-weight-medium);     /* 500 */
+  --font-weight-semibold:  var(--ds-weight-semibold);   /* 600 */
+  --font-weight-bold:      var(--ds-weight-bold);       /* 700 */
+  --font-weight-extrabold: var(--ds-weight-extrabold);  /* 800 */
+
+  /* ── D. Letter spacing ──────────────────────────────────────────────────
+     Maps our tracking tokens to Tailwind tracking-* utility classes.         */
+
+  --tracking-tighter: var(--ds-tracking-tighter);  /* -0.04em — 48px+ headings */
+  --tracking-tight:   var(--ds-tracking-tight);    /* -0.02em — 24px+ headings  */
+  --tracking-wider:   var(--ds-tracking-wider);    /* 0.08em  — uppercase labels*/
+  --tracking-widest:  var(--ds-tracking-widest);   /* 0.16em  — ALL-CAPS micro  */
+
+  /* ── E. Border radius scale ─────────────────────────────────────────────
+     Maps our --ds-radius-* tokens to Tailwind rounded-* classes.
+     Change --ds-radius-card in tokens.css → all cards update globally.       */
+
+  --radius-sm:   var(--ds-radius-xs);    /* 6px  — inline tags, chips          */
+  --radius-md:   var(--ds-radius-sm);    /* 8px  — small buttons, icon boxes   */
+  --radius-lg:   var(--ds-radius-sm);    /* 8px  — inputs on mobile            */
+  --radius-xl:   var(--ds-radius-md);    /* 12px — nav links, inputs, tab items*/
+  --radius-2xl:  var(--ds-radius-card);  /* 16px — ALL product and stat cards  */
+  --radius-3xl:  var(--ds-radius-modal); /* 24px — modals, auth dialogs        */
+
+  /* ── F. Shadow scale ────────────────────────────────────────────────────
+     Maps our --ds-shadow-* tokens to Tailwind shadow-* utility classes.      */
+
+  --shadow-sm:  var(--ds-shadow-sm);   /* Subtle card depth                    */
+  --shadow-md:  var(--ds-shadow-md);   /* Elevated panels, dropdowns           */
+  --shadow-lg:  var(--ds-shadow-lg);   /* Modals, drawers                      */
+  --shadow-xl:  var(--ds-shadow-xl);   /* Floating panels                      */
+  --shadow-2xl: var(--ds-shadow-2xl);  /* Mobile drawer, deepest UI layers     */
+
+  /* ── G. Spacing base unit ───────────────────────────────────────────────
+     Sets the atomic spacing unit so p-1=4px, p-4=16px, p-6=24px, gap-5=20px.
+     Tailwind v4 derives all spacing utilities from this one value.            */
+
+  --spacing: var(--ds-space-unit);  /* 0.25rem = 4px */
+
+  /* ── H. Z-index ─────────────────────────────────────────────────────────
+     Explicit stacking layers for UI components.                               */
+
+  --z-index-0:       0;
+  --z-index-10:      10;    /* Sticky navbar                               */
+  --z-index-20:      20;    /* Dropdowns, tooltips                         */
+  --z-index-30:      30;    /* Drawer side panel                           */
+  --z-index-40:      40;    /* Modal backdrop                              */
+  --z-index-50:      50;    /* Modal dialog                                */
+  --z-index-overlay: 9999;  /* Full-screen overlays, toasts                */
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ════════════════════════════════════════════════════════════════════════════ */
 
 * {
   box-sizing: border-box;
@@ -31,18 +138,88 @@ body {
   padding: 0;
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-primary);
-  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+  font-family: var(--ds-font-primary);
+  transition:
+    background-color var(--ds-transition-smooth),
+    color            var(--ds-transition-smooth);
 }
 
-h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label {
-  font-family: var(--font-primary) !important;
+h1, h2, h3, h4, h5, h6, p, span, div, a, button,
+input, textarea, select, label {
+  font-family: var(--ds-font-primary) !important;
 }
 
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+/* ════════════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM UTILITY CLASSES
+   These supplement Tailwind when a CSS-variable-based value is needed that
+   Tailwind cannot express through its standard utility mapping alone.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Transition utilities ───────────────────────────────────────────────── */
+
+/** Replace `transition-all duration-150` with `ds-transition-fast`          */
+.ds-transition-fast {
+  transition: all var(--ds-transition-fast);
+}
+
+/** Replace `transition-all duration-200` with `ds-transition-base`         */
+.ds-transition-base {
+  transition: all var(--ds-transition-base);
+}
+
+/** Replace `transition-all duration-300` with `ds-transition-smooth`       */
+.ds-transition-smooth {
+  transition: all var(--ds-transition-smooth);
+}
+
+/** Used on theme toggle, sidebar, and large modal transitions               */
+.ds-transition-slow {
+  transition: all var(--ds-transition-slow);
+}
+
+/* ── Shadow utilities ───────────────────────────────────────────────────── */
+
+/** Primary green glow — CTA buttons, action card borders on hover          */
+.shadow-primary-glow {
+  box-shadow: var(--ds-shadow-primary-glow);
+}
+
+/** Smaller primary glow — compact action buttons inside product cards      */
+.shadow-primary-glow-sm {
+  box-shadow: var(--ds-shadow-primary-glow-sm);
+}
+
+/** Modal depth shadow — used on dialog containers                          */
+.shadow-modal {
+  box-shadow: var(--ds-shadow-modal);
+}
+
+/* ── Color scheme utilities ─────────────────────────────────────────────── */
 
 input, textarea, select { color-scheme: dark; }
 [data-theme="light"] input,
 [data-theme="light"] textarea,
 [data-theme="light"] select { color-scheme: light; }
+
+/* ── Scrollbar hide utility ─────────────────────────────────────────────── */
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Font size utility for micro/micro text ─────────────────────────────── */
+
+.text-micro { font-size: var(--ds-text-micro); }   /* 10px */
+.text-xxs   { font-size: var(--ds-text-xxs); }     /* 11px */
+
+/* ── Line height utilities ──────────────────────────────────────────────── */
+
+.leading-display { line-height: var(--ds-leading-tight); }    /* 1.1 — hero */
+.leading-heading  { line-height: var(--ds-leading-snug); }    /* 1.25        */
+.leading-ui       { line-height: var(--ds-leading-normal); }  /* 1.375       */
+.leading-body     { line-height: var(--ds-leading-relaxed); } /* 1.5         */
+
+/* ── Page layout helpers ────────────────────────────────────────────────── */
+
+.max-content { max-width: var(--ds-max-content); }
+.max-form    { max-width: var(--ds-max-form); }
+.max-dash    { max-width: var(--ds-max-dashboard); }
