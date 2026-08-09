@@ -14,7 +14,7 @@ function FarmerCard({ farmers }) {
   };
 
   return (
-    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[#10B981]/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20">
+    <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[var(--color-primary)]/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20">
       <div className="h-48 bg-[var(--bg)] border-b border-[var(--border)] overflow-hidden flex items-center justify-center">
         {farmers.farmer_image_url ? (
           <img
@@ -26,7 +26,7 @@ function FarmerCard({ farmers }) {
             }}
           />
         ) : (
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#1A5C2A] via-[#2D7A3F] to-[#154620] flex items-center justify-center shadow-lg">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-primary-hover)] to-[var(--color-secondary-deep)] flex items-center justify-center shadow-lg">
             <span className="text-white font-extrabold text-3xl tracking-tight">
               {getInitials()}
             </span>
@@ -40,7 +40,7 @@ function FarmerCard({ farmers }) {
             <h3 className="font-bold text-[var(--text)] text-base">
               {farmers.full_name}
             </h3>
-            <span className="inline-block bg-[#10B981]/10 border border-[#10B981]/20 text-[#10B981] text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mt-1">
+            <span className="inline-block bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-[var(--color-primary)] text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mt-1">
               ✓ Verified
             </span>
           </div>
@@ -62,7 +62,7 @@ function FarmerCard({ farmers }) {
 
         <button
           // onClick={() => navigate(`/order/${farmersData.id}`)}
-          className="w-full bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold text-sm px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[#10B981]/20"
+          className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] font-bold text-sm px-4 py-2.5 rounded-xl transition-all shadow-md shadow-[var(--color-primary)]/20"
         >
           View Produce →
         </button>

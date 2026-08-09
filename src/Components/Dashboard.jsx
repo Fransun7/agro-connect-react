@@ -49,7 +49,7 @@ function Dashboard() {
             className={({ isActive }) =>
               `flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 whitespace-nowrap ${
                 isActive
-                  ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20"
+                  ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20"
                   : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
               }`
             }
@@ -63,7 +63,7 @@ function Dashboard() {
       <div className="flex w-full">
         {/* Sidebar */}
         <div className="hidden md:flex sticky top-18 w-64 h-[calc(100vh-72px)] bg-gradient-to-b from-[var(--s2)] to-[var(--bg)] border-r border-[var(--border-2)] flex-col p-5 z-30 shrink-0">
-          <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest px-3 mb-4">Navigation</p>
+          <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest px-3 mb-4">Navigation</p>
           <div className="flex flex-col gap-1">
             {filteredLink.map((link) => (
               <NavLink
@@ -73,7 +73,7 @@ function Dashboard() {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20"
+                      ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20"
                       : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                   }`
                 }
@@ -88,7 +88,7 @@ function Dashboard() {
           {currentUser && (
             <div className="mt-auto pt-5 border-t border-[var(--border-2)]">
               <div className="flex items-center gap-3 px-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#10B981] to-[#065F46] flex items-center justify-center text-white text-xs font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white text-xs font-bold shrink-0">
                   {(currentUser.fullName || "AU").split(" ").map(w => w[0]).join("").toUpperCase()}
                 </div>
                 <div className="min-w-0">

@@ -52,9 +52,9 @@ function Orders() {
   window.dispatchEvent(new Event("authUpdate"));
 
   const statusStyle = (status) => {
-    if (status === "Delivered") return "bg-[#10B981]/10 text-[#10B981] border-[#10B981]/20";
-    if (status === "Pending") return "bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20";
-    if (status === "Confirmed") return "bg-[#0284C7]/10 text-[#0284C7] border-[#0284C7]/20";
+    if (status === "Delivered") return "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border-[var(--color-primary)]/20";
+    if (status === "Pending") return "bg-[var(--color-accent)]/10 text-[var(--color-accent)] border-[var(--color-accent)]/20";
+    if (status === "Confirmed") return "bg-[var(--color-info)]/10 text-[var(--color-info)] border-[var(--color-info)]/20";
     return "bg-red-500/10 text-red-400 border-red-500/20";
   };
 
@@ -67,7 +67,7 @@ function Orders() {
           </h2>
           <p className="text-[var(--muted)] text-xs mt-0.5">{orders.length} total orders</p>
         </div>
-        <span className="text-xs bg-[#10B981]/10 text-[#10B981] font-bold px-3 py-1.5 rounded-full border border-[#10B981]/20">
+        <span className="text-xs bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-bold px-3 py-1.5 rounded-full border border-[var(--color-primary)]/20">
           {orders.length} orders
         </span>
       </div>
@@ -77,7 +77,7 @@ function Orders() {
           orders.map((order) => (
             <div
               key={order.id}
-              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#10B981]/20 transition-all duration-200"
+              className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[var(--color-primary)]/20 transition-all duration-200"
             >
               {/* Order info */}
               <div className="flex flex-col gap-1.5 flex-1">
@@ -99,7 +99,7 @@ function Orders() {
 
               {/* Financial info */}
               <div className="flex flex-col md:items-end gap-1">
-                <span className="text-[#F59E0B] font-black text-base">
+                <span className="text-[var(--color-accent)] font-black text-base">
                   ₦{order.total ? order.total.toLocaleString() : "0"}
                 </span>
                 <span className="text-xs text-[var(--muted)] font-medium">{order.quantity} units</span>
@@ -118,7 +118,7 @@ function Orders() {
                       </button>
                       <button
                         onClick={() => updateOrderStatus(order.id, "Confirmed")}
-                        className="text-xs font-bold bg-[#10B981] hover:bg-[#059669] text-[#0F172A] px-4 py-2 rounded-xl transition-all shadow-md shadow-[#10B981]/20"
+                        className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] px-4 py-2 rounded-xl transition-all shadow-md shadow-[var(--color-primary)]/20"
                       >
                         Accept
                       </button>
@@ -127,13 +127,13 @@ function Orders() {
                   {order.status === "Confirmed" && (
                     <button
                       onClick={() => updateOrderStatus(order.id, "Delivered")}
-                      className="text-xs font-bold bg-[#0284C7] hover:bg-[#0369a1] text-white px-4 py-2 rounded-xl transition-all"
+                      className="text-xs font-bold bg-[var(--color-info)] hover:bg-[var(--color-info-hover)] text-white px-4 py-2 rounded-xl transition-all"
                     >
                       Mark Delivered
                     </button>
                   )}
                   {(order.status === "Delivered" || order.status === "Cancelled") && (
-                    <span className="text-xs text-[var(--muted)] italic bg-[#334155]/50 px-3 py-1.5 rounded-lg border border-[var(--border)]">
+                    <span className="text-xs text-[var(--muted)] italic bg-[var(--border)]/50 px-3 py-1.5 rounded-lg border border-[var(--border)]">
                       Archived
                     </span>
                   )}

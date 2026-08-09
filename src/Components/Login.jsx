@@ -66,11 +66,11 @@ function Login() {
   return (
     <div className="min-h-screen flex bg-[var(--bg)]">
       {/* Left Panel */}
-      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
+      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-secondary-deep)] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
         {/* Decorative circles */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#10B981]/5" />
-        <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[#10B981]/5" />
-        <div className="absolute -bottom-10 left-20 w-96 h-96 rounded-full bg-[#10B981]/5" />
+        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[var(--color-primary)]/5" />
+        <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[var(--color-primary)]/5" />
+        <div className="absolute -bottom-10 left-20 w-96 h-96 rounded-full bg-[var(--color-primary)]/5" />
 
         <div className="relative z-10 flex flex-col gap-10 h-full justify-between">
           {/* Logo */}
@@ -82,7 +82,7 @@ function Login() {
             <h1 className="text-4xl font-extrabold text-white leading-snug tracking-tight">
               Welcome back,
               <br />
-              <span className="text-[#10B981]">We kept it</span>
+              <span className="text-[var(--color-primary)]">We kept it</span>
               <br />
               fresh for you.
             </h1>
@@ -97,7 +97,7 @@ function Login() {
                   {i > 0 && <div className="w-px h-8 bg-white/10" />}
                   <div className="flex flex-col">
                     <span className="text-white font-bold text-2xl">{val}</span>
-                    <span className="text-[#10B981] text-xs font-semibold">{label}</span>
+                    <span className="text-[var(--color-primary)] text-xs font-semibold">{label}</span>
                   </div>
                 </div>
               ))}
@@ -105,7 +105,7 @@ function Login() {
           </div>
 
           {/* Quote */}
-          <div className="border-l-2 border-[#10B981] pl-4">
+          <div className="border-l-2 border-[var(--color-primary)] pl-4">
             <p className="text-[var(--muted)] text-sm italic leading-relaxed">
               "Every morning I log in to check my orders. Cropbit has made selling my harvest faster than going to the market."
             </p>
@@ -127,7 +127,7 @@ function Login() {
           </h2>
           <p className="text-[var(--muted)] text-sm mb-8">
             Don't have an account?{" "}
-            <NavLink to="/register" className="text-[#10B981] font-semibold hover:underline">
+            <NavLink to="/register" className="text-[var(--color-primary)] font-semibold hover:underline">
               Sign up free
             </NavLink>
           </p>
@@ -141,7 +141,7 @@ function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
+                  className="bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--color-primary)] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
                 />
               </div>
 
@@ -153,7 +153,7 @@ function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Min. 8 characters"
-                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
+                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--color-primary)] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)]"
                   />
                   <button
                     onClick={() => setShowPassword(!showPassword)}
@@ -168,11 +168,11 @@ function Login() {
               <button
                 onClick={handleLogin}
                 disabled={loginLoad}
-                className="w-full bg-[#10B981] hover:bg-[#059669] disabled:bg-[#334155] disabled:text-[var(--muted)] text-[#0F172A] font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#10B981]/20 mt-2"
+                className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] disabled:bg-[var(--border)] disabled:text-[var(--muted)] text-[var(--bg)] font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-[var(--color-primary)]/20 mt-2"
               >
                 {loginLoad ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-[#0F172A]/30 border-t-[#0F172A] rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-[var(--bg)]/30 border-t-[var(--bg)] rounded-full animate-spin" />
                     <span>Logging in...</span>
                   </>
                 ) : (
@@ -188,7 +188,7 @@ function Login() {
 
               <button
                 type="button"
-                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[#475569] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
+                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--subtle)] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -206,7 +206,7 @@ function Login() {
       {showSuccessCard && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
-            <div className="w-16 h-16 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-3xl">✓</div>
+            <div className="w-16 h-16 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 rounded-full flex items-center justify-center mx-auto mb-5 text-3xl">✓</div>
             <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Login Successful!</h2>
           </div>
         </div>

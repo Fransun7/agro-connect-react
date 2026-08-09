@@ -116,18 +116,18 @@ function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-black/60 to-black/30" />
 
         {/* Emerald tint strip at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#065F46]/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--color-secondary)]/40 to-transparent" />
 
         {/* Hero content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 pt-16">
-          <div className="inline-flex items-center gap-2 bg-[#10B981]/10 border border-[#10B981]/30 rounded-full px-4 py-2 mb-6">
-            <span className="w-2 h-2 bg-[#10B981] rounded-full animate-pulse" />
-            <span className="text-[#10B981] text-xs font-bold uppercase tracking-widest">Nigeria's Agritech Marketplace</span>
+          <div className="inline-flex items-center gap-2 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 rounded-full px-4 py-2 mb-6">
+            <span className="w-2 h-2 bg-[var(--color-primary)] rounded-full animate-pulse" />
+            <span className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest">Nigeria's Agritech Marketplace</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight drop-shadow-lg mb-4 tracking-tight">
             {slides[currentIndex].headline}
-            <span className="text-[#10B981]"> {slides[currentIndex].headlineSpan}</span>
+            <span className="text-[var(--color-primary)]"> {slides[currentIndex].headlineSpan}</span>
           </h1>
 
           <p className="text-base md:text-xl text-[var(--muted)] max-w-2xl mb-10 leading-relaxed">
@@ -137,7 +137,7 @@ function Home() {
           <div className="flex flex-col sm:flex-row gap-4">
             <NavLink
               to={slides[currentIndex].primaryBtn.link}
-              className="bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold text-base px-8 py-3.5 rounded-full shadow-lg shadow-[#10B981]/30 transition-all duration-300"
+              className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] font-bold text-base px-8 py-3.5 rounded-full shadow-lg shadow-[var(--color-primary)]/30 transition-all duration-300"
             >
               {slides[currentIndex].primaryBtn.label}
             </NavLink>
@@ -153,7 +153,7 @@ function Home() {
           <div className="flex gap-6 mt-12 flex-wrap justify-center">
             {[["✓", "Verified Farmers"], ["🛡️", "Secure Payments"], ["⚡", "Fast Delivery"]].map(([icon, label]) => (
               <div key={label} className="flex items-center gap-2 text-[var(--muted)] text-sm font-medium">
-                <span className="text-[#10B981]">{icon}</span> {label}
+                <span className="text-[var(--color-primary)]">{icon}</span> {label}
               </div>
             ))}
           </div>
@@ -167,7 +167,7 @@ function Home() {
               onClick={() => setCurrentIndex(index)}
               className={`rounded-full transition-all duration-300 cursor-pointer ${
                 index === currentIndex
-                  ? "bg-[#10B981] w-6 h-2.5"
+                  ? "bg-[var(--color-primary)] w-6 h-2.5"
                   : "bg-white/30 hover:bg-white/50 w-2.5 h-2.5"
               }`}
             />
@@ -180,12 +180,12 @@ function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">Fresh From the Market</p>
+              <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest mb-2">Fresh From the Market</p>
               <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--text)] tracking-tight">Featured Products</h2>
             </div>
             <NavLink
               to="/marketplace"
-              className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[#10B981] hover:text-[#059669] bg-[#10B981]/10 hover:bg-[#10B981]/20 border border-[#10B981]/20 px-4 py-2 rounded-full transition-all"
+              className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)]/20 border border-[var(--color-primary)]/20 px-4 py-2 rounded-full transition-all"
             >
               View All →
             </NavLink>
@@ -199,7 +199,7 @@ function Home() {
             >
               {loading ? (
                 <div className="flex items-center justify-center gap-3 py-16 w-full text-[var(--muted)] font-medium">
-                  <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[#10B981] rounded-full animate-spin" />
+                  <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
                   Gathering fresh farm listings...
                 </div>
               ) : products.length === 0 ? (
@@ -215,7 +215,7 @@ function Home() {
           <div className="flex justify-center mt-6 sm:hidden">
             <NavLink
               to="/marketplace"
-              className="text-sm font-semibold text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/20 px-6 py-2.5 rounded-full"
+              className="text-sm font-semibold text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-6 py-2.5 rounded-full"
             >
               View All Products →
             </NavLink>
@@ -224,7 +224,7 @@ function Home() {
       </section>
 
       {/* STATS STRIP */}
-      <section className="bg-[#10B981] py-10 px-4">
+      <section className="bg-[var(--color-primary)] py-10 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             ["200+", "Verified Farmers"],
@@ -233,21 +233,21 @@ function Home() {
             ["100%", "Fresh Produce"],
           ].map(([val, label]) => (
             <div key={label} className="text-center">
-              <div className="text-3xl font-extrabold text-[#0F172A] mb-1 tracking-tight">{val}</div>
-              <div className="text-[#065F46] text-sm font-semibold">{label}</div>
+              <div className="text-3xl font-extrabold text-[var(--bg)] mb-1 tracking-tight">{val}</div>
+              <div className="text-[var(--color-secondary)] text-sm font-semibold">{label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* MISSION SECTION */}
-      <section className="bg-[#065F46] px-6 md:px-20 py-16">
+      <section className="bg-[var(--color-secondary)] px-6 md:px-20 py-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
-            <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest">Our Mission</p>
+            <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest">Our Mission</p>
             <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight tracking-tight">
               We're connecting Nigeria's{" "}
-              <span className="text-[#10B981]">farmers to the world.</span>
+              <span className="text-[var(--color-primary)]">farmers to the world.</span>
             </h2>
             <p className="text-[var(--muted)] text-base md:text-lg leading-relaxed">
               Cropbit is committed to closing the gap between Nigerian farmers and buyers. We make fresh produce accessible, affordable, and traceable, starting from Ibadan, spreading across Nigeria.
@@ -306,7 +306,7 @@ function Home() {
             <h4 className="text-sm font-bold text-[var(--text)] uppercase tracking-widest">Quick Links</h4>
             <nav className="flex flex-col gap-2">
               {[["Home", "/"], ["Marketplace", "/marketplace"], ["Farmers", "/farmers"], ["Dashboard", "/dashboard"]].map(([label, to]) => (
-                <NavLink key={to} to={to} className="text-[var(--muted)] text-sm hover:text-[#10B981] transition-colors">
+                <NavLink key={to} to={to} className="text-[var(--muted)] text-sm hover:text-[var(--color-primary)] transition-colors">
                   {label}
                 </NavLink>
               ))}
@@ -325,9 +325,9 @@ function Home() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="w-9 h-9 bg-[var(--surface)] hover:bg-[#10B981] border border-[var(--border)] hover:border-[#10B981] transition-all duration-300 rounded-full flex items-center justify-center"
+                  className="w-9 h-9 bg-[var(--surface)] hover:bg-[var(--color-primary)] border border-[var(--border)] hover:border-[var(--color-primary)] transition-all duration-300 rounded-full flex items-center justify-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-[#94A3B8] group-hover:fill-white" viewBox="0 0 24 24">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-[var(--muted)] group-hover:fill-white" viewBox="0 0 24 24">
                     <path d={path} />
                   </svg>
                 </a>

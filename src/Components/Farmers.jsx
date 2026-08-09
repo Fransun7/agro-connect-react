@@ -39,16 +39,16 @@ function Farmers({ searchTerm }) {
   return (
     <div className="bg-[var(--bg)] min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#065F46] to-[#0a2918] border-b border-[#10B981]/20 px-5 py-8 md:py-10">
+      <div className="bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary-deep)] border-b border-[var(--color-primary)]/20 px-5 py-8 md:py-10">
         <div className="max-w-7xl mx-auto">
-          <p className="text-[#10B981] text-xs font-bold uppercase tracking-widest mb-2">
+          <p className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest mb-2">
             Our Network
           </p>
           <h1 className="text-2xl md:text-3xl font-extrabold text-[var(--text)] tracking-tight mb-1">
             Verified Farmers
           </h1>
           <p className="text-[var(--muted)] text-sm">
-            Browse verified <span className="text-[#F59E0B]">✓</span> farmers
+            Browse verified <span className="text-[var(--color-accent)]">✓</span> farmers
             across Nigeria and order fresh produce directly from the source.
           </p>
         </div>

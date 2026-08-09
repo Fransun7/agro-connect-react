@@ -62,15 +62,15 @@ function Register() {
     }
   };
 
-  const inputClass = "bg-[var(--surface)] border border-[var(--border)] focus:border-[#10B981] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full";
+  const inputClass = "bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--color-primary)] rounded-xl px-4 py-3 text-sm text-[var(--text)] outline-none transition-all placeholder-[var(--subtle)] w-full";
 
   return (
     <div className="min-h-screen flex bg-[var(--bg)]">
       {/* Left Panel */}
-      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#10B981]/5" />
-        <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[#10B981]/5" />
-        <div className="absolute -bottom-10 left-20 w-96 h-96 rounded-full bg-[#10B981]/5" />
+      <div className="hidden lg:flex flex-col w-[45%] bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-secondary-deep)] to-[var(--bg)] px-12 py-20 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[var(--color-primary)]/5" />
+        <div className="absolute top-40 -right-10 w-48 h-48 rounded-full bg-[var(--color-primary)]/5" />
+        <div className="absolute -bottom-10 left-20 w-96 h-96 rounded-full bg-[var(--color-primary)]/5" />
 
         <div className="relative z-10 flex flex-col gap-10 h-full justify-between">
           <div>
@@ -81,7 +81,7 @@ function Register() {
             <h1 className="text-4xl font-extrabold text-white leading-snug tracking-tight">
               Fresh produce,
               <br />
-              <span className="text-[#10B981]">direct from</span>
+              <span className="text-[var(--color-primary)]">direct from</span>
               <br />
               Nigerian farms.
             </h1>
@@ -95,14 +95,14 @@ function Register() {
                   {i > 0 && <div className="w-px h-8 bg-white/10" />}
                   <div className="flex flex-col">
                     <span className="text-white font-bold text-2xl">{val}</span>
-                    <span className="text-[#10B981] text-xs font-semibold">{label}</span>
+                    <span className="text-[var(--color-primary)] text-xs font-semibold">{label}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="border-l-2 border-[#10B981] pl-4">
+          <div className="border-l-2 border-[var(--color-primary)] pl-4">
             <p className="text-[var(--muted)] text-sm italic leading-relaxed">
               "Cropbit helped me reach buyers across three states without leaving my farm."
             </p>
@@ -123,7 +123,7 @@ function Register() {
           </h2>
           <p className="text-[var(--muted)] text-sm mb-6">
             Already have an account?{" "}
-            <NavLink to="/login" className="text-[#10B981] font-semibold hover:underline">
+            <NavLink to="/login" className="text-[var(--color-primary)] font-semibold hover:underline">
               Log in
             </NavLink>
           </p>
@@ -134,7 +134,7 @@ function Register() {
               onClick={() => setRole("buyer")}
               className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
                 role === "buyer"
-                  ? "bg-[#10B981] text-[#0F172A] shadow-sm"
+                  ? "bg-[var(--color-primary)] text-[var(--bg)] shadow-sm"
                   : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
@@ -144,7 +144,7 @@ function Register() {
               onClick={() => setRole("farmer")}
               className={`flex-1 py-2.5 text-sm font-bold rounded-lg transition-all duration-200 ${
                 role === "farmer"
-                  ? "bg-[#10B981] text-[#0F172A] shadow-sm"
+                  ? "bg-[var(--color-primary)] text-[var(--bg)] shadow-sm"
                   : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
@@ -221,18 +221,18 @@ function Register() {
               </div>
 
               <div className="flex items-start gap-3 mt-1">
-                <input type="checkbox" id="terms" className="mt-0.5 accent-[#10B981] w-4 h-4 cursor-pointer" />
+                <input type="checkbox" id="terms" className="mt-0.5 accent-[var(--color-primary)] w-4 h-4 cursor-pointer" />
                 <label htmlFor="terms" className="text-xs text-[var(--muted)] leading-relaxed cursor-pointer">
                   I agree to Cropbit's{" "}
-                  <span className="text-[#10B981] font-semibold hover:underline cursor-pointer">Terms of Service</span>{" "}
+                  <span className="text-[var(--color-primary)] font-semibold hover:underline cursor-pointer">Terms of Service</span>{" "}
                   and{" "}
-                  <span className="text-[#10B981] font-semibold hover:underline cursor-pointer">Privacy Policy</span>
+                  <span className="text-[var(--color-primary)] font-semibold hover:underline cursor-pointer">Privacy Policy</span>
                 </label>
               </div>
 
               <button
                 type="submit"
-                className="mt-2 bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold text-base py-3.5 rounded-xl transition-all shadow-lg shadow-[#10B981]/20"
+                className="mt-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] font-bold text-base py-3.5 rounded-xl transition-all shadow-lg shadow-[var(--color-primary)]/20"
               >
                 Create Account →
               </button>
@@ -245,7 +245,7 @@ function Register() {
 
               <button
                 type="button"
-                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[#475569] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
+                className="flex items-center justify-center gap-3 bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--subtle)] text-[var(--muted)] font-semibold text-sm py-3 rounded-xl transition-all"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -263,12 +263,12 @@ function Register() {
       {showSuccessCard && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center">
-            <div className="w-20 h-20 bg-[#10B981]/10 border border-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">✓</div>
+            <div className="w-20 h-20 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">✓</div>
             <h2 className="text-2xl font-bold text-[var(--text)] mb-2">Welcome Aboard!</h2>
             <p className="text-[var(--muted)] mb-8">Your account has been created successfully. Ready to explore the farm?</p>
             <button
               onClick={() => navigate("/login")}
-              className="w-full bg-[#10B981] hover:bg-[#059669] text-[#0F172A] font-bold py-4 rounded-2xl transition-all"
+              className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--bg)] font-bold py-4 rounded-2xl transition-all"
             >
               Continue to Login
             </button>

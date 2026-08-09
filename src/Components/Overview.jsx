@@ -62,9 +62,9 @@ function Overview() {
   const LOW_STOCK_LIMIT = 20;
 
   const statusColor = (status) => {
-    if (status === "Delivered") return "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20";
-    if (status === "Pending") return "bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20";
-    if (status === "Confirmed") return "bg-[#0284C7]/10 text-[#0284C7] border border-[#0284C7]/20";
+    if (status === "Delivered") return "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20";
+    if (status === "Pending") return "bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20";
+    if (status === "Confirmed") return "bg-[var(--color-info)]/10 text-[var(--color-info)] border border-[var(--color-info)]/20";
     return "bg-red-500/10 text-red-400 border border-red-500/20";
   };
 
@@ -72,19 +72,19 @@ function Overview() {
     <div className="flex flex-col gap-6 p-4 md:p-6 bg-[var(--bg)] min-h-screen">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold text-[var(--text)]">Overview</h2>
-        <span className="text-[#10B981] text-xs font-bold uppercase tracking-widest">
+        <span className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-widest">
           {new Date().toLocaleDateString("en-NG", { weekday: "short", day: "numeric", month: "short" })}
         </span>
       </div>
 
       {/* WELCOME BANNER */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#065F46] via-[#0a3d26] to-[var(--bg)] p-6 md:p-8 border border-[#10B981]/20">
-        <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-[#F59E0B]/5 blur-3xl" />
-        <div className="absolute -right-10 -top-10 h-60 w-60 rounded-full bg-[#10B981]/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-secondary-deep)] to-[var(--bg)] p-6 md:p-8 border border-[var(--color-primary)]/20">
+        <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-[var(--color-accent)]/5 blur-3xl" />
+        <div className="absolute -right-10 -top-10 h-60 w-60 rounded-full bg-[var(--color-primary)]/10 blur-3xl" />
 
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-center">
           <div className="flex flex-col items-start text-left">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/20 px-3 py-1 text-xs font-bold text-[#10B981] mb-4 uppercase tracking-widest">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-3 py-1 text-xs font-bold text-[var(--color-primary)] mb-4 uppercase tracking-widest">
               {isFarmer ? "🧑‍🌾 Verified Farmer" : "🛒 Verified Buyer"}
             </span>
             <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 text-[var(--text)]">
@@ -93,7 +93,7 @@ function Overview() {
             {isFarmer && (
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--muted)] mb-4 font-medium">
                 <span>📍 {farmName}</span>
-                <span className="h-1 w-1 rounded-full bg-[#10B981]/50 hidden sm:inline" />
+                <span className="h-1 w-1 rounded-full bg-[var(--color-primary)]/50 hidden sm:inline" />
                 <span>{farmLocation}</span>
               </div>
             )}
@@ -101,9 +101,9 @@ function Overview() {
               {isFarmer ? (
                 <>
                   Your digital shop is online and active. You have{" "}
-                  <strong className="text-[#10B981]">{myProducts.length}</strong>{" "}
+                  <strong className="text-[var(--color-primary)]">{myProducts.length}</strong>{" "}
                   products listed and{" "}
-                  <strong className="text-[#F59E0B]">{pendingOrders.length} pending orders</strong>{" "}
+                  <strong className="text-[var(--color-accent)]">{pendingOrders.length} pending orders</strong>{" "}
                   waiting for review.
                 </>
               ) : (
@@ -115,7 +115,7 @@ function Overview() {
           {isFarmer && (
             <div className="hidden md:flex flex-col justify-between rounded-2xl bg-white/5 border border-white/10 p-5 h-full min-h-36">
               <div>
-                <p className="text-xs uppercase tracking-wider text-[#10B981] font-bold mb-1">{farmLocation} Market Alert</p>
+                <p className="text-xs uppercase tracking-wider text-[var(--color-primary)] font-bold mb-1">{farmLocation} Market Alert</p>
                 <p className="text-xs text-[var(--muted)] leading-snug">🌱 Grains and Tubers are in peak demand this weekend across {farmLocation} hubs.</p>
               </div>
               <div className="mt-4 border-t border-white/10 pt-3">
@@ -132,17 +132,17 @@ function Overview() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {isFarmer ? (
           <>
-            <StatsCard label="Active Listings" value={myProducts.length} icon="🌾" iconColor="bg-[#10B981]/10 text-[#10B981]" />
-            <StatsCard label="Total Orders" value={myOrders.length} icon="📦" iconColor="bg-[#0284C7]/10 text-[#0284C7]" />
-            <StatsCard label="Pending Approvals" value={myOrders.filter((o) => o.status === "Pending").length} icon="⏳" iconColor="bg-[#F59E0B]/10 text-[#F59E0B]" />
-            <StatsCard label="Net Earnings" value={`₦${totalEarnings.toLocaleString()}`} icon="💰" iconColor="bg-[#10B981]/10 text-[#10B981]" />
+            <StatsCard label="Active Listings" value={myProducts.length} icon="🌾" iconColor="bg-[var(--color-primary)]/10 text-[var(--color-primary)]" />
+            <StatsCard label="Total Orders" value={myOrders.length} icon="📦" iconColor="bg-[var(--color-info)]/10 text-[var(--color-info)]" />
+            <StatsCard label="Pending Approvals" value={myOrders.filter((o) => o.status === "Pending").length} icon="⏳" iconColor="bg-[var(--color-accent)]/10 text-[var(--color-accent)]" />
+            <StatsCard label="Net Earnings" value={`₦${totalEarnings.toLocaleString()}`} icon="💰" iconColor="bg-[var(--color-primary)]/10 text-[var(--color-primary)]" />
           </>
         ) : (
           <>
-            <StatsCard label="Orders Placed" value={myOrders.length} icon="🛒" iconColor="bg-[#10B981]/10 text-[#10B981]" />
-            <StatsCard label="Pending" value={myOrders.filter((o) => o.status === "Pending").length} icon="⏳" iconColor="bg-[#F59E0B]/10 text-[#F59E0B]" />
-            <StatsCard label="Delivered" value={myOrders.filter((o) => o.status === "Delivered").length} icon="✅" iconColor="bg-[#10B981]/10 text-[#10B981]" />
-            <StatsCard label="Total Spent" value={`₦${totalEarnings.toLocaleString()}`} icon="💳" iconColor="bg-[#0284C7]/10 text-[#0284C7]" />
+            <StatsCard label="Orders Placed" value={myOrders.length} icon="🛒" iconColor="bg-[var(--color-primary)]/10 text-[var(--color-primary)]" />
+            <StatsCard label="Pending" value={myOrders.filter((o) => o.status === "Pending").length} icon="⏳" iconColor="bg-[var(--color-accent)]/10 text-[var(--color-accent)]" />
+            <StatsCard label="Delivered" value={myOrders.filter((o) => o.status === "Delivered").length} icon="✅" iconColor="bg-[var(--color-primary)]/10 text-[var(--color-primary)]" />
+            <StatsCard label="Total Spent" value={`₦${totalEarnings.toLocaleString()}`} icon="💳" iconColor="bg-[var(--color-info)]/10 text-[var(--color-info)]" />
           </>
         )}
       </div>
@@ -165,13 +165,13 @@ function Overview() {
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="text-sm font-semibold text-[var(--text)]">{cropName}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-[#10B981]">₦{cropTotal.toLocaleString()}</span>
+                        <span className="text-xs font-bold text-[var(--color-primary)]">₦{cropTotal.toLocaleString()}</span>
                         <span className="text-[10px] font-bold text-[var(--muted)]">{percentage}%</span>
                       </div>
                     </div>
-                    <div className="h-2 w-full rounded-full bg-[#334155] overflow-hidden">
+                    <div className="h-2 w-full rounded-full bg-[var(--border)] overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#10B981] to-[#059669] transition-all duration-700"
+                        className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-hover)] transition-all duration-700"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
@@ -200,7 +200,7 @@ function Overview() {
                     <span className="text-xs text-[var(--muted)]">{item.quantity} {item.unit}s remaining</span>
                   </div>
                   <span className={`shrink-0 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${
-                    isLow ? "bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20" : "bg-[#10B981]/10 text-[#10B981] border-[#10B981]/20"
+                    isLow ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)] border-[var(--color-accent)]/20" : "bg-[var(--color-primary)]/10 text-[var(--color-primary)] border-[var(--color-primary)]/20"
                   }`}>
                     {isLow ? "⚠️ Low" : "✅ Good"}
                   </span>
@@ -244,7 +244,7 @@ function Overview() {
               </div>
               <div className="flex justify-between md:block">
                 <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Total</span>
-                <span className="text-sm font-bold text-[#10B981]">₦{item.total.toLocaleString()}</span>
+                <span className="text-sm font-bold text-[var(--color-primary)]">₦{item.total.toLocaleString()}</span>
               </div>
               <div className="flex justify-between md:block">
                 <span className="md:hidden text-[10px] font-bold text-[var(--muted)] uppercase">Status</span>
